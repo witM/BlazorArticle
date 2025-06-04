@@ -124,10 +124,11 @@ code {
     margin: 0.0rem 0;
 }
 
-.toc-link {
+a.toc-link {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     font-size: 0.95rem;
-    color: #007acc;
+    color: rgb(33, 37, 41);
+    text-decoration:none;
     display: inline-block;
     padding: 0px 0;
     transition: color 0.2s ease;

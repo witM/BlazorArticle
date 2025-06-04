@@ -63,6 +63,7 @@
 
     public class LayoutData
     {
+        //this maybe in some global state in the future
         public Func<Task> RefreshAllRequested { get; set; }
     }
 
@@ -75,5 +76,11 @@
         await _data.RefreshAllRequested.Invoke();
 
     }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        Console.WriteLine("Article layout rendered...");
+    }
+
 
 }

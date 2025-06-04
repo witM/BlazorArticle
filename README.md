@@ -25,4 +25,13 @@ The library is made from the **BlazorArticle** and **BlazorArticle.Components** 
 
 ## Additional stuff
 
+### Issues
+
 Reported blazor issue: [DynamicComponent renders outside of surrounding HTML tags in InteractiveServer rendering](https://github.com/dotnet/aspnetcore/issues/61760)
+
+### Externals
+
+Regardless of the .NET components and the [Blazor framework](https://dotnet.microsoft.com/en-us/apps/aspnet/web-apps/blazor), the website projects, in addition to the [Bootstrap](https://getbootstrap.com) library, make use of the following libraries:
+- [FontAwesome](https://fontawesome.com)
+- [Katex](https://katex.org) Latex formula rendering as maths
+- [TocBot](https://tscanlin.github.io/tocbot) Rendering Table of Content

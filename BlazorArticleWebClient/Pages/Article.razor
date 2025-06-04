@@ -1,7 +1,7 @@
 ﻿@inherits PageBase
 @layout BlazorArticleWebClient.Layout.ArticleLayout
 
-@page "/postview/{ArticleName}"
+@page "/postview"
 @using BlazorArticle.Components
 @using BlazorArticleWebClient.Services
 @using Microsoft.AspNetCore.Components.Sections
@@ -52,7 +52,7 @@ else
          <!-- sticky header is hardcoded as 50px height -->
         <div class="sticky-top" style="top:50px;">
          
-            <TableOfContent />
+            <TableOfContent @ref="Ref_TOC" />
         </div>
         
 
@@ -70,7 +70,9 @@ else
     public ArticleLayout.LayoutData ArticleLayoutData{ get; set; }
 
     [Parameter]
-    public string ArticleName{ get; set; }
+    public string ArticleName{ get; set; } // not used yet
+
+    TableOfContent Ref_TOC{ get; set; }
 
     bool _isArticleLoaded = false;
     string? _articleContent;
@@ -99,7 +101,9 @@ else
         _articleContent = await GetArticleContentAsync("quadratic_equation");
         _articleStyleContent = await GetArticleStyleContentAsync("math");
         //_isArticleLoaded = true;
-        StateHasChanged();
+        //await Task.Run(() => StateHasChanged());
+        await InvokeAsync(StateHasChanged);
+        Ref_TOC.Refresh();
     }
 
 

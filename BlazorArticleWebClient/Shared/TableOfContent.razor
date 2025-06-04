@@ -22,6 +22,14 @@
         //WARNING:For now we rendering only h2, h3, h4 headers in toc (h1 is used as article title - see tocbot documentation)
         await JsRuntime.InvokeVoidAsync("JS_RenderTOC", baseUri, "#toc-container", ".page");
         await JsRuntime.InvokeVoidAsync("JS_RenderMathInElement", Ref_Toc);
+
+        //Console.WriteLine("Table of content rendered...");
     }
+
+    public void Refresh()
+    {
+        StateHasChanged();
+    }
+
 
 }
