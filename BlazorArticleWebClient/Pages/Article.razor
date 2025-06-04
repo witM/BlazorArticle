@@ -1,7 +1,7 @@
 ﻿@inherits PageBase
 @layout BlazorArticleWebClient.Layout.ArticleLayout
 
-@page "/postview"
+@page "/postview/{ArticleName}"
 @using BlazorArticle.Components
 @using BlazorArticleWebClient.Services
 @using Microsoft.AspNetCore.Components.Sections
@@ -52,7 +52,7 @@ else
          <!-- sticky header is hardcoded as 50px height -->
         <div class="sticky-top" style="top:50px;">
          
-            <TableOfContent  ArticleId="ArticleId" />
+            <TableOfContent />
         </div>
         
 
@@ -70,7 +70,7 @@ else
     public ArticleLayout.LayoutData ArticleLayoutData{ get; set; }
 
     [Parameter]
-    public int ArticleId{ get; set; }
+    public string ArticleName{ get; set; }
 
     bool _isArticleLoaded = false;
     string? _articleContent;
