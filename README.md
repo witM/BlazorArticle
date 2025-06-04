@@ -14,7 +14,7 @@ There's a plan to make more advanced documentation on github page under blazor w
 
 ## Projects information
 
-The library is made from the **BlazorArticle** and **BlazorArticle.Components** projects. These will be used to build and publish nuget packages of the libs
+The library is made from the **BlazorArticle** and **BlazorArticle.Components** projects. These will be used to build and publish nuget packages of the libraries.
 
 **BlazorArticleWeb** is a Blazor Web App that uses server-side rendering on all pages to demonstrate the usage of libraries and test them.
 
