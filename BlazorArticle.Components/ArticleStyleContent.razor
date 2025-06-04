@@ -1,0 +1,93 @@
+﻿@using BlazorArticle
+@using BlazorArticle.Components
+
+@inject BlazorArticle.IParserArticle Parser
+@inject BlazorArticle.Components.Services.ArticleHeadManager ArticleHeadManager
+
+
+@implements IDisposable
+
+@if(UseJavascript)
+{
+    <_ArticleStyleJavascript @rendermode="InteractiveServer" Style="@ParsedStyle" />
+    
+}
+
+@code {
+    /// <summary>
+    /// Not useful for now - in the future may be place for additional styles
+    /// </summary>
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; } = null;
+    /// <summary>
+    /// Provide style content as css string
+    /// </summary>
+    [Parameter]
+    public string? Style { get; set; }
+    /// <summary>
+    /// Decides whether the style is prerendered at the server side or not. (TRUE by default).
+    /// </summary>
+    [Parameter]
+    public bool IsPrerendered { get; set; } = true;
+    /// <summary>
+    /// Decides whether the style is rendered by javascript at the client side. This uses internal logic. (FALSE by default).
+    /// </summary>
+    [Parameter]
+    public bool UseJavascript { get; set; } = false;
+
+    /// <summary>
+    /// Decides whether the style has removed the white spaces and comments (TRUE by default).
+    /// </summary>
+    [Parameter]
+    public bool IsDebug { get; set; } = true;
+
+    string? ParsedStyle{ get; set; }
+
+
+    protected override void OnInitialized()
+    {
+        // if (ChildContent is not null)
+        // {
+        //     ArticleHeadManager.SetArticleFragment(ChildContent);
+        // }
+
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        int x = 20;
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        //parsing the style for the outlet
+        ParsedStyle = Style is null ? Style : Parser.ParseStyle(Style, !IsDebug);
+
+        if(IsPrerendered)
+        {
+            if (Style is not null)
+                ArticleHeadManager.SetArticleStyle(ParsedStyle);
+        }
+        else
+        {
+            if (UseJavascript)
+                ArticleHeadManager.SetArticleStyle(ParsedStyle);
+        }
+        // if(ChildContent is not null)
+        //     ArticleHeadManager.SetArticleFragment(ChildContent);
+    }
+
+    public void Dispose()
+    {
+
+        if (Style is not null)
+            ArticleHeadManager.RemoveStylesAll();
+
+
+        if (ChildContent is not null)
+        {
+            // Usuwamy styl z serwisu, gdy komponent jest niszczony
+            //ArticleHeadManager.RemoveFragment();
+        }
+    }
+}

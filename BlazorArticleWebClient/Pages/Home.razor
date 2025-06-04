@@ -1,0 +1,17 @@
+﻿@inherits PageBase
+@page "/"
+
+<PageTitle>Home</PageTitle>
+
+@*WARNING: There is some exception after you change the page where is rendering math (KaTeX formulas) if the formula is not enclosed in HTML tags.*@
+
+<h1>Hello, world!</h1>
+
+<p>Welcome to your new app.</p>
+@*
+definition of quadratic equation: \$ax^2+bx+c=0\$. - causing the exception
+
+*@
+
+<p>definition of quadratic equation: \$ax^2+bx+c=0\$.</p>
+

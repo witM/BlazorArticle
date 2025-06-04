@@ -1,0 +1,269 @@
+﻿
+/*set .body as container for all layout content (footer is always on the screen bottom)*/
+.body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+
+/*TOP NAV BAR*/
+
+.m-navbar-container {
+    position: sticky;
+    width: 100%;
+    top: 0px;
+    display: flex;
+    align-items: center;
+    background-color: #57236b;
+    height: 50px; /* This is fixed bacuse the container of TOC is set to fixed position for mobile mode for that to be edgy with header!! */
+    z-index: 9999;
+}
+
+/*article navigation button */
+.m-toc-toggler {
+    color: white;
+    display: none;
+    cursor: pointer;
+    /**/
+    /* padding: 50px;*/
+    font-size: 24px;
+    border: 1px solid yellow;
+}
+
+/*WARNING: this must be max-width that same as in @media for sidebar*/
+@media (max-width:780px) {
+
+    .m-toc-toggler {
+        align-self: stretch;
+        display: flex;
+        align-items: center;
+        color: #fff;
+        padding: 0px 20px;
+        background-color: #424a53;
+        border: 1px solid rgb(238 238 238 / 0.20);
+    }
+
+    .m-toc-toggler.active {
+        color: #1861ac;
+        padding: 0px 20px;
+        background-color: #f7f7f7;
+        border: 1px solid rgb(238 238 238 / 0.20);
+    }
+}
+
+
+
+
+/*nav.m-navbar {*/
+    /*position: relative;*/
+    /*width: 100%;
+    max-width: 1920px;*/
+    /* max-width:1280px; */
+    /*margin: auto;*/
+    /* height:50px; */
+    /*display: flex;
+    align-items: center;
+    justify-content: space-around;*/
+    /* border:1px solid red;  */
+/*}
+
+.navbar-shadow {*/
+    /* width: calc(100vh - 100px);  */
+    /*border-radius: 2px;
+    box-shadow: 0px 1px 10px #999;
+}
+
+nav.m-navbar .m-logo {*/
+    /* border:1px solid red; */
+    /*font-size: 1.2rem;
+}
+
+nav.m-navbar .m-logo a {
+    color: rgb(250, 250, 250);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+nav.m-navbar .m-logo .m-logo-screen {
+    display: block;
+}
+
+nav.m-navbar .m-logo .m-logo-mobile {
+    display: none;
+}
+
+.m-toc-toggler {
+    color: white;
+    display: none;
+    cursor: pointer;*/
+    /**/
+    /* padding: 50px;*/
+    /*font-size: 24px;
+    border: 1px solid yellow;
+}*/
+
+
+/*WARNING:max-width must be that same as 'm-toc-container' class in article.razor style*/
+/*@media (max-width:1100px) {
+
+    nav.m-navbar .m-logo .m-logo-screen {
+        display: none;
+    }
+
+    nav.m-navbar .m-logo .m-logo-mobile {
+        display: block;
+    }
+
+    .m-toc-toggler {
+        align-self: stretch;
+        display: flex;
+        align-items: center;
+        color: #fff;
+        padding: 0px 20px;
+        background-color: #424a53;
+        border: 1px solid rgb(238 238 238 / 0.20);
+    }
+
+    .m-toc-toggler.active {
+        color: #1861ac;
+        padding: 0px 20px;
+        background-color: #f7f7f7;
+        border: 1px solid rgb(238 238 238 / 0.20);
+    }
+}*/
+
+/* MAIN CONTENT*/
+
+main.m-main {
+    flex: 1;
+    display: flex;
+}
+
+/* sidebar */
+.m-sidebar {
+    width: 100%;
+    max-width: 400px;
+    min-width: 200px;
+    border-right: 1px solid rgb(225, 225, 225);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+}
+
+.m-sidebar-content-sticky {
+    position: sticky;
+    top: 0; /* lub np. top: 20px; */
+    background: white; /* dla lepszej widoczności */
+    z-index: 10;
+}
+
+.m-sidebar:empty{
+    display:none;
+}
+
+/* page */
+.m-page{
+    flex:1;
+}
+
+/*WARNING:max-width must be that same as 'm-toc-toggler' class in layout style*/
+@media (max-width:780px) {
+
+    .m-sidebar {
+        /*position:absolute;*/
+        position: fixed; /*Sticky doesn't work (why?) and absolute position is relative to the container (work for navbar edge but not slide (not sticky)) -> so fixed setup for now */
+        top: 50px; /* WARNING:Must be that same as fixed height of navbar container */
+        right: -100%;
+        /* right:0px; */
+        /* width: 400px;
+        max-width:400px;
+        max-width: 400px;
+        min-width: 300px; */
+        width: 100%;
+        z-index: 999999;
+        padding: 0px;
+        /* border:1px solid yellow; */
+        border-left: 1px solid rgb(225, 225, 225);
+        border-right: none;
+        background-color: #76b7ff;
+        background-color: rgb(251, 251, 251);
+        height: 100vh;
+        opacity: 0.9;
+    }
+
+    .m-sidebar.hidden {
+        right: -100%;
+        transition: 0.3s;
+    }
+
+    .m-sidebar.active {
+        right: 0px;
+        transition: 0.3s;
+    }
+}
+
+
+    /* FOOTER*/
+
+    footer.m-footer {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        /* height:300px; */
+        padding: 10px;
+        background-color: #ebebeb;
+        background-color: #f7f7f7;
+        /* align-self: flex-end; */
+        bottom: 0px;
+    }
+
+        footer.m-footer .content {
+            min-height: 100px;
+            width: 100%;
+            max-width: 1280px;
+            margin: auto;
+            border-left: 1px solid rgb(225, 225, 225);
+            border-right: 1px solid rgb(225, 225, 225);
+            padding: 0px 10px;
+        }
+
+    footer.m-footer-bottom {
+        width: 100%;
+        background-color: #4e4e4e;
+        background-color: #fcfcfc;
+        padding: 0.6em 0 0.6em 0;
+        text-align: center;
+        font-size: 0.8rem;
+        color: #969696;
+        border-top: 1px solid rgb(225, 225, 225);
+    }
+    /*
+.m-footer-bottom .m-screen {
+}
+
+.m-footer-bottom .m-mobile {
+    display: none;
+}
+
+.m-footer-bottom a {
+   color: rgb(126, 176, 255);
+   text-transform: uppercase;
+   margin: 0px 15px;
+}
+
+.m-footer-bottom a.active {
+   border-bottom: 1px solid rgb(78, 144, 179);
+   color: rgb(70, 141, 255);
+}
+
+
+@media(max-width:800px) {
+    .m-footer-bottom .m-screen {
+        display: none;
+    }
+
+    .m-footer-bottom .m-mobile {
+        display: block;
+    }
+}
+*/

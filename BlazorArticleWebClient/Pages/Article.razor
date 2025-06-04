@@ -1,0 +1,144 @@
+﻿@inherits PageBase
+@layout BlazorArticleWebClient.Layout.ArticleLayout
+
+@page "/postview"
+@using BlazorArticle.Components
+@using BlazorArticleWebClient.Services
+@using Microsoft.AspNetCore.Components.Sections
+@*To see better prerendered results (in site source) in static side rendering set this to "false" - you don't see loading indicator without InteractiveServer rendering mode
+  Starting with .NET 10, the Persistent State mechanism will be more accessible and easier to use.
+*@
+@attribute [StreamRendering(false)] 
+
+@implements IDisposable
+
+@inject NavigationManager Navigation
+@inject IHttpClientFactory ClientFactory
+
+
+
+<PageTitle>
+    @if(_isArticleLoaded)
+    {
+        @("Załadowany")
+    }
+</PageTitle>
+
+@if(!_isArticleLoaded)
+{
+    <div class="d-flex flex-column justify-content-center align-items-center" style="height:100%">
+        <img src="/img/spin_loading.gif" alt="loading article" />
+    </div>
+}
+else
+{
+    @*Renders css style in the head*@
+   <ArticleStyleContent Style="@_articleStyleContent"  UseJavascript="false" IsDebug="false"/>
+
+    <div class="page" @key="_articleContent">
+        <article>
+            @*This component renders article exactly at place where it is with support of BlazorArticle parsing system,
+             *if you don't need this you can just use markupstring: @((MarkupString)string)
+            *@
+           <ArticleRenderer Content="@_articleContent" RemoveComments="false"/>
+        </article>
+    </div>
+
+}
+
+ <SectionContent SectionName="sidebar-article">
+    @if(_isArticleLoaded)
+    {
+         <!-- sticky header is hardcoded as 50px height -->
+        <div class="sticky-top" style="top:50px;">
+         
+            <TableOfContent  ArticleId="ArticleId" />
+        </div>
+        
+
+    }
+</SectionContent> 
+
+
+
+
+@code {
+    [Inject]
+    public ArticleLoader ArticleLoader { get; set; }
+
+    [CascadingParameter]
+    public ArticleLayout.LayoutData ArticleLayoutData{ get; set; }
+
+    [Parameter]
+    public int ArticleId{ get; set; }
+
+    bool _isArticleLoaded = false;
+    string? _articleContent;
+    string? _articleStyleContent;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        ArticleLayoutData.RefreshAllRequested += OnRefreshAll;
+
+        _articleContent = await GetArticleContentAsync("quadratic_equation");
+        _articleStyleContent = await GetArticleStyleContentAsync("math");
+        _isArticleLoaded = true;
+
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+
+    }
+
+
+    async Task OnRefreshAll()
+    {
+        //_isArticleLoaded = false;
+        _articleContent = await GetArticleContentAsync("quadratic_equation");
+        _articleStyleContent = await GetArticleStyleContentAsync("math");
+        //_isArticleLoaded = true;
+        StateHasChanged();
+    }
+
+
+    public void Dispose()
+    {
+        ArticleLayoutData.RefreshAllRequested -= OnRefreshAll;
+    }
+
+
+    async Task<string?> GetArticleContentAsync(string articleName)
+    {
+        string ArticlesBasePath = "ARTICLES";
+        string siteBaseUrl = Navigation.BaseUri;
+
+        var t = DateTime.Now.Ticks; // this parameter is added to the url for ensuring there's no caching
+
+        using (var client = ClientFactory.CreateClient("default"))
+        {
+            string url = $"{siteBaseUrl}{ArticlesBasePath}/{articleName}.html";
+           
+            return  await client.GetStringAsync(url);
+
+        }
+        
+    }
+
+
+    async Task<string?> GetArticleStyleContentAsync(string styleName)
+    {
+        string ArticlesStyleBasePath = "ARTICLES_CSS";
+        string siteBaseUrl = Navigation.BaseUri;
+
+        using (var client = ClientFactory.CreateClient("default"))
+        {
+            string url = $"{siteBaseUrl}{ArticlesStyleBasePath}/{styleName}.css";
+
+            return await client.GetStringAsync(url);
+
+        }
+    }
+
+}

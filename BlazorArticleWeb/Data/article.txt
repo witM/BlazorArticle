@@ -1,0 +1,184 @@
+﻿
+
+<h1>Procenty - Trzeci </h1>
+
+<p style="text-align:center"><b>Artykuł kolejny trzeci</b></p>
+
+<!--<p>Zapoznaj się wcześniej z tym <article-link name="s_text" partial-name="0_test_percent" title="Artykuł - wstęp do procentów"></article-link> artykułem.</p>-->
+
+<p>Zapoznaj się wcześniej z tym artykułem: [[[Link Name="s_text" PartialName="0_test_percent" Title="Artykuł - wprowadzenie do procentów"]]].</p>
+
+<p>Hahahaha...</p>
+
+<p>Albo zobacz ten testowy [[[Link Name="s_test" Title="artykuł"]]] w całości.</p>
+
+<!--<p>Zapoznaj się ze wstępem do procentów:<a href="/post/s_text/0_test_percent" data-enhance-nav="false">WPROWADZENIE DO PROCENTÓW - (enhanced - false)</a>.</p>-->
+
+<h2 id="1">TRZY - ZADANIA</h2>
+
+<!-- #############################################################################-->
+    [[[VideoGroup Code="c_test"]]]
+<!-- #############################################################################-->
+
+
+<div class="block b-definition">
+    \[ p\% = \frac{p}{100} \]
+</div>
+
+<div class="example margin">
+    <div class="header"></div>
+    <div class="answer">
+        <p>\$\displaystyle{ 1\% = \frac{1}{100} = 0.01 }\$</p>
+        <p>\$\displaystyle{ 69\% = \frac{69}{100} = 0.69}\$</p>
+        <p>\$\displaystyle{ 150\% = \frac{150}{100} = 1\frac{50}{100} = 1.5 }\$</p>
+        <p>\$\displaystyle{ 12.5\% = \frac{12.5}{100} = \frac{125}{1000} = 0.125 }\$</p>
+    </div>
+</div>
+
+
+<p style="margin-bottom:0px;">Problemy, które rozwiązujemy w zadaniach z treścią używając procentów można wyszczególnić następująco:</p>
+<p style="margin-bottom:0px;"><b>1)</b> Obliczanie procentu z danej liczby.</p>
+<p style="margin-bottom:0px;"><b>2)</b> Obliczanie liczby znając jej procent.</p>
+<p style="margin-bottom:0px;"><b>3)</b> Jakim procentem jednej liczby jest druga liczba.</p>
+<p style="margin-bottom:0px;"><b>4)</b> O ile procent więcej (mniej) zwiększono (zmniejszono) daną liczbę.</p>
+<p><b>5)</b> Zadania z procentem składanym.</p>
+
+<p>Przed omówieniem powyższych zagadnień, zapoznamy się z procentową notacją i omówimy zamianę ułamka na procent i odwrotnie.</p>
+
+<p>O procentach mówimy, gdy myślimy o procencie jakieś wartości, np. powiedzenie "Około \$15\%\$ ludzi na świecie jest leworęcznych." oznacza, że w populacji ludzi przeciętnie \$15\$ osób na \$100\$ jest leworęczna. Gdybyśmy znali ilość ludzi na świecie, niech oznacza to duża litera <b>P</b>, to procent ludzi leworęcznych wyliczymy następująco:</p>
+
+    \[ 15\% * P = \frac{15}{100} * P \]
+
+
+<p style="text-align:center;"><b>Zamiana ułamka na notację procentową</b></p>
+
+<p>Aby zamienić ułamek na notację procentową możemy rozszerzyć lub skrócić licznik i mianownik ułamka, aby w mianowniku otrzymać liczbe \$100\$.</p>
+
+
+<!-- to jest jakiś komentarz
+
+-->
+
+<div class="example margin">
+    <div class="header"></div>
+    <div class="answer">
+        <p>\$\displaystyle{ \frac{1}{2} = \frac{1}{2} * \frac{50}{50} = \frac{50}{100} = 50\% = 0.5 }\$</p>
+        <p>\$\displaystyle{ \frac{3}{4} = \frac{3}{4} * \frac{25}{25} = \frac{75}{100} = 75\% = 0.75 }\$</p>
+        <p>\$\displaystyle{ \frac{625}{500} = \frac{625}{500} : \frac{5}{5} = \frac{125}{100} = 125\% = 1.25 }\$</p>
+        <p>\$\displaystyle{ 7\frac{9}{10} = \frac{79}{10} * \frac{10}{10} = \frac{790}{100} = 790\% = 7.9 }\$</p>
+    </div>
+</div>
+
+<p>Powyższa metoda jest szybka dla "prostych" ułamków, ale często nie jest tak prosto rozszerzyć (skrócić) ułamek do mianownika z liczbą \$100\$. Ogólna metoda polega na <b>przemnożeniu ułamka przez liczbę \$100\$ i dodanie znaku procentu</b>.</p>
+
+<div class="example margin">
+    <div class="header"></div>
+    <div class="answer">
+        <p>\$\displaystyle{ \frac{1}{2} * 100 = \frac{100}{2} = 50 }\$ + znak procentu: \$50\%\$</p>
+        <p>\$\displaystyle{ \frac{3}{4} * 100 = \frac{300}{4} = \frac{150}{2} = 75 }\$ + znak procentu: \$75\%\$</p>
+        <p>\$\displaystyle{ \frac{71}{\cancel{10}} * 10\cancel{0} = 710 }\$ + znak procentu: \$710\%\$</p>
+        <p>\$\displaystyle{ \frac{1}{3} * 100 = \frac{100}{3} = 33\frac{1}{3} }\$ + znak procentu: \$33\frac{1}{3}\%\$</p>
+    </div>
+</div>
+
+<div class="block b-proof">
+    <p>Wykorzystując proporcję rozwiązujemy równanie:</p>
+    \[\begin{align*} \frac{a}{b}&=\frac{x}{100} \\  bx&=100a \\ x&=\frac{100a}{b}   \end{align*} \]
+</div>
+
+<p style="text-align:center;"><b>Zamiana notacji procentowej na ułamek</b></p>
+
+<p>Zapisujemy procent w postaci ułamka i skracamy go w razie potrzeby, gdy istnieje taka możliwość.</p>
+
+<div class="example margin">
+    <div class="header"></div>
+    <div class="answer">
+        <p>\$\displaystyle{ 12\% = \frac{12}{100} = \frac{3}{25} }\$</p>
+        <p>\$\displaystyle{ 91\% = \frac{91}{100} }\$</p>
+        <p>\$\displaystyle{ 315\% = \frac{315}{100} = \frac{63}{20} = 3\frac{3}{20}}\$</p>
+        <p>\$\displaystyle{ 7.8\% = \frac{7.8}{100} = \frac{78}{1000} = 0.078   }\$</p>
+        <p>\$\displaystyle{ 25\% = 25.0\% = 0.25  }\$</p>
+    </div>
+</div>
+
+<p>Powyższa metoda jest szybka dla "prostych" ułamków, ale często nie jest tak prosto rozszerzyć (skrócić) ułamek do mianownika z liczbą \$100\$. Ogólna metoda polega na <b>przemnożeniu ułamka przez liczbę \$100\$ i dodanie znaku procentu</b>.</p>
+
+<p>O procentach mówimy, gdy myślimy o procencie jakieś wartości, np. powiedzenie "Około \$15\%\$ ludzi na świecie jest leworęcznych." oznacza, że w populacji ludzi przeciętnie \$15\$ osób na \$100\$ jest leworęczna. Gdybyśmy znali ilość ludzi na świecie, niech oznacza to duża litera <b>P</b>, to procent ludzi leworęcznych wyliczymy następująco:</p>
+
+<p>O procentach mówimy, gdy myślimy o procencie jakieś wartości, np. powiedzenie "Około \$15\%\$ ludzi na świecie jest leworęcznych." oznacza, że w populacji ludzi przeciętnie \$15\$ osób na \$100\$ jest leworęczna. Gdybyśmy znali ilość ludzi na świecie, niech oznacza to duża litera <b>P</b>, to procent ludzi leworęcznych wyliczymy następująco:</p>
+
+
+<div class="block b-remember">
+    <p><b>Zamiana liczby dziesiętnej na procent:</b> Przesuwamy przecinek dwie pozycje w prawo. </p>
+    <p><b>Zamiana procent dziesiętny na liczbę:</b> Usuwamy znak procentu i przesuwamy przecinek dwie pozycje w lewo. </p>
+    <p>\$\displaystyle{ 13.7\% = 0.137    }\$</p>
+    <p>\$\displaystyle{ 99\frac{1}{3}\% = 99.(3)\% = 0.99(3)   }\$</p>
+</div>
+
+<h2 id="2">Obliczanie procentu z danej liczby (ZNOWU)</h2>
+
+
+<p>Aby obliczyć procent z danej liczby, to mnożymy wartość procentową przez daną liczbę.</p>
+
+<div class="example margin">
+    <div class="header"></div>
+    <div class="content">
+        <p style="margin-bottom:0px;"><b>A)</b> Oblicz \$10\%\$ z liczby \$50\$.</p>
+        <p style="margin-bottom:0px;"><b>B)</b> Oblicz \$75\%\$ z liczby \$312\$.</p>
+        <p style="margin-bottom:0px;"><b>B)</b> Oblicz \$13.7\%\$ z liczby \$75\$.</p>
+    </div>
+    <div class="answer">
+        <p><b>A)</b></p>
+        \[ 0.10 * 50 = 5  \]
+        <p style="margin-bottom:0px;"><b>Odp:</b> \$10\%\$ z liczby \$50\%\$ to \$5\$.</p>
+        <div class="separator"></div>
+        <p><b>B)</b></p>
+        \[  0.75 * 312 = 234 \]
+        <p style="margin-bottom:0px;"><b>Odp:</b> \$75\%\$ z liczby \$312\$ to \$234\$.</p>
+        <div class="separator"></div>
+        <p><b>C)</b></p>
+        \[  0.137 * 75 = 10.275\]
+        <p style="margin-bottom:0px;"><b>Odp:</b> \$13.7\%\$ z liczby \$75\$ to \$10.275\$.</p>
+    </div>
+</div>
+
+
+<h2 id="3">Potęga z liczby \$a\ge 0\$</h2>
+
+<div class="block b-definition">
+    <p>Potęga z liczby \$a\in\mathbb{R}\$ o wykładniku nieujemnym całkowitym \$n\in\mathbb{N}\$ to liczba:</p>
+    \[  a^n=\begin{cases} \underbrace{a*a*a*\cdots *a}_n \ &\text{dla} \ n\ge 1 \\ 0 \ &\text{dla} \ n=0, a\neq 0    \end{cases}\]
+    <p style="margin-bottom:0px;">Liczbę \$a\$ nazywamy <b>podstawą potęgi</b>, a liczbę \$n\$ <b>wykładnikiem potęgi</b>.</p>
+</div>
+
+<p>Liczba \$0^0\$ jest nieokreślona.</p>
+
+<div class="example  margin">
+    <div class="header"></div>
+    <div class="answer">
+        <p>\$2^3 = 2*2*2=8\$</p>
+        <p>\$(-2)^5 = (-2)*(-2)*(-2)*(-2)*(-2) = (-32)\$</p>
+        <p>\$\displaystyle{\left(\frac{3}{4}\right)^3 = \frac{3}{4} * \frac{3}{4} *\frac{3}{4} = \frac{27}{64} }  \$</p>
+        <p>\$\displaystyle{ 0^{21} = 0 }  \$</p>
+        <p>\$\displaystyle{ 21^0 = 1 }  \$</p>
+    </div>
+</div>
+
+<div class="block b-remember">
+    <p>Podstawowe prawa działań znasz już ze szkoły podstawowej. Pamiętaj, że potęga z podstawy ujemnej o wykładniku przystym nie jest ujemna.</p>
+    <p>\$\displaystyle{ (-3)^4 = (-3)* (-3)* (-3)* (-3) = 81 }\$</p>
+    <p>\$\displaystyle{ \left(-\frac{1}{2}\right)^6 = \frac{1}{64}   }\$</p>
+</div>
+
+<h2 id="4">Pierwiastkowanie</h2>
+
+<!-- #############################################################################-->
+    [[[VideoGroup Code="c_test"]]]
+<!-- #############################################################################-->
+
+
+<div class="block b-definition">
+    <p><b>Pierwiastek arytmetyczny</b> z liczby \$a\ge 0\$ stopnia \$n\in\mathbb{N}\$ oraz \$n\ge 2\$ to liczba \$\sqrt[n]{a}\$ taka, że:</p>
+    <div style="font-size:1.1em;">\[  \sqrt[n]{a} = x \Leftrightarrow x^n=a  \ \text{dla} \ x\ge 0 \]</div>
+    <p style="margin-bottom:0px;">Liczbę \$a\$ nazywamy <b>liczbą pierwiastkowaną</b>.</p>
+</div>

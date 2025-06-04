@@ -1,0 +1,211 @@
+﻿
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap');
+
+
+.page {
+    overflow-x: auto; /*this makes the page items scrolling if needed (if item overflow-x:auto) */
+    width: 100%;
+    height: 100%;
+    margin: none;
+    background-color: white;
+    padding: 50px;
+    padding-right: 100px;
+    box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em;
+    /**/
+    background-color: white; /*chage for testin (uncomment) */
+    overflow-wrap: break-word;
+    overflow: visible;
+    zoom: 1;
+    font-family: 'Lato';
+    font-weight: 400;
+    color: rgb(0 0 0 / 0.9)
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+}
+
+.page article {
+    /*border:1px solid red;*/
+    max-width: 1000px;
+    margin-left: 2%;
+}
+
+img {
+    display: block;
+    width: 100%;
+    /*    height:100%;*/
+}
+
+
+@media (max-width:1440px) {
+    .page {
+        /* margin:auto;*/
+    }
+}
+
+
+
+@media (max-width:1280px) {
+    .page {
+        padding: 25px;
+    }
+
+        .page article {
+            margin-left: 0px;
+        }
+}
+
+
+@media (max-width:800px) {
+    .page {
+        box-shadow: none;
+    }
+}
+
+/*katex  configuration */
+
+.katex {
+    font-size: 1.18em /*default 1.21em*/
+}
+
+.katex-display {
+    overflow: auto hidden;
+    /* border:1px solid red; */
+    padding: 2px;
+}
+
+.m-katex-line .katex {
+    font-size: 1em;
+}
+
+.m-katex-up .katex {
+    font-size: 1.21em;
+}
+
+.m-katex-max .katex {
+    font-size: 1.22em;
+}
+
+.m-katex-small .katex {
+    font-size: 0.85em;
+}
+
+.m-katex-no-scroll .katex {
+    overflow: hidden !important;
+}
+/********/
+
+
+math {
+    display: block;
+    overflow-x: auto;
+    margin: auto;
+    max-width: 800px;
+    border: 1px solid blue;
+}
+
+
+h1 {
+    margin: 0px 0px 1em 0px;
+}
+
+h2 {
+    margin: 0.5em 0px 0.5em 0px;
+}
+
+h3 {
+    margin: 0.5em 0px 0.5em 0px;
+}
+
+.block {
+    overflow-x: auto;
+    margin: 2em 0px;
+    /*  background-color: beige;*/
+    padding: 0.5em;
+}
+
+    /***BLOCK - DEFINITION ***/
+    .block.b-definition {
+        border: 1px solid #626262;
+    }
+
+.b-definition:before {
+    /*  counter-increment: counter-definition;
+        content: "Definicja " counter(counter-definition) ". ";*/
+    content: "Definicja";
+    font-weight: bold;
+    /*border:1px solid red;*/
+    margin-right: 10px;
+    display: block;
+}
+
+/***BLOCK - EXAMPLE ***/
+.block.b-example {
+    border-top: 1px solid rgb(184, 184, 184);
+    border-bottom: 1px solid rgb(184, 184, 184);
+}
+
+.b-example:before {
+    /*  counter-increment: counter-example;
+        content: "Przykład " counter(counter-example) ". ";*/
+    content: "Zadanie.";
+    font-weight: bold;
+}
+
+/***BLOCK - PROOF ***/
+.block.b-proof {
+    border: 1px solid #a0a0a0;
+    font-size: 0.9em;
+    background-color: #f8f8f8;
+}
+
+.b-proof:before {
+    /*counter-increment: counter-theorem;
+    content: "Twierdzenie " counter(counter-theorem) ". ";
+    content: "Dowód: ";*/
+    content: "Dowód. " attr(data-title);
+    font-weight: normal;
+    font-style: italic;
+    padding-bottom: 0.5em;
+}
+
+
+/***BLOCK - PROOF ***/
+.block.b-theorem {
+    border: 1px solid #a0a0a0;
+    font-size: 0.9em;
+}
+
+.b-theorem:before {
+    /*counter-increment: counter-theorem;
+    content: "Twierdzenie " counter(counter-theorem) ". ";
+    content: "Dowód: ";*/
+    content: "Twierdzenie. " attr(data-title);
+    padding-bottom: 0.5em;
+    font-weight: bold;
+}
+
+
+
+
+/*************************************************************/
+/**********GENERAL MODYFICATORS*/
+.m-center {
+    text-align: center;
+}
+
+.m-no-margin-bottom {
+    margin-bottom: 0px !important;
+}
+
+.m-h-scroll {
+    overflow-x: auto;
+}
+
+
+@media (max-width:800px) {
+    .m-center {
+        text-align: left;
+    }
+}

@@ -1,0 +1,52 @@
+
+@using BlazorArticle
+
+@inject IParserArticle Parser
+
+@* @((MarkupString)Content) *@
+
+@if(_renderFragments is not null)
+{
+    @foreach (var fragment in _renderFragments)
+    {
+        switch (fragment)
+        {
+            case HtmlFragment html:
+                @((MarkupString)html.Html)
+                break;
+
+            case ComponentFragment component:
+                <DynamicComponent Type="component.type" Parameters="component.parameters" />
+                break;
+        }
+    }
+}
+
+
+@code{
+
+    /// <summary>
+    /// Provide content that will be parsing by BlazorArticle library
+    /// </summary>
+    [Parameter]
+    public string Content { get; set; }
+    /// <summary>
+    /// Set whether the final rendered result has HTML comments removed or not. (FALSE by default).
+    /// </summary>
+    [Parameter]
+    public bool RemoveComments { get; set; } = false;
+
+    List<ArticleFragment> _renderFragments { get; set; }
+
+
+    protected override async Task OnInitializedAsync()
+    {
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _renderFragments = Parser.Parse(Content, RemoveComments);
+
+    }
+
+}

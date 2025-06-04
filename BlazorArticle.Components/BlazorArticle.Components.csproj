@@ -1,0 +1,50 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+	
+  </PropertyGroup>
+
+	<PropertyGroup>
+		<!-- generate package -->
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<PackageId>BlazorArticle.Components</PackageId>
+		<Version>1.0.4-alpha</Version>
+		<Authors>Marian Witek (witM)</Authors>
+		<Description>.NET library with blazor components to parsing html article and rendering them with interactive dynamic components.</Description>
+		<!--<RepositoryUrl>https://github.com/twoj-login/twoj-repozytorium</RepositoryUrl>-->
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <Compile Remove="ExampleJsInterop.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="README.md" Pack="true" PackagePath="" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="ExampleJsInterop.cs" />
+	</ItemGroup>
+
+  <ItemGroup>
+    <SupportedPlatform Include="browser" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="9.0.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BlazorArticle\BlazorArticle.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="README.md" />
+  </ItemGroup>
+
+</Project>

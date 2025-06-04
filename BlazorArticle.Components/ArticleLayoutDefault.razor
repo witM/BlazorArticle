@@ -1,0 +1,47 @@
+﻿
+
+<div class="body">
+
+<!--top fixed (sticky) nav bar -->
+<div id="m-top" class="m-navbar-container navbar-shadow">
+    @if(Header is not null)
+    {
+         @Header   
+    }
+    <label id="m-sidebar-toggler" class="m-toc-toggler" onclick="BlazorArticle_ToggleArticleNavigation()"><i class="fas fa-bars"></i></label>
+</div>
+<!--end navbar -->
+
+<main class="m-main">
+    <div id="m-sidebar" class="m-sidebar">
+         @if(Sidebar is not null)
+         {
+            @Sidebar
+         } 
+    </div> 
+    <div class="m-page">
+       @Body
+    </div>
+</main>
+
+
+<footer class="m-footer-bottom">
+    @if(Footer is not null)
+    {
+         @Footer   
+    }
+</footer>
+
+</div>
+
+@code {
+
+    [Parameter]
+    public RenderFragment? Header{ get; set; }
+    [Parameter]
+    public RenderFragment? Sidebar{ get; set; }
+    [Parameter]
+    public RenderFragment Body{ get; set; }
+    [Parameter]
+    public RenderFragment? Footer{ get; set; }
+}

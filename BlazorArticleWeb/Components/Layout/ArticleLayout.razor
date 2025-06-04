@@ -1,0 +1,56 @@
+﻿@inherits LayoutComponentBase
+
+@using BlazorArticle.Components
+
+
+@*ArticleLayoutDefault is not needed to BlazorArticle components to work.*@
+
+
+<ArticleLayoutDefault>
+    <Header>
+        <nav class="m-navbar">
+            <section class="m-logo">
+                <div class="m-logo-screen">
+                    <a href="/">
+                        <img src="_content/BlazorArticle.Components/img/blazor_logo_yellow.png" />
+                        BlazorArticle
+                    </a>
+                </div>
+                <div class="m-logo-mobile">
+                    <a href="/">
+                        <img src="_content/BlazorArticle.Components/img/blazor_logo_yellow.png" />
+                    </a>
+                </div>
+            </section>
+            <section class="m-navigation">
+                <a class="me-2" href="/"><i class="fa-solid fa-arrow-left"></i></a> <!-- return to the list of article - not implemented yet -->
+                <button onclick="BlazorArticle_ScrollToTop();"><i class="fa-solid fa-arrows-up-to-line"></i></button>
+            </section>
+        </nav>
+    @*NOTE:Navigation toggler button for now is a part of the article layout component because of internal logic and parsing article as SSR,
+     *this may change if interactive server side rendering will improve - see BlazorArticle documentation
+    *@
+    </Header>
+    <Sidebar>
+        @*This is rendered from the page component*@
+        <SectionOutlet SectionName="sidebar-article" /> 
+    </Sidebar>
+    <Body>
+        @Body
+    </Body>
+    <Footer>
+        <section class="m-screen">
+            BlazorArticle - @DateTime.Now.Year
+        </section>
+        <section class="m-mobile">
+            BlazorArticle - @DateTime.Now.Year
+        </section>
+    </Footer>
+</ArticleLayoutDefault>
+
+
+
+
+@code {
+
+}

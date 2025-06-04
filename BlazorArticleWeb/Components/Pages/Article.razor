@@ -1,0 +1,83 @@
+﻿@layout BlazorArticleWeb.Components.Layout.ArticleLayout
+@page "/post/{ArticleId:int}"
+@using BlazorArticle.Components
+@*To see better prerendered results (in site source) in static side rendering set this to "false" - you don't see loading indicator without InteractiveServer rendering mode
+  Starting with .NET 10, the Persistent State mechanism will be more accessible and easier to use.
+*@
+@attribute [StreamRendering(true)] 
+
+@implements IDisposable
+
+<PageTitle>
+    @if(_isArticleLoaded)
+    {
+        @("Załadowany")
+    }
+</PageTitle>
+
+@if(!_isArticleLoaded)
+{
+    <div class="d-flex flex-column justify-content-center align-items-center" style="height:100%">
+        <img src="/img/spin_loading.gif" alt="loading article" />
+    </div>
+}
+else
+{
+    @*Renders css style in the head*@
+    <ArticleStyleContent Style="@ArticleLoader.ArticleStyle"  UseJavascript="true" IsDebug="false"/> 
+
+    <div class="page">
+        <article>
+            @*This component renders article exactly at place where it is with support of BlazorArticle parsing system,
+             *if you don't need this you can just use markupstring: @((MarkupString)string)
+            *@
+            <ArticleRenderer Content="@ArticleLoader.Article" RemoveComments="true"/>
+        </article>
+    </div>
+
+}
+
+ <SectionContent SectionName="sidebar-article">
+    @if(_isArticleLoaded)
+    {
+        <!-- sticky header is hardcoded as 50px height -->
+        <div class="sticky-top db-red" style="top:50px;">
+            @*This component is part of a website template for a fully customizable table of contents. Some solution of rendering TOC may become part of the BlazorArticle library in the future*@
+            <TableOfContent @rendermode="InteractiveServer" ArticleId="ArticleId" /> 
+        </div>
+
+    }
+</SectionContent> 
+
+
+
+
+@code {
+    [Inject]
+    public ArticleLoader ArticleLoader { get; set; }
+
+    [Parameter]
+    public int ArticleId{ get; set; }
+
+    bool _isArticleLoaded = false;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(1200);
+        _isArticleLoaded = true;
+
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+
+    }
+
+    public void Dispose()
+    {
+        int x = 10;
+    }
+
+
+}

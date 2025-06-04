@@ -1,0 +1,36 @@
+﻿
+
+@if(PartialName is null)
+{
+   @*  <a data-enhance-nav="@_isEnhancedNav.ToString().ToLower()" href="@($" /{AppService.Article.ArticlePageUrlName}/{Name}")" @onclick="OnLinkClicked">@Title</a> *@
+}
+else
+{
+    @* <a data-enhance-nav="@_isEnhancedNav.ToString().ToLower()" href="@($"/{AppService.Article.ArticlePageUrlName}/{Name}/{PartialName}")" @onclick="OnLinkClicked">@Title</a> *@
+
+}
+
+<a href="#">jakiś link</a>
+
+
+@code {
+    [Parameter]
+    public string Name { get; set; }    //needed
+    [Parameter] 
+    public string? PartialName{get;set;} //optional (for rendering partial article)
+    [Parameter]
+    public string Title { get; set; } //needed
+
+    bool _isEnhancedNav = false;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+
+    }
+
+    async Task OnLinkClicked()
+    {
+        //AppService.Article.SetBaseArticleUrl(Name, PartialName);
+    }
+}

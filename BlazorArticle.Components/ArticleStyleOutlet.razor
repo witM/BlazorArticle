@@ -1,0 +1,52 @@
+@inject BlazorArticle.IParserArticle Parser
+@inject BlazorArticle.Components.Services.ArticleHeadManager ArticleHeadManager
+@implements IDisposable
+
+@*NOTE: The <style> tag is always rendering for now due to problem with update styles in streaming mode and javascript usage for this *@
+
+
+@if(ArticleHeadManager.ArticleStyle != null)
+{
+    <style id="@ArticleHeadManager.ArticleStyleId" type="text/css">
+        @((MarkupString)ArticleHeadManager.ArticleStyle)
+    </style>
+}
+else
+{
+    <style id="@ArticleHeadManager.ArticleStyleId" type="text/css"></style>
+} 
+
+@* @if (ArticleHeadManager.ArticleFragment != null)
+{
+    <style>
+        @(ArticleHeadManager.ArticleFragment)
+    </style>
+    
+} *@
+
+@code {
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        ArticleHeadManager.OnFragmentChanged += async () => await InvokeAsync(UpdateStyles);
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        int x = 10;
+    }
+
+    private async Task UpdateStyles()
+    {
+        // Pobieramy style z serwisu
+        //ArticleStyles = HeadArticleState.GetStyles();
+        StateHasChanged(); // Aktualizujemy stan UI
+    }
+
+
+    public void Dispose()
+    {
+        ArticleHeadManager.OnFragmentChanged -= async () => await InvokeAsync(UpdateStyles);
+    }
+}

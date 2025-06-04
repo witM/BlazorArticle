@@ -1,0 +1,29 @@
+﻿@inject IJSRuntime JsRuntime
+@inject NavigationManager Navigation
+@* @inject AppStateService AppState *@
+
+<h3 class="text-center pt-5">Table of content</h3>
+
+<div @ref="Ref_Toc" id="toc-container" class="p-4 pe-1" ></div>
+
+@code {
+
+    [Parameter]
+    public int ArticleId{ get; set; }
+
+    ElementReference Ref_Toc{ get; set; }
+
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        //string relativeUrl = _partialCurrent is null ? $"{AppService.UrlArticleRouteName}/{ArticleName}" : $"{AppService.UrlArticleRouteName}/{ArticleName}/{_partialCurrent.Name}";
+        //string baseUri = NavigationManager.ToAbsoluteUri(relativeUrl).ToString();
+        /////////////////////////////////////////////////
+        string baseUri = Navigation.Uri;
+        //WARNING:For now we rendering only h2, h3, h4 headers in toc (h1 is used as article title - see tocbot documentation)
+        await JsRuntime.InvokeVoidAsync("JS_RenderTOC", baseUri, "#toc-container", ".page");
+        await JsRuntime.InvokeVoidAsync("JS_RenderMathInElement", Ref_Toc);
+    }
+
+}

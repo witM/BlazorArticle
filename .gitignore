@@ -1,0 +1,22 @@
+
+## Binaries
+bin/
+obj/
+
+## User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+## Visual Studio working folder
+.vs/
+
+## Build results
+*.dll
+*.exe
+*.app
+*.pdb
+
+## Others
+##TestResults/
