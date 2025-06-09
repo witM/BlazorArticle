@@ -1,6 +1,6 @@
 ﻿@using BlazorArticle
 @using BlazorArticle.Components
-
+@using System.Runtime.InteropServices;
 @inject BlazorArticle.IParserArticle Parser
 @inject BlazorArticle.Components.Services.ArticleHeadManager ArticleHeadManager
 
@@ -9,7 +9,17 @@
 
 @if(UseJavascript)
 {
-    <_ArticleStyleJavascript @rendermode="InteractiveServer" Style="@ParsedStyle" />
+    
+
+    if (RuntimeInformation.IsOSPlatform(OSPlatform.Create("BROWSER")))
+    {
+        <_ArticleStyleJavascript Style="@ParsedStyle" />
+    }
+    else
+    {
+        <_ArticleStyleJavascript @rendermode="InteractiveServer" Style="@ParsedStyle" />
+    }
+
     
 }
 
@@ -36,10 +46,10 @@
     public bool UseJavascript { get; set; } = false;
 
     /// <summary>
-    /// Decides whether the style has removed the white spaces and comments (TRUE by default).
+    /// Decides whether the style has removed the white spaces and comments (FALSE by default).
     /// </summary>
     [Parameter]
-    public bool IsDebug { get; set; } = true;
+    public bool IsCompressed { get; set; } = false;
 
     string? ParsedStyle{ get; set; }
 
@@ -61,7 +71,7 @@
     protected override async Task OnParametersSetAsync()
     {
         //parsing the style for the outlet
-        ParsedStyle = Style is null ? Style : Parser.ParseStyle(Style, !IsDebug);
+        ParsedStyle = Style is null ? Style : Parser.ParseStyle(Style, IsCompressed);
 
         if(IsPrerendered)
         {

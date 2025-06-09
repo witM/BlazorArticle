@@ -25,7 +25,7 @@ builder.Services.AddBlazorArticle();
 builder.Services.AddBlazorArticleStyle();
 
 /************************************************************/
-
+int x = 10;
 
 
 var app = builder.Build();

@@ -1,7 +1,7 @@
 
 # BlazorArticle
 
-The **BlazorArticle** package is experimental package for .net for supporting rendering parsed article from database (html article currently). Within an article you can render interactive blazor components. This is all SEO friendly by rendering article with components on server side. The articles may have different styles also rendered from database.
+The **BlazorArticle.Components** package is experimental package for .net for supporting rendering parsed article from database (html article currently). Within an article you can render interactive blazor components. This is all SEO friendly by rendering article with components on server side. The articles may have different styles also rendered from database. It contains blazor components and javascript functions to support article rendering.
 
 The library will be good for bloggers and other educational content.
 

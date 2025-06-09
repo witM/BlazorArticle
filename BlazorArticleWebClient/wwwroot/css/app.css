@@ -113,6 +113,19 @@ code {
     text-align: start;
 }
 
+/** DEBUGGING **/
+
+.db-red{
+    border:1px solid red;
+}
+
+.db-blue{
+    border:1px solid blue;
+}
+
+.db-yellow{
+    border:1px solid yellow;
+}
 
 
 /**** HARD CODED OVERRIDDED STYLE FOR ARTICLE TOC ***/

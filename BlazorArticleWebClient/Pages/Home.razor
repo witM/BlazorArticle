@@ -1,17 +1,61 @@
 ﻿@inherits PageBase
 @page "/"
 
-<PageTitle>Home</PageTitle>
+<PageTitle>Select article and style</PageTitle>
 
-@*WARNING: There is some exception after you change the page where is rendering math (KaTeX formulas) if the formula is not enclosed in HTML tags.*@
+@inject NavigationManager Navigation
 
-<h1>Hello, world!</h1>
 
-<p>Welcome to your new app.</p>
-@*
-definition of quadratic equation: \$ax^2+bx+c=0\$. - causing the exception
+<div style="padding-top:8em;">
+    <div class="container db-red;">
+        <div class="row">
+            <div class="col col-md-6 mx-auto" style="max-width:500px;">
+                <div style="border:2px solid rgb(20, 20, 20); padding:2em;">
+                        <div class="mb-4">
+                            <section class="mb-3">
+                                <small class="form-text text-muted mb-4">Give article name and its style name based on your configuration. Click 'Edit' to view the article.</small>
+                            </section>
+                        <section>
+                            <small class="form-text text-muted mb-4">When you don't set each one then by default:</small><br>
+                            <small><b>Name:</b> @_default.ArticleName</small><br />
+                            <small><b>Style:</b> @_default.StyleName</small><br />
+                        </section>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label>Article Name</label>
+                            <input type="text" class="form-control"  placeholder="Enter article name" @bind="_data.ArticleName" />
+                        </div>
+                        <div class="form-group mb-3">
+                            <label>Style Name</label>
+                        <input type="text" class="form-control" placeholder="enter style name" @bind="_data.StyleName">
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <button onclick="@OnEditArticle" type="submit" class="btn btn-primary">Edit</button>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-*@
 
-<p>definition of quadratic equation: \$ax^2+bx+c=0\$.</p>
+@code{
+    class ArticleData
+    {
+        public string ArticleName { get; set; }
+        public string StyleName{ get; set; }
+    }
 
+
+    ArticleData _data = new ArticleData();
+    ArticleData _default = new ArticleData() { ArticleName = "quadratic_equation", StyleName = "math" };
+
+    async Task OnEditArticle()
+    {
+        _data.ArticleName = string.IsNullOrEmpty(_data.ArticleName) ? _default.ArticleName : _data.ArticleName;
+        _data.StyleName = string.IsNullOrEmpty(_data.StyleName) ? _default.StyleName : _data.StyleName;
+
+
+        Navigation.NavigateTo($"/postview/{_data.ArticleName}?style={_data.StyleName}", false);
+    }
+}

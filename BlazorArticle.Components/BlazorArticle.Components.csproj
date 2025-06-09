@@ -11,10 +11,14 @@
 		<!-- generate package -->
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<PackageId>BlazorArticle.Components</PackageId>
-		<Version>1.0.4-alpha</Version>
+		<Version>1.0.6-alpha</Version>
 		<Authors>Marian Witek (witM)</Authors>
 		<Description>.NET library with blazor components to parsing html article and rendering them with interactive dynamic components.</Description>
-		<!--<RepositoryUrl>https://github.com/twoj-login/twoj-repozytorium</RepositoryUrl>-->
+		<!-- other metadata -->
+		<PackageProjectUrl>https://github.com/witM/BlazorArticle</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/witM/BlazorArticle</RepositoryUrl>
+		<PackageIcon>logo.png</PackageIcon>
+		<!--reademe file and license -->
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 	</PropertyGroup>
@@ -25,6 +29,7 @@
 
 	<ItemGroup>
 		<None Include="README.md" Pack="true" PackagePath="" />
+		<None Include="logo.png" Pack="true" PackagePath="" />
 	</ItemGroup>
 
 	<ItemGroup>

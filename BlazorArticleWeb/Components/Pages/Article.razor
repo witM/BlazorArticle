@@ -23,15 +23,15 @@
 }
 else
 {
-    @*Renders css style in the head*@
-    <ArticleStyleContent Style="@ArticleLoader.ArticleStyle"  UseJavascript="true" IsDebug="false"/> 
+    @*Renders css style in the head - with StreamRendering set to false you can set "UseJavascript" to false *@
+    <ArticleStyleContent Style="@ArticleLoader.ArticleStyle"  UseJavascript="true" IsCompressed="true"/> 
 
     <div class="page">
         <article>
             @*This component renders article exactly at place where it is with support of BlazorArticle parsing system,
              *if you don't need this you can just use markupstring: @((MarkupString)string)
             *@
-            <ArticleRenderer Content="@ArticleLoader.Article" RemoveComments="true"/>
+             <ArticleRenderer Content="@ArticleLoader.Article" RemoveComments="true"/> 
         </article>
     </div>
 

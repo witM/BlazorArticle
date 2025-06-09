@@ -1,0 +1,111 @@
+﻿<!-- https://localhost:44346/ArticleEngine/Math/logarithm?style=s_math -->
+
+<h1>Logarithm </h1>
+
+<h2 id="1">Calculating Logarithms</h2>
+
+<div class="block b-definition">
+    <p>The logarithm of a number \$b > 0\$ with base \$a > 0\$ and \$a \neq 1\$ is defined as the number \$x\$ such that \$a^x = b\$:</p>
+    \[  \log_a(b) = x \Leftrightarrow a^x = b  \]
+    <p style="margin-bottom:0px;">The number \$b\$ is called the <b>antilogarithm</b>, and the number \$a\$ is called the <b>base of the logarithm</b>.</p>
+</div>
+
+<p>To calculate a logarithm \$\log_a(b)\$, we look for the number \$x\$ such that raising \$a\$ to the power of \$x\$ equals \$b\$.</p>
+<p>A <b>common logarithm</b> is a logarithm with base \$a = 10\$, and is written in short form as: \$\log_{10}(b) = \log(b)\$.</p>
+
+<p>Below are examples of calculating logarithms from the definition.</p>
+
+<div class="example">
+    <div class="header"></div>
+    <div class="content">Calculate \$\displaystyle{\log_2(8)}\$</div>
+    <div class="answer">
+        <p style="margin-bottom:0px;">Let \$\log_2(8) = x\$, then we are looking for such an \$x\$ that:</p>
+        \[ 2^x = 8 \]
+        <p style="margin-bottom:0px;">We try to express both sides using the same base.</p>
+        \[ 2^x = 2^3 \]
+        <p style="margin-bottom:0px;">From this we get:</p>
+        \[ x = 3 \]
+        <p>So, \$\log_2(8) = 3\$.</p>
+    </div>
+</div>
+
+<div class="example">
+    <div class="header"></div>
+    <div class="content">Calculate \$\log_3(9)\$</div>
+    <div class="answer">
+        <p style="margin-bottom:0px;">Let \$\log_3(9) = x\$, then we are looking for such an \$x\$ that:</p>
+        \[ 3^x = 9 \]
+        <p style="margin-bottom:0px;">We try to express both sides using the same base.</p>
+        \[ 3^x = 3^2 \]
+        <p style="margin-bottom:0px;">So</p>
+        \[\begin{aligned} x = 2 \end{aligned}\]
+        <p>We get \$\log_3(9) = 2\$.</p>
+    </div>
+</div>
+
+<div class="example solve">
+    <div class="header"></div>
+    <div class="content">Calculate \$\displaystyle{\log_{16}\left(\frac{1}{4}\right)}\$</div>
+    <div class="answer">
+        <p style="margin-bottom:0px;">Let \$\log_{16}\left(\frac{1}{4}\right) = x\$, then we are looking for such an \$x\$ that:</p>
+        \[ 16^x = \frac{1}{4} \]
+        <p style="margin-bottom:0px;">We try to express both sides using the same base.</p>
+        \[\begin{aligned} \left(4^2\right)^x &= 4^{-1} \end{aligned}\]
+        <p style="margin-bottom:0px;">Using the power rule, we multiply the exponents:</p>
+        \[\begin{aligned} 4^{2x} = 4^{-1} \end{aligned}\]
+        <p style="margin-bottom:0px;">So</p>
+        \[\begin{aligned} 2x &= -1 \\ x &= -\frac{1}{2} \end{aligned}\]
+        <p>We get \$\displaystyle{\log_{16}\left(\frac{1}{4}\right) = -\frac{1}{2}}\$.</p>
+    </div>
+</div>
+
+<div class="example solve">
+    <div class="header"></div>
+    <div class="content">Calculate \$\displaystyle{\log_{\sqrt{2}}(64)}\$</div>
+    <div class="answer">
+        <p style="margin-bottom:0px;">Let \$\log_{\sqrt{2}}(64) = x\$, then we are looking for such an \$x\$ that:</p>
+        \[\begin{aligned} \left(\sqrt{2}\right)^x &= 64 \\ \left(2^{\frac{1}{2}}\right)^x &= 2^6 \\ 2^{\frac{1}{2}x} &= 2^6 \end{aligned}\]
+        <p style="margin-bottom:0px;">So</p>
+        \[\begin{aligned} \frac{1}{2}x &= 6 \\ x &= 12 \end{aligned}\]
+        <p>We get \$\log_{\sqrt{2}}(64) = 12\$.</p>
+    </div>
+</div>
+
+<div class="example solve margin">
+    <div class="header"></div>
+    <div class="content">Calculate \$\displaystyle{\log\left(\frac{1}{1000}\right)}\$</div>
+    <div class="answer">
+        <p style="margin-bottom:0px;">Let \$\log\left(\frac{1}{1000}\right) = x\$, then we are looking for such an \$x\$ that:</p>
+        \[\begin{aligned} 10^x &= \frac{1}{1000} \\ 10^x &= 1000^{-1} \\ 10^x &= \left(10^3\right)^{-1} \\ 10^x &= 10^{-3} \end{aligned}\]
+        <p style="margin-bottom:0px;">So</p>
+        \[\begin{aligned} x = -3 \end{aligned}\]
+        <p>We get \$\log\left(\frac{1}{1000}\right) = -3\$.</p>
+    </div>
+</div>
+
+
+<h2 id="2">Changing the Base of a Logarithm</h2>
+
+<div class="block b-theorem">
+    <p>The following formula allows us to convert a logarithm with base \$a\$ into an expression using a logarithm with base \$c\$.</p>
+    <div style="font-size:1.1em;">
+        \[ \log_a(b) = \frac{\log_c(b)}{\log_c(a)} \]
+    </div>
+</div>
+
+<p>We can use this formula to approximate an irrational logarithm using a calculator. Most calculators compute base-10 (common) logarithms.</p>
+
+
+<div class="example solve margin">
+    <div class="header"></div>
+    <div class="content">Calculate \$\displaystyle{\log_7(9)}\$</div>
+    <div class="answer">
+        <p style="margin-bottom:0px;">Using the base change formula, we convert the base to \$10\$:</p>
+        \[\begin{aligned} \log_7(9) = \frac{\log_{10}(9)}{\log_{10}(7)} \end{aligned}\]
+        <p style="margin-bottom:0px;">Using a calculator, we approximate \$\log_{10}(9)\$ and \$\log_{10}(7)\$ to 4 decimal places:</p>
+        \[\begin{aligned} \frac{\log(9)}{\log(7)} \approx \frac{0.9542}{0.8451} \end{aligned}\]
+        <p style="margin-bottom:0px;">Then, we calculate the final result (to 4 decimal places):</p>
+        \[\begin{aligned} \frac{0.9542}{0.8451} = 1.1291 \end{aligned}\]
+        <p style="margin-bottom:0px;">So, \$\displaystyle{ \log_7(9) \approx 1.1291 }\$.</p>
+    </div>
+</div>

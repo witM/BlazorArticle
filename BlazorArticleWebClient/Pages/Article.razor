@@ -1,10 +1,13 @@
 ﻿@inherits PageBase
 @layout BlazorArticleWebClient.Layout.ArticleLayout
 
-@page "/postview"
+@page "/postview/"
+@page "/postview/{ArticleName}"
+
 @using BlazorArticle.Components
 @using BlazorArticleWebClient.Services
 @using Microsoft.AspNetCore.Components.Sections
+
 @*To see better prerendered results (in site source) in static side rendering set this to "false" - you don't see loading indicator without InteractiveServer rendering mode
   Starting with .NET 10, the Persistent State mechanism will be more accessible and easier to use.
 *@
@@ -14,17 +17,17 @@
 
 @inject NavigationManager Navigation
 @inject IHttpClientFactory ClientFactory
-
+@inject IOptions<AppConfig> Config
 
 
 <PageTitle>
-    @if(_isArticleLoaded)
+    @if(Layout.IsArticleLoaded)
     {
         @("article loaded")
     }
 </PageTitle>
 
-@if(!_isArticleLoaded)
+@if(!Layout.IsArticleLoaded)
 {
     <div class="d-flex flex-column justify-content-center align-items-center" style="height:100%">
         <img src="/img/spin_loading.gif" alt="loading article" />
@@ -32,22 +35,28 @@
 }
 else
 {
-    @*Renders css style in the head*@
-   <ArticleStyleContent Style="@_articleStyleContent"  UseJavascript="false" IsDebug="false"/>
+    @*Renders css style in the head - In Blazor WebAssembly use "UseJavascript" parameter is optional *@
+   <ArticleStyleContent Style="@_articleData.ContentStyle"  UseJavascript="false" IsCompressed="false"/>
 
-    <div class="page" @key="_articleContent">
+
+   @*
+       @key is needed for two reasons:
+       1)there are some javascript DOM interlop after article has been rendered at server side
+       2)there are (maybe) rendering different types of render fragments in the loop by "ArticleRenderer" component
+   *@
+    <div class="page" @key="@_articleData.Id">
         <article>
             @*This component renders article exactly at place where it is with support of BlazorArticle parsing system,
              *if you don't need this you can just use markupstring: @((MarkupString)string)
             *@
-           <ArticleRenderer Content="@_articleContent" RemoveComments="false"/>
+            <ArticleRenderer Content="@_articleData.Content" RemoveComments="false"  /> 
         </article>
     </div>
 
 }
 
  <SectionContent SectionName="sidebar-article">
-    @if(_isArticleLoaded)
+    @if(Layout.IsArticleLoaded)
     {
          <!-- sticky header is hardcoded as 50px height -->
         <div class="sticky-top" style="top:50px;">
@@ -63,77 +72,106 @@ else
 
 
 @code {
-    [Inject]
-    public ArticleLoader ArticleLoader { get; set; }
+
+    class ArticleData
+    {
+        public string Id{ get; set; }
+        public string Content{ get; set; }
+        public string ContentStyle{ get; set; }
+    }
 
     [CascadingParameter]
-    public ArticleLayout.LayoutData ArticleLayoutData{ get; set; }
+    public ArticleLayout Layout{ get; set; }
 
     [Parameter]
-    public string ArticleName{ get; set; } // not used yet
+    public string? ArticleName { get; set; } 
+
+    [SupplyParameterFromQuery(Name = "style")]
+    private string? StyleName{ get; set; }
 
     TableOfContent Ref_TOC{ get; set; }
 
-    bool _isArticleLoaded = false;
-    string? _articleContent;
-    string? _articleStyleContent;
+    ArticleData _articleData;
 
 
     protected override async Task OnInitializedAsync()
     {
-        ArticleLayoutData.RefreshAllRequested += OnRefreshAll;
+        Layout.RefreshAllRequested += OnRefreshAll;
+        Layout.RefreshStyle += OnRefreshStyle;
 
-        _articleContent = await GetArticleContentAsync("quadratic_equation");
-        _articleStyleContent = await GetArticleStyleContentAsync("math");
-        _isArticleLoaded = true;
 
     }
 
     protected override async Task OnParametersSetAsync()
     {
+        // if is not set in url then use this by default
+        ArticleName ??= "quadratic_equation";
+        StyleName ??= "math";
+        //////////////
+
+        if(!Layout.IsArticleLoaded)
+        {
+            _articleData = new ArticleData();
+            _articleData.Id = Guid.NewGuid().ToString();
+            _articleData.Content = await GetArticleContentAsync(ArticleName);
+            _articleData.ContentStyle = await GetArticleStyleContentAsync(StyleName);
+            Layout.IsArticleLoaded = true;
+        }
 
     }
 
 
     async Task OnRefreshAll()
     {
-        //_isArticleLoaded = false;
-        _articleContent = await GetArticleContentAsync("quadratic_equation");
-        _articleStyleContent = await GetArticleStyleContentAsync("math");
-        //_isArticleLoaded = true;
-        //await Task.Run(() => StateHasChanged());
+        //WARNING:The order of assignment is important if you  make new ArticleData because it may cause rerendering compoent <ArticleRenderer> with null content.
+        //Make sure you first create new temp instance and then assign _articleData = temp;
+        ///
+        // WARNING: The Content parameter of <ArticleRenderer> changes after 'await',
+        // so assigning _articleContent like shown below ensures the component rerenders only once and correctly.
+        var data = new ArticleData();
+        data.Id = Guid.NewGuid().ToString();
+        data.Content =  await GetArticleContentAsync(ArticleName);
+        data.ContentStyle = await GetArticleStyleContentAsync(StyleName);
+        _articleData = data;
         await InvokeAsync(StateHasChanged);
         Ref_TOC.Refresh();
+    }
+
+    async Task OnRefreshStyle(string styleName)
+    {
+        _articleData.ContentStyle = await GetArticleStyleContentAsync(styleName);
+        StateHasChanged();
     }
 
 
     public void Dispose()
     {
-        ArticleLayoutData.RefreshAllRequested -= OnRefreshAll;
+        Layout.RefreshAllRequested -= OnRefreshAll;
+        Layout.RefreshStyle -= OnRefreshStyle;
+
     }
 
 
     async Task<string?> GetArticleContentAsync(string articleName)
     {
-        string ArticlesBasePath = "ARTICLES";
+        string ArticlesBasePath = Config.Value.SourceArticle;
         string siteBaseUrl = Navigation.BaseUri;
 
-        var t = DateTime.Now.Ticks; // this parameter is added to the url for ensuring there's no caching
 
         using (var client = ClientFactory.CreateClient("default"))
         {
             string url = $"{siteBaseUrl}{ArticlesBasePath}/{articleName}.html";
-           
+
             return  await client.GetStringAsync(url);
 
         }
-        
+
     }
 
 
     async Task<string?> GetArticleStyleContentAsync(string styleName)
     {
-        string ArticlesStyleBasePath = "ARTICLES_CSS";
+        string ArticlesStyleBasePath = Config.Value.SourceArticleStyle;
         string siteBaseUrl = Navigation.BaseUri;
 
         using (var client = ClientFactory.CreateClient("default"))

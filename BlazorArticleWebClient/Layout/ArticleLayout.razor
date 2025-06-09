@@ -3,6 +3,7 @@
 @using BlazorArticle.Components
 @using Microsoft.AspNetCore.Components.Sections
 
+@inject NavigationManager Navigation
 
 @*ArticleLayoutDefault is not needed to BlazorArticle components to work.*@
 
@@ -25,6 +26,10 @@
                 </div>
             </section>
             <section class="m-navigation">
+                <!-- style selection -->
+
+                <input class="form-control" value="@(_styleName ?? "#")" @onchange="HandleStyleChange">
+                <!-- ################################################ -->
                 <a class="me-2" href="/"><i class="fa-solid fa-arrow-left"></i></a> <!-- return to the list of article - not implemented yet -->
                 <!-- refresh te content of the article and article css style -->
                 <button @onclick="RefreshAll"><i class="fa-solid fa-arrows-rotate"></i></button>
@@ -41,9 +46,9 @@
         <SectionOutlet SectionName="sidebar-article" /> 
     </Sidebar>
     <Body>
-        <CascadingValue Value="@_data">
+         <CascadingValue Value="@this" IsFixed="true">
             @Body
-        </CascadingValue>
+        </CascadingValue> 
     </Body>
     <Footer>
         <section class="m-screen">
@@ -61,19 +66,50 @@
 @code {
 
 
-    public class LayoutData
+
+    string? _styleName;
+
+
+    //Refresh the article and style
+    public Func<Task> RefreshAllRequested { get; set; }
+    //Refresh the article style. String is a new style name
+    public Func<string, Task> RefreshStyle{ get; set; }
+    public bool IsArticleLoaded{ get; set; }
+
+    protected override async Task OnInitializedAsync()
     {
-        //this maybe in some global state in the future
-        public Func<Task> RefreshAllRequested { get; set; }
+
     }
 
-    LayoutData _data = new LayoutData();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        //set the current style name in the text area of style box
+        var uri = new Uri(Navigation.Uri);
+        var query = System.Web.HttpUtility.ParseQueryString(uri.Query);
+        _styleName = query["style"];
+
+    }
 
 
     async Task RefreshAll()
     {
-        //AppService.Article.NotifyRefreshAll(this);
-        await _data.RefreshAllRequested.Invoke();
+        await (RefreshAllRequested?.Invoke() ?? Task.CompletedTask);
+    }
+
+
+    private async Task HandleStyleChange(ChangeEventArgs e)
+    {
+        _styleName = e.Value?.ToString();
+        ///
+        var uri = new Uri(Navigation.Uri);
+        var baseUri = uri.GetLeftPart(UriPartial.Path); 
+
+        var newUri = $"{baseUri}?style={Uri.EscapeDataString(_styleName ?? "")}";
+
+        //IsArticleLoaded = false;
+        Navigation.NavigateTo(newUri, forceLoad: false);
+        await (RefreshStyle?.Invoke(_styleName) ?? Task.CompletedTask);
 
     }
 
