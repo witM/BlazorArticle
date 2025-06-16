@@ -10,7 +10,7 @@ namespace BlazorArticle.Components.Services
     public class ArticleHeadManager
     {
         /// <summary>
-        /// This is the of the <style> element that "ArticleStyleOutlet" component renders.
+        /// This is the id of the <style> element that "ArticleStyleOutlet" component renders.
         /// </summary>
         public string ArticleStyleId { get; private set; }
 

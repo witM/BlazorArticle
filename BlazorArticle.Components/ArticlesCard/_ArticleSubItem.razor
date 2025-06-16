@@ -1,0 +1,84 @@
+﻿@inject NavigationManager Navigation
+@inject IJSRuntime JS
+
+@* 
+<section class="d-flex subitem ">
+    <div class="left-side-box ">
+        <!-- <div class="item-blank"></div> -->
+        <div class="item-blank @(_isColumnBorderSeparator ? "toggle-border-column-separator" : "")  @(_lastSubitem ? "toggle-border" : "")"></div>
+        <div class="item-order" style="background-color:@Styles.BackgroundOrder; color:@Styles.ColorOrderHeader;">@((ItemOrder).ToString() + "." + (SubItemOrder).ToString()) </div>
+    </div>
+    <div class="item-content @(ArticlePartial.IsMarked ? "marked" : "") @(IsAdmin ? "m-admin-item-content" : "")">
+      
+        <a class="@(!ArticlePartial.IsActive ? "notActive" : "")"
+        style="@_hoverStyle"
+        @onmouseover="OnMouseOver"
+        @onmouseout="OnMouseOut"
+        @onpointerdown="@(() => SetReturnUrl())"
+        href="@_link">
+        <i class="bi bi-arrow-right-circle icon" style="display:none;"></i>@ArticlePartial.Title
+        </a>
+    </div>
+</section> *@
+
+@code {
+    //[CascadingParameter]
+    //CardArticle.ContextData ContextData { get; set; }
+    //[CascadingParameter]
+    //public CardArticle.ConfigGridData ConfigData { get; set; }
+    //[Parameter]
+    //public DAL.Data.Entity_ArticlePartial ArticlePartial { get; set; }
+    //[CascadingParameter]
+    //public CardArticle.CStyles Styles { get; set; }
+    [Parameter]
+    public int ItemOrder { get; set; }
+    [Parameter]
+    public int SubItemOrder { get; set; }
+    [Parameter]
+    public bool IsAdmin { get; set; } = false;
+
+    string _link;
+    bool _lastSubitem = false;
+    bool _isColumnBorderSeparator = false;
+
+    string _hoverStyle = "";
+
+
+    protected override async Task OnParametersSetAsync()
+    {
+        // string returnUrl = Navigation.ToBaseRelativePath(Navigation.Uri);
+        // //_link = string.Format("/article/{0}/{1}?returnUrl={2}", ArticlePartial._Article.Name, ArticlePartial.Name, returnUrl);
+        // _link = $"/{ConfigData.BaseArticleUrl}/{ArticlePartial._Article.Name}/{ArticlePartial.Name}";
+        // //render "toggle-border-column-separator" at the last itme in the left column at last subitem (if there is two column mode)
+        // _isColumnBorderSeparator = (ContextData.IsTwoColumnMode) && (ContextData.CategoryNumberShowed > 1) && (ContextData.LastLeftColumnItemIndex + 1 == ItemOrder) && (ContextData.LastLeftColumnSubitemIndex + 1 == SubItemOrder);
+
+        // //render "toggle-border" only in last sub-item for each item except the last item for each column
+        // _lastSubitem = ((ItemOrder < ContextData.LastLeftColumnItemIndex +1) && (SubItemOrder == ArticlePartial._Article._Partials.Count)) ||
+        //                 ((ItemOrder > ContextData.LastLeftColumnItemIndex+1
+        //                     && ItemOrder < ContextData.CategoryNumberShowed
+        //                     && SubItemOrder == ArticlePartial._Article._Partials.Count));
+
+    }
+
+    override protected async Task OnInitializedAsync()
+    {
+
+    }
+
+    private async Task SetReturnUrl()
+    {
+        await JS.InvokeVoidAsync("sessionStorage.setItem", "returnUrl", Navigation.Uri);
+    }
+
+
+    private void OnMouseOver()
+    {
+        //_hoverStyle = $"background-color: {Styles.BackgroundHoverItemLink};";
+    }
+
+    private void OnMouseOut()
+    {
+        _hoverStyle = ""; // Usunięcie nadpisanego stylu, wraca do CSS
+    }
+
+}

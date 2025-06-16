@@ -1,10 +1,13 @@
 
-using BlazorArticleWeb.Components;
-
-using BlazorArticle.Components.Services;
-
-using BlazorArticleWeb.Services;
 using BlazorArticle;
+using BlazorArticle.Components.Services;
+using BlazorArticleWeb.Components;
+using BlazorArticleWeb.Services;
+using BlazorArticleWeb.Data;
+//
+using Microsoft.Extensions.Configuration;
+using Microsoft.EntityFrameworkCore;
+
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,18 +17,24 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
 /*** APPLICATION WEB SERVICES ***/
-//test
-builder.Services.AddSingleton<ArticleLoader>();
 builder.Services.AddScoped<AppStateService>();
+builder.Services.AddScoped<ArticleProviderSite>();
 /************************************************************/
 
 /*** BLAZOR ARTICLE SERVICES ***/
 builder.Services.AddBlazorArticle();
 //manage the head tag depended from article style
 builder.Services.AddBlazorArticleStyle();
+//register default markers to be used in articles
+builder.Services.AddBlazorArticleDefaultMarkers();
 
 /************************************************************/
-int x = 10;
+
+string? connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlite(connectionString));
+
 
 
 var app = builder.Build();

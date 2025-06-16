@@ -1,12 +1,39 @@
 ﻿@page "/"
 
-<PageTitle>Home</PageTitle>
+@using BlazorArticle.Components.ArticlesCard
 
-<h1>Hello, world!</h1>
+@rendermode InteractiveServer
 
-<p>You can solve quadratic equation if \$\Delta\ge 0 \$. There is \$\Delta = b^2-4ac \$.</p>
+@inject ApplicationDbContext Context
 
-<p>If \$x\$ is solution to the quadratic equation \$ax^2+bx+c=0\$ and \$a\neq 0\$ then formula for \$x\$ is:</p>
-\[ x=\frac{-b\pm \sqrt{\Delta}}{2a}  \]
+<PageTitle>Articles</PageTitle>
 
-Welcome to your new app.
+@if(_isArticleLoaded)
+{
+    <div class="container">
+        <div class="row">
+            <div class="col col-md-6">
+                <CardArticle Articles="_articles">
+                    <TemplateHeader>
+                        <h4 class="text-center mb-0">List of articles</h4>
+                    </TemplateHeader>
+                    <TemplateLink><a href="/post/@context.Name">@context.Name</a></TemplateLink>
+                </CardArticle>
+            </div>
+        </div>
+    </div>
+}
+
+
+@code{
+    bool _isArticleLoaded;
+    List<ModelArticle> _articles;
+
+    protected async override Task OnInitializedAsync()
+    {
+        _articles = await Context.Articles.ToListAsync();
+        _isArticleLoaded = true;
+
+    }
+
+}

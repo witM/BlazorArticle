@@ -1,0 +1,58 @@
+﻿
+/* SUB-ITEM */
+.subitem-box {
+}
+
+    .subitem-box .subitem {
+    }
+
+    .subitem-box .item-order {
+        /* border-top:1px solid rgba(0, 0, 0, 0.445); */
+        border-left: none;
+    }
+
+        .subitem-box .item-order:last-of-type {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+        }
+
+
+
+    .subitem-box .item-content {
+    }
+
+        .subitem-box .item-content a {
+            padding-left: 20px;
+            font-size: 0.9em;
+            
+        }
+
+.subitem.notActive {
+}
+
+.subitem.notActive .item-content a {
+        cursor: pointer;
+        pointer-events: none;
+        opacity: 0.5;
+        box-shadow: none;
+    }
+
+/*MARKED ARTICLES (SPECIAL)*/
+
+item-content.marked{
+
+
+}
+
+.item-content.marked a {
+    font-weight: 600;
+}
+
+.item-content.marked a .icon{
+	display:block !important;
+    padding-right:1em;
+    color:rgba(223, 12, 12, 0.904);
+    /* color:rgba(0, 84, 209, 0.904); */
+    font-weight:500;
+    /* background-color:red; */
+
+}

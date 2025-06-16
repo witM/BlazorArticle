@@ -1,0 +1,5 @@
+
+[VERSION 1.0.0]
+- rendering article css article style in given playce: outlet component (compressed code or note)
+	- prerendered or using style rendering by client side, javascript built internal logic
+- rendering parsed html article in given place by <ArticleRenderer> component. Article is rendering as render fragments with see belowe dynamic interactive blazor components within. 

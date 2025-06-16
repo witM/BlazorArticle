@@ -1,0 +1,147 @@
+﻿@inject NavigationManager Navigation
+@inject IJSRuntime JS
+
+@typeparam TItem
+
+@{
+
+}
+
+<!--ITEM -->
+<div class="box-item ">
+    <!--this item is hightlighted !!! -->
+    <div class="d-flex item" style="">
+        <div class="left-side-box">
+            <div class="item-order" style="background-color:@Styles.BackgroundOrder; color:@Styles.ColorOrderHeader;">@(ItemOrder)</div>
+            <div class="item-button @(_expandToggler ? "active" : "")"
+                 style="background-color:@(_expandToggler? Styles.BackgroundButtonActive: Styles.BackgroundOrder)">
+             @*    @if (Article._Partials.Count > 0 && (Article.IsPartialsActive || _isAdmin))
+                {
+                    <button class="" @onclick=ToggleSubitem><i class="fas fa-angle-@btn_arrow"></i></button>
+                } *@
+            </div>
+        </div>
+        <div class="item-content" style="@_hoverStyle">
+          @*   <a class="@(!_isActive? "notActive" : "")"
+               style="@_hoverStyle"
+               @onmouseover="OnMouseOver"
+               @onmouseout="OnMouseOut"
+               @onpointerdown="@(() => SetReturnUrl())"
+            href="@_link">@Article.Title</a> *@
+            @if(TemplateArticleLink is not null)
+            {
+                @TemplateArticleLink(Article)
+            }
+        </div>
+    </div>
+   @*  @if (Article._Partials.Count > 0 && (Article.IsPartialsActive || _isAdmin))
+    {
+        <div class="subitem-box collapse @(_expandToggler ? "show" : "")" id="item-@ItemOrder">
+            <!--sub-item-->
+            @for (int i = 0; i < Article._Partials.Count; i++)
+            {
+                var partial = Article._Partials.ElementAt(i);
+                <SubItemLink ArticlePartial=@partial ItemOrder=@ItemOrder SubItemOrder=@(i+1) IsAdmin=@_isAdmin></SubItemLink>
+            }
+        </div>
+        <!--end subitem-->
+    } *@
+
+</div>
+<!--end item-->
+
+
+
+@code {
+
+    public class CStyles
+    {
+        public string BackgroundOrder { get; set; } = "#f0edbd";
+        public string BackgroundButtonActive { get; set; } = "#e6de6e";
+        public string BackgroundHoverItemLink { get; set; } = "#fffad9";
+        public string ColorOrderHeader { get; set; } = "rgba(0, 0, 0, 0.953)";
+    }
+
+    [CascadingParameter]
+    public CardArticle<TItem> Context { get; set; }
+
+    CardArticle<TItem>.CStyles Styles { get { return Context.Styles; } }
+
+    [Parameter]
+    public TItem Article{ get; set; }
+    [Parameter]
+    public RenderFragment<TItem>? TemplateArticleLink {get;set;}
+    [Parameter]
+    public int ItemOrder { get; set; }
+    //[Parameter]
+    //public bool IsItemsExpanded { get; set; } = false;
+    bool _expandToggler = false;
+
+    string _link;
+    //
+    bool _isActive = false;
+    bool _showSubitems = false;
+    // string btn_active_class = "";
+    string btn_arrow = "right";
+    string _hoverStyle = "";
+
+    bool _isAdmin = false;
+
+
+    override protected async Task OnParametersSetAsync()
+    {
+
+        //_expandToggler = IsItemsExpanded;
+        _expandToggler = false;
+
+
+        btn_arrow = _expandToggler ? "down" : "right";
+
+    }
+
+    override protected async Task OnInitializedAsync()
+    {
+
+    }
+
+    async Task SetupArticleData()
+    {
+        
+    }
+
+  
+
+    private async Task SetReturnUrl()
+    {
+        await JS.InvokeVoidAsync("sessionStorage.setItem", "returnUrl", Navigation.Uri);
+    }
+
+
+
+
+    private void OnMouseOver()
+    {
+        _hoverStyle = $"background-color: {Styles.BackgroundHoverItemLink};";
+    }
+
+    private void OnMouseOut()
+    {
+        _hoverStyle = ""; // Usunięcie nadpisanego stylu, wraca do CSS
+    }
+
+
+    void ToggleSubitem()
+    {
+        _expandToggler = !_expandToggler;
+        //
+        if (_expandToggler)
+        {
+            btn_arrow = "down";
+        }
+        else
+        {
+            btn_arrow = "right";
+        }
+    }
+
+}

@@ -1,0 +1,82 @@
+﻿
+
+
+/*this is use in script for bordering the item when the box is expanded */
+
+/******************************************************************
+                       
+******************************************************************/
+.container-items-sample {
+    
+}
+    /* 
+ * Select all .red children of .home, including the first one,
+ * and give them a border.
+ */
+    .container-items-sample > ::deep .container-items-sample-header {
+        border-top: 1px solid rgba(0, 0, 0, 0.5);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+    }
+
+        /* 
+ * Select all but the first .red child of .home,
+ * and remove the border from the previous rule.
+ */
+        .container-items-sample > ::deep .container-items-sample-header ~ .container-items-sample-header {
+            border-top: none;
+        }
+
+::deep .container-items-sample-header {
+    background-color: rgba(0, 0, 0, 0.025);
+    border-left: 1px solid rgba(0, 0, 0, 0.5);
+    border-right: 1px solid rgba(0, 0, 0, 0.5);
+    padding: 0.8em;
+    border-radius: 0px;
+}
+
+
+/******************************************/
+/* MODYFICATORS */
+/******************************************/
+
+/*toggle-border - this is assigned to the blank element of subset item which is before the next main item - to assign top border to that element (main item) */
+.column-left-modificator ::deep .toggle-border {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.column-right-modificator ::deep .toggle-border {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+
+.column-right-modificator ::deep .item .left-side-box .item-order {
+    /* border-left: none !important;   */
+    width: 46px !important;
+    margin-left: -1px !important;
+    /* position:absolute; */
+    /* left:0px; */
+    /* right:0px; */
+    /* background-color:green !important; */
+}
+
+
+
+/*WARNING:max-width has to match to bootstrap column breakpoint (bootstrap brakepoints have affection from min-width, forexample: if column breakpoints are set for 576px for two columns 6 size "col-6" then here max-width has to be set for 575px to make column wrappings with proper styles ) 
+    -This just have to match set in CardArticle.razor for columns size "sm, lg, etc"
+*/
+
+@media (max-width:992px) {
+
+    .column-right-modificator ::deep .item .left-side-box .item-order { 
+        border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+        width: 45px !important;
+        margin-left: 0px !important;
+    }
+
+    .column-left-modificator ::deep .toggle-border-column-separator {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+        /* opacity:1; */
+    }
+
+
+}

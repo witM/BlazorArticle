@@ -18,13 +18,15 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddHttpClient("default", client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress));
 
 /*** APPLICATION WEB SERVICES ***/
-
+builder.Services.AddSingleton<ArticleProviderSite>();
 /************************************************************/
 
 /*** BLAZOR ARTICLE SERVICES ***/
 builder.Services.AddBlazorArticle();
 //manage the head tag depended from article style
 builder.Services.AddBlazorArticleStyle();
+//register default markers to be used in articles
+builder.Services.AddBlazorArticleDefaultMarkers();
 
 /*** READ CONFIGURATION ***/
 var configSection = builder.Configuration.GetSection("AppConfig");

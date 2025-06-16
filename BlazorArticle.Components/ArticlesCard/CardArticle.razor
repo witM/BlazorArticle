@@ -1,0 +1,218 @@
+﻿@inject IJSRuntime JS
+
+@typeparam TItem
+
+<!--WARNING:this section works temporaly only for local development.
+   <!-- COURSE CATEGORIES -->
+@{
+    int index = 0;
+    int articleCounterOrder = 0;
+
+}
+        <CascadingValue Value="this" IsFixed=true>
+        <div class="container-items-sample">
+            <!--header-->
+             <_Header TItem="TItem">
+                @if (TemplateHeader is not null)
+                {
+                    @TemplateHeader
+            }
+            else
+            {
+                <h4 class="text-center mb-0">Articles</h4>
+            }
+            </_Header> 
+            <!--end:header-->
+
+            <div class="container-fluid px-0" style="">
+                <div class="row g-0" style="">
+                    <!-- *************************-COLUMN LEFT -*************************************************-->
+                    <div class="col col-12 col-lg-6 column-left-modificator" style="@(_articleCount < TwoColumnsAt ? "width:100%" : "")">
+                        <!--------------------------------ITEM----------------------------------------------------->
+                        @for (int counter = 0; counter < _countCategoriesLeftColumn; counter++)
+                        {
+                            var article = Articles.ElementAt(index);
+                            //if (category.IsSelective)
+                            {
+                                <_ArticleItem Article=@article ItemOrder=@(articleCounterOrder+1) >
+                                    <TemplateArticleLink>
+                                        @if(TemplateLink is not null)
+                                        {
+                                            @TemplateLink(article)
+                                        }
+                                    </TemplateArticleLink>
+                                </_ArticleItem>
+                                articleCounterOrder++;
+                                index++;
+                            }
+                            //
+                        }
+                        <!--###################-->
+                        <!----------------------------------------->
+                        <!--end column -->
+                    </div>
+                    <!--###########################################################################################-->
+                    <!-- *************************-COLUMN RIGHT -**************************************************-->
+                    <div class="col col-12 col-lg-6 column-right-modificator" style="">
+                        <!--------------------------------ITEM----------------------------------------------------->
+                        @for (int counter = 0; counter < _countCategoriesRightColumn; counter++)
+                        {
+                            var article = Articles.ElementAt(index);
+                            //if (category.IsSelective)
+                            {
+                                <_ArticleItem Article=@article ItemOrder=@(articleCounterOrder+1)>
+                                     <TemplateArticleLink>
+                                        @if(TemplateLink is not null)
+                                        {
+                                            @TemplateLink(article)
+                                        }
+                                     </TemplateArticleLink>
+                                </_ArticleItem>
+                                articleCounterOrder++;
+                                index++;
+                            }
+                        }
+                        <!--###################-->
+                        <!----------------------------------------->
+                        <!--end column -->
+                    </div>
+                    <!--###########################################################################################-->
+                </div>
+                <!--end row (bootstrap) -->
+            </div>
+            <!--end container (bootstrap) -->
+            @*@for (int i = 0, order = 0; i < Articles.Count; i++)
+                {
+                    var Article = Articles[i];
+                    <ItemsLinkExtended Article=Article ItemOrder=order></ItemsLinkExtended>
+                    if (Article.IsSelective == true)
+                        order++;
+                }*@
+
+        </div>
+        <!--end container-items-sample -->
+        </CascadingValue>
+
+
+@code {
+
+    public class ContextData
+    {
+        public int CategoryNumberShowed { get; set; }
+        public int LastLeftColumnItemIndex { get; set; }
+        public int LastLeftColumnSubitemIndex { get; set; } //for item of index given above
+        public bool IsTwoColumnMode{ get; set; }
+    }
+
+    public class ConfigGridData
+    {
+        public string BaseArticleUrl{get;set;}
+    }
+
+    public class CStyles
+    {
+        public string BackgroundOrder { get; set; } = "#f0edbd";
+        public string BackgroundButtonActive { get; set; } = "#e6de6e";
+        public string BackgroundHoverItemLink { get; set; } = "#fffad9";
+        public string ColorOrderHeader { get; set; } = "rgba(0, 0, 0, 0.953)";
+    }
+
+    /// <summary>
+    /// Provides list of the articles
+    /// </summary>
+    [Parameter]
+    public IEnumerable<TItem> Articles { get; set; }
+
+    //[Parameter]
+    //public bool IsPartialsAllExpanded { get; set; } = false;
+    /// <summary>
+    /// Specify at how many articles the article items separates into the two columns of the article items. Side by side.
+    /// </summary>
+    [Parameter]
+    public int TwoColumnsAt { get; set; } = 4;
+
+    /// <summary>
+    /// Provides header content. If is not set then there is default content of header.
+    /// </summary>
+    [Parameter]
+    public RenderFragment? TemplateHeader{ get; set; }
+    /// <summary>
+    /// Provides a link to each of the article items. Use here &lt;a&gt; tag with custom url and title.
+    /// </summary>
+    [Parameter]
+    public RenderFragment<TItem>? TemplateLink{ get; set; }
+
+    //[Parameter]
+    public CStyles Styles { get; private set; } = new CStyles();
+
+
+
+    //grid
+    int _articleCount;
+    int _countCategoriesLeftColumn;
+    int _countCategoriesRightColumn;
+
+    //DAL.Data.Entity_CourseCategory _courseCategory;
+
+    public ContextData Data{ get; private set; }
+
+    bool _isAdmin = false;
+
+    protected override Task OnParametersSetAsync()
+    {
+        Data = new ContextData();
+        Data.LastLeftColumnItemIndex = Data.LastLeftColumnSubitemIndex = -1;
+        //_Categories = _Course._CourseCategories.OrderBy(c => c.Order).ToList();
+        // _articles = ArticleCategory._Articles.Where(e => e.IsSelective || _isAdmin).OrderBy(o => o.Order);
+        _articleCount = Articles.Count();
+        Data.CategoryNumberShowed = _articleCount;
+        bool isCategoriesCountEven = _articleCount % 2 == 0;
+        //show one column when there is less category then ARTICLES_COUNT_TO_TWO_COLUMNS
+        if (_articleCount < TwoColumnsAt)
+        {
+            _countCategoriesLeftColumn = _articleCount;
+            _countCategoriesRightColumn = 0;
+        }
+        //show two columns
+        else
+        {
+            Data.IsTwoColumnMode = true;
+            if (isCategoriesCountEven)
+                _countCategoriesLeftColumn = _countCategoriesRightColumn = _articleCount / 2;
+            else
+            {
+                //if the numer of categories is odd then in left column is more items than right column !!
+                _countCategoriesLeftColumn = (_articleCount / 2) + 1;
+                _countCategoriesRightColumn = _countCategoriesLeftColumn - 1;
+            }
+        }
+
+        ///
+        var articleAtLast = _countCategoriesLeftColumn > 0 ? Articles.ElementAt(_countCategoriesLeftColumn - 1) : default;   //index of last article in left column
+        Data.LastLeftColumnItemIndex = _countCategoriesLeftColumn - 1;
+        // if (articleAtLast != null && articleAtLast._Partials.Count > 0)
+        // {
+        //     //Data.LastLeftColumnSubItemId = categoryAt._CourseVideoCategories[categoryAt._CourseVideoCategories.Count - 1].Id;
+        //     Data.LastLeftColumnSubitemIndex = articleAtLast._Partials.Where(e => e.IsSelective || _isAdmin).Count() - 1;
+        // }
+        return base.OnParametersSetAsync();
+    }
+
+    override protected async Task OnInitializedAsync()
+    {
+       
+
+    }
+
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+       
+       
+    }
+
+
+
+
+}

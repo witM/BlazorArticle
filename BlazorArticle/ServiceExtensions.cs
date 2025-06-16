@@ -11,14 +11,14 @@ namespace BlazorArticle
     public static class ServiceExtensions
     {
         /// <summary>
-        ///  Add BlazorArticle default parser from the library as the service. It is singleton service.
+        ///  Add BlazorArticle default article parser from the library as the service. It is singleton service.
         /// </summary>
         public static IServiceCollection AddBlazorArticle(
             this IServiceCollection services)
         {
 
 
-            services.TryAddSingleton<IParserArticle, ArticleParser>();
+            services.TryAddSingleton<IParserArticle, ParserArticle>();
 
             //if (configureOptions is not null)
             //    services.Configure(configureOptions);

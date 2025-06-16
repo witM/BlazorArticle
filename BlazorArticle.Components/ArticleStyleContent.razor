@@ -1,7 +1,7 @@
 ﻿@using BlazorArticle
 @using BlazorArticle.Components
 @using System.Runtime.InteropServices;
-@inject BlazorArticle.IParserArticle Parser
+@inject BlazorArticle.IParserStyle Parser
 @inject BlazorArticle.Components.Services.ArticleHeadManager ArticleHeadManager
 
 
@@ -30,7 +30,7 @@
     [Parameter]
     public RenderFragment? ChildContent { get; set; } = null;
     /// <summary>
-    /// Provide style content as css string
+    /// Provides style content.
     /// </summary>
     [Parameter]
     public string? Style { get; set; }

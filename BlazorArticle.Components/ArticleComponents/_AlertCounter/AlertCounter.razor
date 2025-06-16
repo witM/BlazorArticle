@@ -1,0 +1,20 @@
+﻿@namespace BlazorArticle.Components.ArticleComponents
+@using System.Runtime.InteropServices
+
+
+ @if (RuntimeInformation.IsOSPlatform(OSPlatform.Create("BROWSER")))
+    {
+        <_AlertCounter Counter="Counter" />
+    }
+    else
+    {
+        <_AlertCounter @rendermode="InteractiveServer" Counter="Counter" />
+    }
+
+
+@code {
+    [Parameter]
+    public int Counter { get; set; } = 0;
+
+  
+}

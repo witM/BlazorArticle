@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace BlazorArticle.Components
 {
     /// <summary>
-    /// Render proper <style></style> tag with the style content given by the "ArticleStyleContent" component.
+    /// Renders the <style></style> tag with the style content given by the "ArticleStyleContent" component.
     /// WARNING:This component have to be rendered in the same render mode as "ArticleStyleContent" component.
     /// </summary> 
     public partial class ArticleStyleOutlet

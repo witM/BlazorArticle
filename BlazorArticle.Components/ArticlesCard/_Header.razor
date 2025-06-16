@@ -1,0 +1,28 @@
+﻿@typeparam TItem
+
+@*@(IsSelective == false ? "notSelective-admin" : "")"*@
+
+<!--header -->
+ <div class="container-items-sample-header"  style="background-color:@Styles.BackgroundOrder; color:@Styles.ColorOrderHeader;">
+    @if(ChildContent is not null)
+    {
+        @ChildContent
+    }
+</div>
+
+@code {
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [CascadingParameter]
+    public CardArticle<TItem> Context{ get; set; }
+
+    CardArticle<TItem>.CStyles Styles { get { return Context.Styles; } }
+
+   //[CascadingParameter]
+    //public CardArticle.CStyles Styles{ get; set; }
+
+    //[Parameter]
+   // public bool IsSelective { get; set; }
+
+} 

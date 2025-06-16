@@ -1,23 +1,18 @@
 ﻿@inherits PageBase
 @layout BlazorArticleWebClient.Layout.ArticleLayout
 
-@page "/postview/"
 @page "/postview/{ArticleName}"
 
 @using BlazorArticle.Components
 @using BlazorArticleWebClient.Services
 @using Microsoft.AspNetCore.Components.Sections
+@using System.Runtime.InteropServices
 
-@*To see better prerendered results (in site source) in static side rendering set this to "false" - you don't see loading indicator without InteractiveServer rendering mode
-  Starting with .NET 10, the Persistent State mechanism will be more accessible and easier to use.
-*@
-@attribute [StreamRendering(false)] 
 
 @implements IDisposable
 
 @inject NavigationManager Navigation
-@inject IHttpClientFactory ClientFactory
-@inject IOptions<AppConfig> Config
+@inject ArticleProviderSite ArticleProvider
 
 
 <PageTitle>
@@ -36,20 +31,17 @@
 else
 {
     @*Renders css style in the head - In Blazor WebAssembly use "UseJavascript" parameter is optional *@
-   <ArticleStyleContent Style="@_articleData.ContentStyle"  UseJavascript="false" IsCompressed="false"/>
+   <ArticleStyleContent Style="@_articleStyle.Content"  UseJavascript="false" IsCompressed="false"/>
 
 
    @*
        @key is needed for two reasons:
-       1)there are some javascript DOM interlop after article has been rendered at server side
+       1)there are some javascript DOM interlop (katex library) after article has been rendered at server side
        2)there are (maybe) rendering different types of render fragments in the loop by "ArticleRenderer" component
    *@
-    <div class="page" @key="@_articleData.Id">
+    <div class="page" @key="_article.Id">
         <article>
-            @*This component renders article exactly at place where it is with support of BlazorArticle parsing system,
-             *if you don't need this you can just use markupstring: @((MarkupString)string)
-            *@
-            <ArticleRenderer Content="@_articleData.Content" RemoveComments="false"  /> 
+            <ArticleRenderer  IContent="@_article" RemoveComments="false"  /> 
         </article>
     </div>
 
@@ -73,12 +65,6 @@ else
 
 @code {
 
-    class ArticleData
-    {
-        public string Id{ get; set; }
-        public string Content{ get; set; }
-        public string ContentStyle{ get; set; }
-    }
 
     [CascadingParameter]
     public ArticleLayout Layout{ get; set; }
@@ -91,7 +77,8 @@ else
 
     TableOfContent Ref_TOC{ get; set; }
 
-    ArticleData _articleData;
+    ModelArticle? _article;
+    ModelArticleStyle? _articleStyle;
 
 
     protected override async Task OnInitializedAsync()
@@ -111,10 +98,9 @@ else
 
         if(!Layout.IsArticleLoaded)
         {
-            _articleData = new ArticleData();
-            _articleData.Id = Guid.NewGuid().ToString();
-            _articleData.Content = await GetArticleContentAsync(ArticleName);
-            _articleData.ContentStyle = await GetArticleStyleContentAsync(StyleName);
+            //await Task.Delay(1000);
+            _article = (ModelArticle)await ArticleProvider.GetArticleByNameAsync(ArticleName);
+            _articleStyle = await ArticleProvider.GetStyleByNameAsync(StyleName);
             Layout.IsArticleLoaded = true;
         }
 
@@ -128,18 +114,16 @@ else
         ///
         // WARNING: The Content parameter of <ArticleRenderer> changes after 'await',
         // so assigning _articleContent like shown below ensures the component rerenders only once and correctly.
-        var data = new ArticleData();
-        data.Id = Guid.NewGuid().ToString();
-        data.Content =  await GetArticleContentAsync(ArticleName);
-        data.ContentStyle = await GetArticleStyleContentAsync(StyleName);
-        _articleData = data;
+
+        _article =  (ModelArticle)await ArticleProvider.GetArticleByNameAsync(ArticleName);
+        _articleStyle = await ArticleProvider.GetStyleByNameAsync(StyleName);
         await InvokeAsync(StateHasChanged);
         Ref_TOC.Refresh();
     }
 
     async Task OnRefreshStyle(string styleName)
     {
-        _articleData.ContentStyle = await GetArticleStyleContentAsync(styleName);
+        _articleStyle = await ArticleProvider.GetStyleByNameAsync(styleName);
         StateHasChanged();
     }
 
@@ -152,35 +136,35 @@ else
     }
 
 
-    async Task<string?> GetArticleContentAsync(string articleName)
-    {
-        string ArticlesBasePath = Config.Value.SourceArticle;
-        string siteBaseUrl = Navigation.BaseUri;
+    // async Task<string?> GetArticleContentAsync(string articleName)
+    // {
+    //     string ArticlesBasePath = Config.Value.SourceArticle;
+    //     string siteBaseUrl = Navigation.BaseUri;
 
 
-        using (var client = ClientFactory.CreateClient("default"))
-        {
-            string url = $"{siteBaseUrl}{ArticlesBasePath}/{articleName}.html";
+    //     using (var client = ClientFactory.CreateClient("default"))
+    //     {
+    //         string url = $"{siteBaseUrl}{ArticlesBasePath}/{articleName}.html";
 
-            return  await client.GetStringAsync(url);
+    //         return  await client.GetStringAsync(url);
 
-        }
+    //     }
 
-    }
+    // }
 
 
-    async Task<string?> GetArticleStyleContentAsync(string styleName)
-    {
-        string ArticlesStyleBasePath = Config.Value.SourceArticleStyle;
-        string siteBaseUrl = Navigation.BaseUri;
+    // async Task<string?> GetArticleStyleContentAsync(string styleName)
+    // {
+    //     string ArticlesStyleBasePath = Config.Value.SourceArticleStyle;
+    //     string siteBaseUrl = Navigation.BaseUri;
 
-        using (var client = ClientFactory.CreateClient("default"))
-        {
-            string url = $"{siteBaseUrl}{ArticlesStyleBasePath}/{styleName}.css";
+    //     using (var client = ClientFactory.CreateClient("default"))
+    //     {
+    //         string url = $"{siteBaseUrl}{ArticlesStyleBasePath}/{styleName}.css";
 
-            return await client.GetStringAsync(url);
+    //         return await client.GetStringAsync(url);
 
-        }
-    }
+    //     }
+    // }
 
 }

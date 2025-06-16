@@ -1,6 +1,12 @@
 
 @using BlazorArticle
 
+@inject RegistrationArticleMarker Reg
+
+@typeparam TId
+
+
+
 @inject IParserArticle Parser
 
 @* @((MarkupString)Content) *@ 
@@ -26,12 +32,12 @@
 @code{
 
     /// <summary>
-    /// Provide content that will be parsing by BlazorArticle library
+    /// Provides content to be parsed by the BlazorArticle library. Model has to inherit from IArticle interface.
     /// </summary>
     [Parameter]
-    public string Content { get; set; }
+    public IArticle<TId> IContent { get; set; }
     /// <summary>
-    /// Set whether the final rendered result has HTML comments removed or not. (FALSE by default).
+    /// Specifies whether CSS comments and white spaces are removed from the final rendered result. (Default: false).
     /// </summary>
     [Parameter]
     public bool RemoveComments { get; set; } = false;
@@ -41,12 +47,12 @@
 
     protected override async Task OnInitializedAsync()
     {
+
     }
 
     protected override async Task OnParametersSetAsync()
     {
-        _renderFragments = Parser.Parse(Content, RemoveComments);
-
+        _renderFragments = Parser.Parse(IContent.Content, RemoveComments);
     }
 
 }

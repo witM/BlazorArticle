@@ -1,5 +1,5 @@
 ﻿@layout BlazorArticleWeb.Components.Layout.ArticleLayout
-@page "/post/{ArticleId:int}"
+@page "/post/{ArticleName}"
 @using BlazorArticle.Components
 @*To see better prerendered results (in site source) in static side rendering set this to "false" - you don't see loading indicator without InteractiveServer rendering mode
   Starting with .NET 10, the Persistent State mechanism will be more accessible and easier to use.
@@ -7,6 +7,8 @@
 @attribute [StreamRendering(true)] 
 
 @implements IDisposable
+
+@inject ArticleProviderSite ArticleProvider
 
 <PageTitle>
     @if(_isArticleLoaded)
@@ -23,17 +25,26 @@
 }
 else
 {
-    @*Renders css style in the head - with StreamRendering set to false you can set "UseJavascript" to false *@
-    <ArticleStyleContent Style="@ArticleLoader.ArticleStyle"  UseJavascript="true" IsCompressed="true"/> 
+    @*Renders css style in the head - with StreamRendering set to false you can set "UseJavascript" to false and use by default pre-rendered style. *@
+    <ArticleStyleContent Style="@_articleStyle.Content"  UseJavascript="true" IsCompressed="true"/>
 
-    <div class="page">
-        <article>
-            @*This component renders article exactly at place where it is with support of BlazorArticle parsing system,
-             *if you don't need this you can just use markupstring: @((MarkupString)string)
-            *@
-             <ArticleRenderer Content="@ArticleLoader.Article" RemoveComments="true"/> 
-        </article>
-    </div>
+    if(_article is not null)
+    {
+        <div class="page">
+            <article>
+                <ArticleRenderer IContent="@_article" RemoveComments="true" />
+            </article>
+        </div>
+    }
+    else
+    {
+        <div class="d-flex flex-column justify-content-center align-items-center" style="height:100%">
+            <div class="alert alert-warning" role="alert">
+                There's no article of ID: @ArticleName
+            </div>
+        </div>
+    }
+
 
 }
 
@@ -43,7 +54,7 @@ else
         <!-- sticky header is hardcoded as 50px height -->
         <div class="sticky-top" style="top:50px;">
             @*This component is part of a website template for a fully customizable table of contents. Some solution of rendering TOC may become part of the BlazorArticle library in the future*@
-            <TableOfContent @rendermode="InteractiveServer" ArticleId="ArticleId" /> 
+            <TableOfContent @rendermode="InteractiveServer" ArticleId="_article.Id" /> 
         </div>
 
     }
@@ -53,11 +64,15 @@ else
 
 
 @code {
-    [Inject]
-    public ArticleLoader ArticleLoader { get; set; }
+    //[Inject]
+    //public ArticleLoader ArticleLoader { get; set; }
 
     [Parameter]
-    public int ArticleId{ get; set; }
+    public string ArticleName{ get; set; }
+
+
+    ModelArticle _article;
+    ModelArticleStyle _articleStyle;
 
     bool _isArticleLoaded = false;
 
@@ -65,13 +80,16 @@ else
     protected override async Task OnInitializedAsync()
     {
         await Task.Delay(1200);
+        _article = await ArticleProvider.GetArticleByNameAsync(ArticleName);
+        //
+        _articleStyle = await ArticleProvider.GetStyleAsync(_article._StyleId.Value);
+        //
         _isArticleLoaded = true;
-
     }
 
     protected override async Task OnParametersSetAsync()
     {
-
+        
     }
 
     public void Dispose()

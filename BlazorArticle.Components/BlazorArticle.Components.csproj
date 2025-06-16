@@ -52,4 +52,8 @@
     <Resource Include="README.md" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Versions\" />
+  </ItemGroup>
+
 </Project>

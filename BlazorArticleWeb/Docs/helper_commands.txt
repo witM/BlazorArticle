@@ -1,0 +1,20 @@
+
+
+
+database: D:\PROJECT_INFOMAKS_WWW\WEB_DEV_NET\www\BlazorArticle\BlazorArticle\BlazorArticleWeb\app.db
+Driver=SQLite3 ODBC Driver; Database=D:\PROJECT_INFOMAKS_WWW\WEB_DEV_NET\www\BlazorArticle\BlazorArticle\BlazorArticleWeb\app.db;
+
+Add-Migration InitialCreate
+Update-Database
+dotnet ef migrations remove //remove last migration if you din't update database
+
+
+/********** SQL COMMAND *************************/
+
+
+DROP TABLE nazwa_tabeli;
+
+/**
+DROP TABLE __EFMigrationsHistory
+DROP TABLE __EFMigrationsLock
+/**
