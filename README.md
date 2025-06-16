@@ -1,4 +1,5 @@
 <!-- https://github.com/witM/BlazorArticle -->
+<!-- github pages: https://witm.github.io/BlazorArticle -->
 
 # BlazorArticle
 
