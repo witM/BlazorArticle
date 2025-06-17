@@ -136,26 +136,7 @@ math {
 .example .header:before{
     content: "Example";
 }
-/*NOTE:This dos not take effect */  
-/*display info about "zrób to sam" belove the header*/
-/*.example.solve .header:after{
-    position:absolute;
-    display:block;
-    content: "";
-    color:white;
-    left:-1px;*/   /*as header border size*/
-    /*bottom:-21px;*//*as information height - header border size*/
-    /*width:120px;
-    height:20px;
-    background-image: url('img/solve_information.png');
-    background-size: contain;
-    background-repeat: no-repeat;
-}
-.example.solve .header{
-    position:relative;
-    margin-bottom:20px;*/ /*as information height*/
-/*}*/
-/*************************************************/
+
 .example .header {
    display:flex;
    flex-direction:column;
