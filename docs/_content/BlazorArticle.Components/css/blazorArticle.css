@@ -1,0 +1,135 @@
+﻿
+
+/* DEFAULT LAYOUT ELEMENTS*/
+
+/* header */
+
+nav.m-navbar {
+    /*position: relative;*/
+    width: 100%;
+    max-width: 1920px;
+    /* max-width:1280px; */
+    margin: auto;
+    /* height:50px; */
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    /* border:1px solid red;  */
+}
+
+.navbar-shadow {
+    /* width: calc(100vh - 100px);  */
+    border-radius: 2px;
+    box-shadow: 0px 1px 10px #999;
+}
+
+nav.m-navbar .m-logo {
+    /* border:1px solid red; */
+    font-size: 1.2rem;
+}
+
+nav.m-navbar .m-logo img {
+    max-width:40px;
+}
+
+nav.m-navbar .m-logo a {
+    color: rgb(250, 250, 250);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    text-decoration:none;
+}
+
+nav.m-navbar .m-logo .m-logo-screen {
+    display: block;
+}
+
+nav.m-navbar .m-logo .m-logo-mobile {
+    display: none;
+}
+
+/*.m-toc-toggler {
+    color: white;
+    display: none;
+    cursor: pointer;*/
+    /**/
+    /* padding: 50px;*/
+    /*font-size: 24px;
+    border: 1px solid yellow;
+}*/
+
+
+/*WARNING:max-width must be that same as 'm-toc-container' class in article.razor style*/
+@media (max-width:780px) {
+
+    nav.m-navbar .m-logo .m-logo-screen {
+        display: none;
+    }
+
+    nav.m-navbar .m-logo .m-logo-mobile {
+        display: block;
+    }
+
+    /*.m-toc-toggler {
+        align-self: stretch;
+        display: flex;
+        align-items: center;
+        color: #fff;
+        padding: 0px 20px;
+        background-color: #424a53;
+        border: 1px solid rgb(238 238 238 / 0.20);
+    }
+
+    .m-toc-toggler.active {
+        color: #1861ac;
+        padding: 0px 20px;
+        background-color: #f7f7f7;
+        border: 1px solid rgb(238 238 238 / 0.20);
+    }*/
+}
+
+nav.m-navbar .m-navigation {
+    display: flex;
+    /* border: 1px solid red;  */
+}
+
+nav.m-navbar .m-navigation a, button {
+    padding: 5px;
+    background-color: #fcfcfc;
+    border-radius: 4px;
+    color: #13345a;
+    border: none;
+    margin-left: 8px;
+}
+
+
+
+/* footer */
+
+
+.m-footer-bottom .m-screen {
+}
+
+.m-footer-bottom .m-mobile {
+    display: none;
+}
+
+.m-footer-bottom a {
+    color: rgb(126, 176, 255);
+    text-transform: uppercase;
+    margin: 0px 15px;
+}
+
+    .m-footer-bottom a.active {
+        border-bottom: 1px solid rgb(78, 144, 179);
+        color: rgb(70, 141, 255);
+    }
+
+
+@media(max-width:780px) {
+    .m-footer-bottom .m-screen {
+        display: none;
+    }
+
+    .m-footer-bottom .m-mobile {
+        display: block;
+    }
+}
