@@ -2,13 +2,9 @@
 
 namespace BlazorArticleWebClient.Models
 {
-    public class ModelArticle : IArticle<string>
+    public class ModelArticle : ModelArticleBase<string>
     {
-        public string Id { get; set; }
-
-        public string? Name {  get; set; }
-
-        public string? Content {  get; set; }
+    
     }
 
 

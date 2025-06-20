@@ -8,7 +8,10 @@
     {
          @Header   
     }
+    @if(ShowToggler)
+    {
     <label id="m-sidebar-toggler" class="m-toc-toggler" onclick="BlazorArticle_ToggleArticleNavigation()"><i class="fas fa-bars"></i></label>
+    }
 </div>
 <!--end navbar -->
 
@@ -35,6 +38,12 @@
 </div>
 
 @code {
+
+    /// <summary>
+    /// If true then the sidebar toggler is visible in the right corner of the header when the site is presented in mobile version. TRUE BY DEFAUTL.
+    /// </summary>
+    [Parameter]
+    public bool ShowToggler { get; set; } = true;
 
     [Parameter]
     public RenderFragment? Header{ get; set; }
