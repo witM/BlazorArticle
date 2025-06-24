@@ -47,12 +47,6 @@ body {
     font-size: 1.3rem;
 }
 
-@media(max-width:1280px){
-    .page{
-        padding:20px;
-    }
-}
-
 /* Linki */
 a {
     color: #0066cc;
@@ -74,9 +68,9 @@ pre {
 
 code {
     font-family: Consolas, Monaco, 'Courier New', monospace;
-/*    color: #c7254e;*/
+    color: #c7254e;
     background-color: #f9f2f4;
-/*    padding: 0.2em 0.4em;*/
+    padding: 0.2em 0.4em;
     border-radius: 4px;
 }
 
@@ -116,26 +110,3 @@ th {
     overflow-y: auto;
     border-right: 1px solid #ddd;
 }
-
-.console-block {
-    background-color: #f9f9f9;
-    color: #333;
-    font-family: Consolas, Monaco, 'Courier New', monospace;
-    padding: 1rem;
-    margin: 1rem 0;
-    border-left: 4px solid #0078d4; /* niebieski pasek Microsoft */
-    border-radius: 4px;
-    overflow-x: auto;
-    font-size: 0.95rem;
-}
-/*.console-block code{
-    padding-top:0px;
-}*/
-
-/* Wiersz z prefiksem $ */
-.console-line::before {
-    content: "$ ";
-    color: #007700;
-    font-weight: bold;
-}
-

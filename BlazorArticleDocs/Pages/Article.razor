@@ -1,0 +1,150 @@
+﻿@inherits PageBase
+@layout BlazorArticleDocs.Layout.ArticleLayout
+
+@page "/example/{ArticleName}"
+@page "/docs/{ArticleName}"
+
+@using BlazorArticle.Components
+@using BlazorArticleDocs.Services
+@using Microsoft.AspNetCore.Components.Sections
+@using System.Runtime.InteropServices
+
+
+@implements IDisposable
+
+@inject NavigationManager Navigation
+@inject ArticleExamplesProvider ArticleProvider
+@inject ArticleDocsProvider ArticleDocsProvider
+
+
+<PageTitle>
+    @if(Layout.IsArticleLoaded)
+    {
+        @($"{_article.Title} | docs")
+    }
+</PageTitle>
+
+@if(!_isLoaded)
+{
+    <div class="d-flex flex-column justify-content-center align-items-center" style="height:100%">
+        <img src="img/spin_loading.gif" alt="loading article" />
+    </div>
+}
+else
+{
+    @*Renders css style in the head - In Blazor WebAssembly use "UseJavascript" parameter is optional *@
+   <ArticleStyleContent Style="@_articleStyle.Content"  UseJavascript="false" IsCompressed="true"/>
+
+
+   @*
+       @key is needed for two reasons:
+       1)there are some javascript DOM interlop (katex library) after article has been rendered at server side
+       2)there are (maybe) rendering different types of render fragments in the loop by "ArticleRenderer" component
+   *@
+    <div class="page" @key="_article.Id">
+        <article>
+            <ArticleRenderer  IContent="@_article" RemoveComments="false"  /> 
+        </article>
+    </div>
+
+}
+
+ <SectionContent SectionName="sidebar-article">
+    @if(_isLoaded)
+    {
+         <!-- sticky header is hardcoded as 50px height -->
+        <div class="sticky-top" style="top:50px;">
+         
+            <TableOfContent @ref="Ref_TOC" />
+        </div>
+        
+
+    }
+</SectionContent> 
+
+
+
+
+@code {
+
+
+    [CascadingParameter]
+    public ArticleLayout Layout{ get; set; }
+
+    [Parameter]
+    public string? ArticleName { get; set; } 
+
+    [SupplyParameterFromQuery(Name = "style")]
+    private string? StyleName{ get; set; }
+
+    TableOfContent Ref_TOC{ get; set; }
+
+    bool _isLoaded;
+    ModelArticle? _article;
+    ModelArticleStyle? _articleStyle;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        // // if is not set in url then use this by default
+        // ArticleName ??= "quadratic_equation";
+        // StyleName ??= "math";
+        //////////////
+        _isLoaded = false;
+
+        var uri = Navigation.Uri; // full URL, ex: https://localhost:5001/example/some-article
+        var baseUri = Navigation.BaseUri; //base URL ex: https://localhost:5001/
+        var relativePath = uri.Replace(baseUri, "", StringComparison.OrdinalIgnoreCase); // example/some-article
+
+        if (relativePath.StartsWith("example/", StringComparison.OrdinalIgnoreCase))
+        {
+            await ParseExample();
+        }
+        else if (relativePath.StartsWith("docs/", StringComparison.OrdinalIgnoreCase))
+        {
+            await ParseDocs();
+        }
+    }
+
+    public void Dispose()
+    {
+
+
+    }
+
+    async Task ParseDocs()
+    {
+        //Default style name for docs article - style parameter is not set by default
+        StyleName ??= "docs";
+
+        //
+        if (!_isLoaded)
+        {
+            //await Task.Delay(1000);
+            _article = await ArticleDocsProvider.GetArticleByNameAsync(ArticleName);
+            _articleStyle = await ArticleDocsProvider.GetStyleByNameAsync(StyleName);
+            _isLoaded = true;
+        }
+    }
+
+
+    async Task ParseExample()
+    {
+
+        if (!_isLoaded)
+        {
+            //await Task.Delay(1000);
+            _article = await ArticleProvider.GetArticleByNameAsync(ArticleName);
+            _articleStyle = await ArticleProvider.GetStyleByNameAsync(StyleName);
+            _isLoaded = true;
+        }
+
+        
+    }
+
+}

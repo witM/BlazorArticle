@@ -1,0 +1,78 @@
+﻿@inherits LayoutComponentBase
+
+@using BlazorArticle.Components
+@using Microsoft.AspNetCore.Components.Sections
+
+@inject NavigationManager Navigation
+@inject IOptions<AppConfig> ConfigSite
+
+
+<ArticleLayoutDefault ShowToggler="false">
+    <Header>
+        <nav class="m-navbar">
+            <section class="m-logo">
+                <div class="m-logo-screen">
+                    <a href="@ConfigSite.Value.BaseSiteUrl">
+                        <img src="_content/BlazorArticle.Components/img/blazor_logo_yellow.png" />
+                        BlazorArticleDocs
+                    </a>
+                </div>
+                <div class="m-logo-mobile">
+                    <a href="@ConfigSite.Value.BaseSiteUrl">
+                        <img src="_content/BlazorArticle.Components/img/blazor_logo_yellow.png" />
+                        Docs
+                    </a>
+                </div>
+            </section>
+            <section class="m-navigation">
+                
+            </section>
+        </nav>
+        @*NOTE:Navigation toggler button for now is a part of the article layout component because of internal logic and parsing article as SSR,
+     *this may change if interactive server side rendering will improve - see BlazorArticle documentation
+    *@
+    </Header>
+   @*  <Sidebar>
+        <SectionOutlet SectionName="sidebar-article" />
+    </Sidebar> *@
+    <Body>
+        @Body
+    </Body>
+    <Footer>
+        <section class="m-screen">
+            BlazorArticleDocs - @DateTime.Now.Year
+        </section>
+        <section class="m-mobile">
+            BlazorArticleDocs - @DateTime.Now.Year
+        </section>
+    </Footer>
+</ArticleLayoutDefault>
+
+
+
+
+@code {
+
+
+
+    protected override async Task OnInitializedAsync()
+    {
+
+    }
+
+
+    protected override async Task OnParametersSetAsync()
+    {
+       
+
+    }
+
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        
+    }
+
+
+}

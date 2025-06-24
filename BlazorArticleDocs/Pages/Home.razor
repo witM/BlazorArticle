@@ -1,0 +1,61 @@
+﻿@inherits PageBase
+@page "/"
+@using BlazorArticle
+@using BlazorArticle.Components.ArticlesCard
+
+<PageTitle>Welcome to BlazorArticle documentation</PageTitle>
+
+@inject NavigationManager Navigation
+@inject ArticleExamplesProvider ArticleProvider
+@inject ArticleDocsProvider ArticleDocsProvider
+
+<div style="padding-top:8em;">
+    <div class="container db-red;">
+        <div class="row">
+            <div class="col col-md-6 mx-auto" style="max-width:600px;">
+                @if(_isArticleLoaded)
+                {
+                   @*  <CardArticle Articles="_articles">
+                        <TemplateHeader>
+                            <h4 class="text-center mb-0">Example articles</h4>
+                        </TemplateHeader>
+                        <TemplateLink><a href="example/@context.Name?style=math">@context.Name</a></TemplateLink>
+                    </CardArticle> *@
+
+
+                      <CardArticle Articles="_articleDocs">
+                        <TemplateHeader>
+                            <h4 class="text-center mb-0">Documentation</h4>
+                        </TemplateHeader>
+                        <TemplateLink><a href="@($"{Navigation.BaseUri}docs/{context.Name}")">@context.Title</a></TemplateLink>
+                    </CardArticle> 
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@code{
+
+
+    bool _isArticleLoaded;
+    List<ModelArticle> _articles;
+    List<ModelArticle> _articleDocs;
+
+    protected override async Task OnInitializedAsync()
+    {
+        //_articles = await ArticleProvider.GetAll();
+        _articleDocs = await ArticleDocsProvider.GetAll();
+        _isArticleLoaded = true;
+    }
+
+
+    async Task OnEditArticle()
+    {
+       
+
+
+        //Navigation.NavigateTo($"example/{_data.ArticleName}?style={_data.StyleName}", false);
+    }
+}

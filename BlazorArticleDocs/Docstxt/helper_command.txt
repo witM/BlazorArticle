@@ -1,0 +1,1 @@
+﻿how to publishing Blazor Assembly on github pages: https://github.com/arvinboggs/BlazorGitHubPages?tab=readme-ov-file
