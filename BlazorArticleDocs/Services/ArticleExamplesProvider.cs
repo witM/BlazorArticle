@@ -8,7 +8,7 @@ using System.Xml.Linq;
 
 namespace BlazorArticleDocs.Services
 {
-    public class ArticleExamplesProvider : ArticleProviderBase
+    public class ArticleExamplesProvider : ArticleProviderBase,  IArticleProvider<ModelArticle, string>
     {
 
         public ArticleExamplesProvider(NavigationManager Navigation, IHttpClientFactory ClientFactory, IOptions<AppConfig> Config, IOptions<ArticleConfig> ArticleConfig)

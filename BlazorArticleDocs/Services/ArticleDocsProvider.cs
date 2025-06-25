@@ -5,7 +5,7 @@ using Microsoft.Extensions.Options;
 
 namespace BlazorArticleDocs.Services
 {
-    public class ArticleDocsProvider : ArticleProviderBase
+    public class ArticleDocsProvider : ArticleProviderBase, IArticleProviderVersion<ModelArticle, string, int?>
     {
 
         public ArticleDocsProvider(NavigationManager Navigation, IHttpClientFactory ClientFactory, IOptions<AppConfig> Config, IOptions<ArticleConfig> ArticleConfig)
@@ -21,33 +21,47 @@ namespace BlazorArticleDocs.Services
             throw new NotImplementedException();
         }
 
-        public async Task<ModelArticle?> GetArticleByNameAsync(string name)
+
+        public Task<ModelArticle?> GetArticleByNameAsync(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<ModelArticle?> GetArticleByNameAsync(string name, int? version)
         {
             string ArticlesBasePath = _config.Value.SourceArticleDocs;
             string siteBaseUrl = _navigation.BaseUri;
 
             var itemDoc = _configArticle.Value.Docs.Find(e => e.Name == name);
-            if (itemDoc == null) 
+            if (itemDoc == null)
                 return null;
+            if(version is not null)
+            {
+                if (!itemDoc.Versions.Contains(version.Value))
+                    return null;
+            }//return the newest version if version is null
+            else
+            {
+                version = itemDoc.Versions.Max();
+            }
             //
             ModelArticle? article = null;
 
             using (var client = _httpClientFactory.CreateClient("default"))
             {
-                string url = $"{siteBaseUrl}{ArticlesBasePath}/{itemDoc.Name}.html";
+                string url = $"{siteBaseUrl}{ArticlesBasePath}/{itemDoc.Name}/{version}/{itemDoc.Name}.html";
 
                 article = new Models.ModelArticle()
                 {
                     Id = Guid.NewGuid().ToString(),
                     Name = name,
                     Title = itemDoc.Title,
+                    Version = version.Value,
                     Content = await client.GetStringAsync(url)
-
                 };
 
                 return article;
             }
-
 
         }
 
@@ -62,14 +76,14 @@ namespace BlazorArticleDocs.Services
             {
                 foreach (var item in _configArticle.Value.Docs)
                 {
-                    string url = $"{siteBaseUrl}{ArticlesBasePath}/{item.Name}.html";
+                    //string url = $"{siteBaseUrl}{ArticlesBasePath}/{item.Name}.html";
 
                     articles.Add(new ModelArticle()
                     {
                         Id = Guid.NewGuid().ToString(),
                         Name = item.Name,
                         Title = item.Title,
-                        Content = await client.GetStringAsync(url)
+                        //Content = await client.GetStringAsync(url)
                     });
                 }
 

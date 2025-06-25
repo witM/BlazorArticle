@@ -77,6 +77,9 @@ else
     [SupplyParameterFromQuery(Name = "style")]
     private string? StyleName{ get; set; }
 
+    [SupplyParameterFromQuery(Name = "ver")]
+    private int? ArticleVersion { get; set; }
+
     TableOfContent Ref_TOC{ get; set; }
 
     bool _isLoaded;
@@ -126,7 +129,7 @@ else
         if (!_isLoaded)
         {
             //await Task.Delay(1000);
-            _article = await ArticleDocsProvider.GetArticleByNameAsync(ArticleName);
+            _article = await ArticleDocsProvider.GetArticleByNameAsync(ArticleName, ArticleVersion);
             _articleStyle = await ArticleDocsProvider.GetStyleByNameAsync(StyleName);
             _isLoaded = true;
         }

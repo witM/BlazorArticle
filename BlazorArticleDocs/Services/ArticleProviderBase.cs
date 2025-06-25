@@ -5,7 +5,7 @@ using Microsoft.Extensions.Options;
 
 namespace BlazorArticleDocs.Services
 {
-    public abstract class ArticleProviderBase : IArticleProvider<ModelArticle, string>, IArticleStyleProvider<ModelArticleStyle, string>
+    public abstract class ArticleProviderBase :  IArticleStyleProvider<ModelArticleStyle, string>
     {
         protected readonly NavigationManager _navigation;
         protected readonly IHttpClientFactory _httpClientFactory;
@@ -21,15 +21,6 @@ namespace BlazorArticleDocs.Services
             _configArticle = ConfigArticle;
         }
 
-        public Task<ModelArticle> GetArticleAsync(string id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<ModelArticle> GetArticleByNameAsync(string name)
-        {
-            throw new NotImplementedException();
-        }
 
         public Task<ModelArticleStyle> GetStyleAsync(string id)
         {

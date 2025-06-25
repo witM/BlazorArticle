@@ -4,13 +4,14 @@
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+	<GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
 	<PropertyGroup>
 		<!-- generate package -->
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<PackageId>BlazorArticle</PackageId>
-		<Version>1.0.8-preview</Version>
+		<Version>1.0.9-preview</Version>
 		<Authors>Marian Witek (witM)</Authors>
 		<Description>.NET library to parsing html article rendered from database. Supports rendering interactive dynamic components within the article.</Description>
 		<!-- other metadata -->
@@ -26,6 +27,7 @@
 	<ItemGroup>
 		<None Include="README.md" Pack="true" PackagePath="" />
 		<None Include="logo.png" Pack="true" PackagePath="" />
+		<None Include="$(OutputPath)$(AssemblyName).xml" pack="true" packagePath="" />
 	</ItemGroup>
 
 	<ItemGroup>

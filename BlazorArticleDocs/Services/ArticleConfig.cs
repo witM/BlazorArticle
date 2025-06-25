@@ -5,6 +5,7 @@
         public string Name { get; set; } = string.Empty;
         public string Title { get; set; } = string.Empty;
         public DateTime DateUpdated { get; set; }
+        public int[] Versions { get; set; } = new int[0];
     }
 
     public class ArticleConfig

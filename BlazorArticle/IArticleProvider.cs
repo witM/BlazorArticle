@@ -14,17 +14,36 @@ namespace BlazorArticle
     public interface IArticleProvider<TModel, Id> where TModel : IArticle<Id>
     {
         /// <summary>
-        /// Get the IArticle by Id
+        /// Get the article by Id.
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="id">Id of the article</param>
         /// <returns></returns>
-        Task<TModel> GetArticleAsync(Id id);
+        Task<TModel?> GetArticleAsync(Id id);
 
         /// <summary>
-        /// Get the IArticle by name
+        /// Get the article by name.
         /// </summary>
-        /// <param name="name"></param>
+        /// <param name="name">Name of the article</param>
         /// <returns></returns>
-        Task<TModel> GetArticleByNameAsync(string name);
+        Task<TModel?> GetArticleByNameAsync(string name);
     }
+
+
+    /// <summary>
+    /// Extended interface of article provider with version checking.
+    /// </summary>
+    /// <typeparam name="Id"></typeparam>
+    /// <typeparam name="TModel">Inherits from IArticle</typeparam>
+    /// <typeparam name="TVersion">Version type of the article</typeparam>
+    public interface IArticleProviderVersion<TModel, Id, TVersion> : IArticleProvider<TModel, Id> where TModel: IArticle<Id>
+    {
+        /// <summary>
+        /// Get the article by name with given version of the article.
+        /// </summary>
+        /// <param name="name">Name of the article</param>
+        /// <param name="version">Version of the article</param>
+        Task<TModel?> GetArticleByNameAsync(string name, TVersion version);
+    }
+
+
 }

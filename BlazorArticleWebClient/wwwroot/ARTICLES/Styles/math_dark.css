@@ -1,5 +1,5 @@
 ﻿@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap');
-/*this is official style for math school*/
+
 
 .page {
     overflow-x: auto; /*this makes the page items scrolling if needed (if item overflow-x:auto) */
