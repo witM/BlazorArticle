@@ -49,7 +49,7 @@ namespace BlazorArticleDocs.Services
 
             using (var client = _httpClientFactory.CreateClient("default"))
             {
-                string url = $"{siteBaseUrl}{ArticlesBasePath}/{itemDoc.Name}/{version}/{itemDoc.Name}.html";
+                string url = $"{siteBaseUrl}{ArticlesBasePath}/{itemDoc.Name}/{version}.html";
 
                 article = new Models.ModelArticle()
                 {

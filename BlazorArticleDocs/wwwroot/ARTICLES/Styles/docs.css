@@ -1,5 +1,7 @@
 ﻿
 
+
+
 .page {
     overflow-x: auto; /*this makes the page items scrolling if needed (if item overflow-x:auto) */
     max-width: 1080px; /*---->*/
@@ -9,13 +11,12 @@
     margin: 0;
     padding: 0;
     line-height: 1.6;
-    padding:50px;
+    padding: 50px;
     /*****/
 }
 
 /* Główne tło i czcionki */
 body {
-
 }
 
 /* Layout dla treści dokumentacji */
@@ -26,7 +27,7 @@ body {
 }
 
 /* Nagłówki */
-.page h1, .page h2, .page h3,  .page h4 {
+.page h1, .page h2, .page h3, .page h4 {
     color: #2b2b2b;
     font-weight: 600;
     margin-top: 2rem;
@@ -45,6 +46,12 @@ body {
 
 .page h3 {
     font-size: 1.3rem;
+}
+
+@media(max-width:1280px) {
+    .page {
+        padding: 20px;
+    }
 }
 
 /* Linki */
@@ -68,9 +75,9 @@ pre {
 
 code {
     font-family: Consolas, Monaco, 'Courier New', monospace;
-    color: #c7254e;
+    /*    color: #c7254e;*/
     background-color: #f9f2f4;
-    padding: 0.2em 0.4em;
+    /*    padding: 0.2em 0.4em;*/
     border-radius: 4px;
 }
 
@@ -109,4 +116,26 @@ th {
     height: 100%;
     overflow-y: auto;
     border-right: 1px solid #ddd;
+}
+
+.console-block {
+    background-color: #f9f9f9;
+    color: #333;
+    font-family: Consolas, Monaco, 'Courier New', monospace;
+    padding: 1rem;
+    margin: 1rem 0;
+    border-left: 4px solid #0078d4; /* niebieski pasek Microsoft */
+    border-radius: 4px;
+    overflow-x: auto;
+    font-size: 0.95rem;
+}
+/*.console-block code{
+    padding-top:0px;
+}*/
+
+/* Wiersz z prefiksem $ */
+.console-line::before {
+    content: "$ ";
+    color: #007700;
+    font-weight: bold;
 }

@@ -2,7 +2,9 @@
 
 @using BlazorArticle.Components
 @using Microsoft.AspNetCore.Components.Sections
+@using Microsoft.AspNetCore.Components.WebAssembly.Hosting
 
+@inject IWebAssemblyHostEnvironment Env
 @inject NavigationManager Navigation
 @inject IOptions<AppConfig> ConfigSite
 
@@ -29,6 +31,12 @@
                 <!-- ################################################ -->
                 <!-- return to the list of article - not implemented yet -->
                 <a class="me-2" href="@ConfigSite.Value.BaseSiteUrl"><i class="fa-solid fa-arrow-left"></i></a> 
+                @if (Env.IsDevelopment())
+                {
+                    <!-- refresh te content of the article and article css style -->
+                    <button @onclick="RefreshAll"><i class="fa-solid fa-arrows-rotate"></i></button>
+                }
+
                 <!-- go to the top of the site (article) -->
                 <button onclick="BlazorArticle_ScrollToTop();"><i class="fa-solid fa-arrows-up-to-line"></i></button>
             </section>

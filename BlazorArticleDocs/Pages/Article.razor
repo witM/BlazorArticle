@@ -8,10 +8,11 @@
 @using BlazorArticleDocs.Services
 @using Microsoft.AspNetCore.Components.Sections
 @using System.Runtime.InteropServices
+@using Microsoft.AspNetCore.Components.WebAssembly.Hosting
 
 
 @implements IDisposable
-
+@inject IWebAssemblyHostEnvironment Env
 @inject NavigationManager Navigation
 @inject ArticleExamplesProvider ArticleProvider
 @inject ArticleDocsProvider ArticleDocsProvider
@@ -89,7 +90,8 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-
+        Layout.RefreshAllRequested += OnRefreshAll;
+        Layout.RefreshStyle += OnRefreshStyle;
     }
 
     protected override async Task OnParametersSetAsync()
@@ -116,7 +118,8 @@ else
 
     public void Dispose()
     {
-
+        Layout.RefreshAllRequested -= OnRefreshAll;
+        Layout.RefreshStyle -= OnRefreshStyle;
 
     }
 
@@ -148,6 +151,33 @@ else
         }
 
         
+    }
+
+
+
+    async Task OnRefreshAll()
+    {
+        //WARNING:Assumption of editing only the docs article
+
+        //WARNING:The order of assignment is important if you  make new ArticleData because it may cause rerendering compoent <ArticleRenderer> with null content.
+        //Make sure you first create new temp instance and then assign _articleData = temp;
+        ///
+        // WARNING: The Content parameter of <ArticleRenderer> changes after 'await',
+        // so assigning _articleContent like shown below ensures the component rerenders only once and correctly.
+        @if (Env.IsDevelopment())
+        {
+            _article = await ArticleDocsProvider.GetArticleByNameAsync(ArticleName, ArticleVersion);
+            _articleStyle = await ArticleDocsProvider.GetStyleByNameAsync(StyleName);
+            await InvokeAsync(StateHasChanged);
+            Ref_TOC.Refresh();
+        }
+      
+    }
+
+    async Task OnRefreshStyle(string styleName)
+    {
+        _articleStyle = await ArticleProvider.GetStyleByNameAsync(styleName);
+        StateHasChanged();
     }
 
 }

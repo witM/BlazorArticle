@@ -1,0 +1,45 @@
+﻿
+
+
+<h2 id="1">Examples</h2>
+
+<p><b>ver 2</b></p>
+
+<p>All documentations are written and work on the site using <b>BlazorArticle library.</b></p>
+
+<p>You can see example of the other article about solving logarithm <a href="Example/Logarithm?Style=math">here</a>. The article have custom style. You can change it to the dark theme by url parameter: <i>style=math_dark</i>.</p>
+
+<h2 id="2">Installation</h2>
+
+<p>
+    The library is designed to work with .NET and Blazor applications. You can choose either a Blazor Web App or a Blazor WebAssembly Standalone application. For example, in a Blazor Web App, you might render articles from a database and build a custom article editing system. For simplicity, you can use a Blazor WebAssembly Standalone application for editing articles and then push them to the database to make them publicly visible. This is how the documentation is written.
+</p>
+
+<h3 id="1-1">Package installation</h3>
+
+<p>Install the following packages from nuget.</p>
+
+<pre class="console-block"><code>
+    dotnet add package BlazorArticle
+    dotnet add package BlazorArticle.Components
+</code></pre>
+
+<p>In the Visual Studio gui package manager look for "BlazorAricle" and "BlazorArticle.Components" packages.</p>
+
+<p>After the packages are installed, add the following code to the <b>Program.cs</b> file to use the library's default services.</p>
+
+<pre class=""><code>
+    builder.Services.AddBlazorArticle();
+    builder.Services.AddBlazorArticleStyle();
+    //optional
+    builder.Services.AddBlazorArticleDefaultMarkers();
+</code></pre>
+
+
+<h2 id="3">Basic usage</h2>
+
+<p>
+    We will use a special Blazor Web App template to render articles and demonstrate how the library works, since the main goal is server-side article rendering.
+    When using this template, the required library packages are already installed.
+</p>
+
