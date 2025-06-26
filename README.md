@@ -3,17 +3,16 @@
 
 # BlazorArticle
 
-Library in .NET with blazor components to support rendering article from database with interactive server side component within the article. In summary, it is a library that supports the creation and rendering of pages with articles, such as blogs or educational materials.
+The Library in .NET with blazor components to support rendering article from database (or other sources like files for example) with interactive server side components within the article. In summary, it is a library that supports the creation and rendering of pages with articles, such as blogs, educational or documentation materials.
 
-The library will be good for bloggers and other educational content.
+The library is designed to work with both Blazor Web App and Blazor WebAssembly Standalone applications.
 
 ## Installation and documentation
 
-The first version of library is under development...when it will be ready it will be published just as the "BlazorArticle" and "BlazorArticle.Components" packages.
+The documentation is hosted on GitHub pages [here](https://witm.github.io/BlazorArticle/). The website is built as a Blazor WebAssembly Standalone application and uses the library itself, so you can check how it works. The articles of documentation are rendering from plain html files.
 
-In this file you will see base setup and example of usage of the libs.
-
-There's a plan to make more advanced documentation on github page under blazor webassembly site using the BlazorArticle library itself.
+This repository serves as a testing and development environment for the library. Do not treat it as a usage template for the library.
+To test and build your own projects, download the dedicated Blazor Web App and Blazor WebAssembly Standalone templates from the official template repository [here](https://github.com/witM/BlazorArticleTemplates).
 
 ## Projects information
 
@@ -36,3 +35,11 @@ Regardless of the .NET components and the [Blazor framework](https://dotnet.micr
 - [FontAwesome](https://fontawesome.com)
 - [Katex](https://katex.org) Latex formula rendering as maths
 - [TocBot](https://tscanlin.github.io/tocbot) Rendering Table of Content
+
+
+### Learning
+
+I plan to create a few videos, for example showing how to use the library to build a blog using Blazor Web App.
+We'll see how the library evolves and whether it gains popularity.
+
+You can view the development log (dev log) [here](https://www.youtube.com/watch?v=mfRf5yP0JRY&list=PLbctGVdzNn9TE0LZWewGu8Q8ykIZJ2v-B).
