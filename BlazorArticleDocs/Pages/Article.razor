@@ -116,6 +116,15 @@ else
         }
     }
 
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        //if(firstRender)
+        {
+            await JS.InvokeVoidAsync("ParseLanguageCode");
+            await base.OnAfterRenderAsync (firstRender);
+        }
+    }
+
     public void Dispose()
     {
         Layout.RefreshAllRequested -= OnRefreshAll;

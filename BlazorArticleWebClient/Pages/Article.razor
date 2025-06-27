@@ -114,7 +114,7 @@ else
         // WARNING: The Content parameter of <ArticleRenderer> changes after 'await',
         // so assigning _articleContent like shown below ensures the component rerenders only once and correctly.
 
-        _article =  (ModelArticle)await ArticleProvider.GetArticleByNameAsync(ArticleName);
+        _article =  await ArticleProvider.GetArticleByNameAsync(ArticleName);
         _articleStyle = await ArticleProvider.GetStyleByNameAsync(StyleName);
         await InvokeAsync(StateHasChanged);
         Ref_TOC.Refresh();

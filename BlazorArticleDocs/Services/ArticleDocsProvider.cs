@@ -66,15 +66,20 @@ namespace BlazorArticleDocs.Services
         }
 
 
+        /// <summary>
+        /// Get Articles sorted by "Order"
+        /// </summary>
+        /// <returns></returns>
         public async Task<List<ModelArticle>> GetAll()
         {
             var articles = new List<ModelArticle>();
             string ArticlesBasePath = _config.Value.SourceArticleDocs;
             string siteBaseUrl = _navigation.BaseUri;
+            //
 
             using (var client = _httpClientFactory.CreateClient("default"))
             {
-                foreach (var item in _configArticle.Value.Docs)
+                foreach (var item in _configArticle.Value.Docs.OrderBy(o => o.Order))
                 {
                     //string url = $"{siteBaseUrl}{ArticlesBasePath}/{item.Name}.html";
 

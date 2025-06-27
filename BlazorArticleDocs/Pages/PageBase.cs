@@ -11,7 +11,7 @@ namespace BlazorArticleDocs.Pages
 
 
         [Inject]
-        IJSRuntime JS { get; set; }
+        protected IJSRuntime JS { get; set; }
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             await JS.InvokeVoidAsync("JS_ParsePage");

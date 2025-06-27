@@ -64,6 +64,10 @@ function JS_RenderTOC(url, tocSelector, articleSelector) {
 }
 
 
+function ParseLanguageCode() {
+    Prism.highlightAll();
+}
+
 //var g_isMobileTocActive = false;
 function ToggleArticleNavigation() {
 
