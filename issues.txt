@@ -1,0 +1,3 @@
+
+- Rendering dynamic components at place of marker with sourranding html tags when page is in Interactiver rendering mode: component is rendered outside of the sourranding tags (in prerendering the component is rendered right).
+- In WebAssembly app rendering article style by javascript and making change in style during running app (refreshing): exception occur, because of javascript interlop content, @key needed.
