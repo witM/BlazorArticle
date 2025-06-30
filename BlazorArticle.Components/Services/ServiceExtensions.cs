@@ -30,17 +30,20 @@ namespace BlazorArticle.Components.Services
             services.TryAddSingleton<IParserStyle, ParserStyle>();
             //add ArticleManager
             services.TryAddScoped<ArticleHeadManager>(provider => new ArticleHeadManager(Id));
+            //
+            services.TryAddSingleton<RegistrationArticleMarker>();
 
-                //if (configureOptions is not null)
-                //    services.Configure(configureOptions);
 
-                //if (configureParser is not null)
-                //    services.PostConfigure<IArticleParser>(parser =>
-                //    {
-                //        configureParser(parser);
-                //    });
+            //if (configureOptions is not null)
+            //    services.Configure(configureOptions);
 
-                return services;
+            //if (configureParser is not null)
+            //    services.PostConfigure<IArticleParser>(parser =>
+            //    {
+            //        configureParser(parser);
+            //    });
+
+            return services;
         }
 
         /// <summary>

@@ -5,8 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 using BlazorArticle;
+using BlazorArticle.Components.ArticleComponents;
 
-namespace BlazorArticle
+namespace BlazorArticle.Components
 {
     public class RegistrationArticleMarker
     {
@@ -15,13 +16,10 @@ namespace BlazorArticle
         {
             _parser = parser;
             //
-            //parser.RegisterComponentParser(new AlertCounter_ParserMarker());
+            parser.RegisterComponentParser(new AlertCounter_ParserMarker());
 
         }
 
-        public void RegisterMarker(IParserMarker marker)
-        {
-            _parser.RegisterComponentParser(marker);
-        }
+      
     }
 }
