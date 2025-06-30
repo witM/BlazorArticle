@@ -14,6 +14,8 @@ namespace BlazorArticle
         * ARTICLES
         *********************************************************************************/
 
+
+        
         List<ArticleFragment> IParserArticle.Parse(string rawContent, bool removeComments)
         {
             //remove html comments from article 
@@ -101,9 +103,10 @@ namespace BlazorArticle
         }
 
 
-        /*********************************************************************************
-        * MARKERS
-        *********************************************************************************/
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="marker"></param>
         public void RegisterComponentParser(IParserMarker marker)
         {
             _markers.Add(marker);

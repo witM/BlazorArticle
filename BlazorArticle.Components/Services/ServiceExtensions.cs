@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using BlazorArticle.Components.ArticleComponents;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using System;
 using System.Collections.Generic;
@@ -50,7 +51,13 @@ namespace BlazorArticle.Components.Services
         public static IServiceCollection AddBlazorArticleDefaultMarkers(this IServiceCollection services)
         {
 
-            services.TryAddSingleton<RegistrationArticleMarker>(); //worning: have to be that same scoped as article parser
+            //services.TryAddSingleton<RegistrationArticleMarker>(); //worning: have to be that same scoped as article parser
+            services.PostConfigure<IParserArticle>(parser =>
+            {
+                parser.RegisterComponentParser(new AlertCounter_ParserMarker());
+                // możesz dodać więcej markerów
+            });
+
             return services;
         }
     }

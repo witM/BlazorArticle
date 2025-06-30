@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using BlazorArticle.Components;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,7 @@ namespace BlazorArticle
 
 
             services.TryAddSingleton<IParserArticle, ParserArticle>();
+            services.TryAddSingleton<RegistrationArticleMarker>();
 
             //if (configureOptions is not null)
             //    services.Configure(configureOptions);
