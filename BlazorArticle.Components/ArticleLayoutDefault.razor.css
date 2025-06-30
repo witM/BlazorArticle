@@ -162,8 +162,9 @@ main.m-main {
 }
 
 /* page */
-.m-page{
-    flex:1;
+.m-page {
+    flex: 1;
+    overflow-x: hidden;
 }
 
 /*WARNING:max-width must be that same as 'm-toc-toggler' class in layout style*/
