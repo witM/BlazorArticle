@@ -42,4 +42,8 @@ Regardless of the .NET components and the [Blazor framework](https://dotnet.micr
 I plan to create a few videos, for example showing how to use the library to build a blog using Blazor Web App.
 We'll see how the library evolves and whether it gains popularity.
 
-You can view the development log (dev log) [here](https://www.youtube.com/watch?v=mfRf5yP0JRY&list=PLbctGVdzNn9TE0LZWewGu8Q8ykIZJ2v-B).
+You can view the development log (dev log) [here](https://www.youtube.com/watch?v=mfRf5yP0JRY&list=PLbctGVdzNn9TE0LZWewGu8Q8ykIZJ2v-B
+
+### Licence
+
+The repository is under [GNU GPL v3](LICENSE) — © 2025 Marian Witek (witM). You may use, distribute, and modify the code from this repository freely, provided that you credit the original author and include a link to this repository. You have to share you project source code under that same GNU GPL licence.
