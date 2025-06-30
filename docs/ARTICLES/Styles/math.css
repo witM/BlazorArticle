@@ -3,7 +3,6 @@
 
 .page {
     overflow-x: auto; /*this makes the page items scrolling if needed (if item overflow-x:auto) */
-    max-width: 1080px; /*---->*/
     max-width: 100%;
     width: 100%;
     height: 100%;
@@ -125,6 +124,10 @@ math {
 
 /***EXAMPLE ***/
 .example {
+    overflow-x: auto;
+    max-width: 100%;
+    width:100%;
+    white-space:pre;
     /*border-top: 2px solid black;*/ /***************/
     /*    border-bottom: 2px solid rgba(0, 0, 0, 0.25);
     margin-bottom: 1.5em;*/

@@ -1,21 +1,95 @@
 ﻿
 
-<h2 id="1">Examples</h2>
-
-
-<p>All documentations are written and work on the site using <b>BlazorArticle library.</b></p>
-
-<p>You can see example of the other article about solving logarithm <a href="Example/Logarithm?Style=math">here</a>. The article have custom style. You can change it to the dark theme by url parameter: <i>style=math_dark</i>.</p>
-
-<h2 id="2">Installation</h2>
-
-<p>You can see example of the article about solving logarithm. You can see example of the article about solving logarithm. You can see example of the article about solving logarithm. You can see example of the article about solving logarithm.You can see example of the article about solving logarithm. You can see example of the article about solving logarithm.You can see example of the article about solving logarithm. You can see example of the article about solving logarithm.You can see example of the article about solving logarithm. You can see example of the article about solving logarithm.You can see example of the article about solving logarithm. You can see example of the article about solving logarithm.You can see example of the article about solving logarithm. You can see example of the article about solving logarithm.You can see example of the article about solving logarithm. You can see example of the article about solving logarithm.</p>
+<p>We will use the Blazor Web App and Blazor WebAssembly Standalone application templates, which are described in the article about installing the library.</p>
 
 <p>
-    You can see example of the article about solving logarithm. You can see example of the article about solving logarith
-    <a href="../../Examples/Quadratic_equation.html">../../Examples/Quadratic_equation.html</a>m. You can see example of the article about solving logarithm. You can see example of the article about solving logarithm.You can see example of the article about solving logarithm. You can see example of the article about solving logarithm.You can see example of the article about solving logarithm. You can see example of the article about solving logarithm.You can see example of the article about solving logarithm. You can see example of the article about solving logarithm.You can see example of the article about solving logarithm. You can see example of the article about solving logarithm.You can see example of the article about solving logarithm. You can see example of the article about solving logarithm.You can see example of the article about solving logarithm. You can see example of the article about solving logarithm.
+    <b>BlazorArticleWeb</b> is a template project based on Blazor Web App that uses a SQLite database to render articles.
+    To browse and edit the database app.db file, you can use various tools, including: <a href="https://sqlitebrowser.org/" target="_blank">https://sqlitebrowser.org/</a>.
+</p>
+
+<p>
+    <b>BlazorArticleEditor</b> is a template project based on Blazor WebAssembly Standalone, where you can edit articles and their styles.
+    You edit the HTML and CSS files directly in your code editor (e.g., Visual Studio) while the application is running, and then use the refresh <i class="fa-solid fa-arrows-rotate"></i> button in header to reload the content.
+</p>
+
+<p>
+    Some solutions may vary depending on the type of application — in such cases, this will be clearly indicated.
+    The library is designed so that as many features as possible work across both types of applications.
+</p>
+
+<h2 id="1">Basics</h2>
+
+<h3 id="1-1">Article rendering</h3>
+
+<p>As you can see on the <b>Article.razor</b> page in both applications the following component is responsible for article rendering.</p>
+
+<pre>
+<code class="language-csharp">&lt;ArticleRenderer IContent="@_article" RemoveComments="true"/&gt;</code>
+</pre>
+
+<p>
+    This is a low-level component used to render an article exactly at a specified location.
+    The article is re-rendered every time its parameters change.
+    You can implement your own logic to decide whether and when the article should be re-rendered.
+    The simplest solution is to place the component inside an if condition
+</p>
+
+<p>IContent can be any class that implements <b>IArticle</b> interface. You can use your own class or the one from the BlazorArticle library, such as in the template projects, which use <b>ModelArticleBase&lt;TId&gt;</b></p>
+
+<p>In the future, the library is planned to support parsing articles not only in HTML format.</p>
+
+
+<h3 id="1-2">Style managment</h3>
+
+<p>In the <b>Article.razor</b> page in both application the <b>ArticleStyleContent</b> component is responsible for style rendering at place where the <b>ArticleStyleOutlet</b> component is rendered. See <b>App.razor</b> file in both applications.</p>
+
+<p style="font-size:0.9em;">In the Blazor Web Application:</p>
+
+<pre><code class="language-csharp">&lt;ArticleStyleContent Style="@_articleStyle.Content"  UseJavascript="true" IsCompressed="true"/&gt;</code>
+</pre>
+
+<p style="font-size:0.9em;">In the Blazor WebAssembly Application:</p>
+
+<pre>
+<code class="language-csharp">&lt;ArticleStyleContent Style="@_articleStyle.Content"  UseJavascript="false" IsCompressed="false"/&gt;</code></pre>
+
+<p>
+    The component behaves exactly the same in both application types, but it handles parameters differently.
+
+    In a Blazor Web App, if the page is rendered statically (which is the default) and you apply the <b>[StreamRendering(true)]</b> attribute, the component uses JavaScript to render styles on the client side — as shown in the example.
+    If the attribute is set to false, you can pre-render the styles on the server and disable JavaScript-based rendering.
+    Style pre-rendering is enabled by default, but you can disable it by setting the component parameter: <b>IsPrerendered="false"</b>.
+</p>
+
+<p>If the page is rendered statically with <b>[StreamRendering(false)]</b> and style pre-rendering enabled, you will see the style code directly in the browser’s page source — exactly where the ArticleStyleContent component is rendered.</p>
+
+<p>In Blazor WebAssembly Standalone, the <b>UseJavascript</b> parameter has no effect and is set to "false" by default to prevent styles from being rendered twice.</p>
+
+
+<h3 id="1-3">Markers (interactive component within the article)</h3>
+
+<p>Below you can see an example of an interactive, dynamic Blazor component from the BlazorArticle.Components library, which is rendered in place of a special marker embedded in the article text.</p>
+
+<!-- ####################################################################################-->
+<!-- THIS MARKER IS RENDERED AS BLAZOR COMPONENT FROM BlazorArticle.Components library   -->
+<!-- "Counter" is optional parameter you can skip it-->
+[[[AlertCounter]]]
+<!-- ####################################################################################-->
+
+<p>Both components and markers can accept parameters. The marker parameters are passed into the component.</p>
+
+<p>
+    Go to this <a href="Example/Logarithm?Style=math" target="_blank">page</a> with example of math article. There, you can also see this component being rendered, but its counter starts at 5. This happens because the component’s parameter has a default value of zero, and the marker parameter is optional.
+    In the "BlazorArticleEditor" project, open the file:
+    <b>wwwroot/ARTICLE/Articles/Logarithm.html</b> — it's the same article used in the example.
+    In the code, you'll find a marker named "AlertCounter" with the Counter parameter set to 5.
+    If you change the value of this parameter and run the application to render the article, you will see the updated value in the counter. You can also remove the parameter and by default counter will be set to zero.
 </p>
 
 
-<p>You can see example of the article about solving logarithm. You can see example of the article about solving logarithm. You can see example of the article about solving logarithm. You can see example of the article about solving logarithm.You can see example of the article about solving logarithm. You can see example of the article about solving logarithm.You can see example of the article about solving logarithm. You can see example of the article about solving logarithm.You can see example of the article about solving logarithm. You can see example of the article about solving logarithm.You can see example of the article about solving logarithm. You can see example of the article about solving logarithm.You can see example of the article about solving logarithm. You can see example of the article about solving logarithm.You can see example of the article about solving logarithm. You can see example of the article about solving logarithm.</p>
+<p>
+    This way, you can create and embed your own markers directly in the article's content, which will render corresponding interactive Blazor components.
+    While this approach has some limitations, it is SEO-friendly — because components can be server-side rendered, their output becomes part of the page's HTML source.
+    For example, you could build your own articles system with videos embedded directly into your content using such markers.
+</p>
 
