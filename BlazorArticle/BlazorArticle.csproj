@@ -11,7 +11,7 @@
 		<!-- generate package -->
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<PackageId>BlazorArticle</PackageId>
-		<Version>1.0.9-preview</Version>
+		<Version>1.0.10-preview</Version>
 		<Authors>Marian Witek (witM)</Authors>
 		<Description>.NET library to parsing html article rendered from database. Supports rendering interactive dynamic components within the article.</Description>
 		<!-- other metadata -->
@@ -21,6 +21,8 @@
 		<!--reademe file and license -->
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<!-- documentation -->
+		<PackageReleaseNotes>See documentation: https://witm.github.io/BlazorArticle/</PackageReleaseNotes>
 	</PropertyGroup>
 
 

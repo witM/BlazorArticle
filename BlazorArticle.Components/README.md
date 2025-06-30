@@ -1,12 +1,11 @@
 
+
 # BlazorArticle
 
-The **BlazorArticle.Components** package is experimental package for .net for supporting rendering parsed article from database (html article currently). Within an article you can render interactive blazor components. This is all SEO friendly by rendering article with components on server side. The articles may have different styles also rendered from database. It contains blazor components and javascript functions to support article rendering.
+The Library in .NET with Blazor components to support rendering article from database (or other sources like files for example) with interactive server side components within the article. In summary, it is a library that supports the creation and rendering of pages with articles, such as blogs, educational or documentation materials.
 
-The library will be good for bloggers and other educational content.
+The library is designed to work with both Blazor Web App and Blazor WebAssembly Standalone applications.
 
 ## Installation and documentation
 
-The first version of library is under development...when it will be ready it will be published just as the "BlazorArticle" package.
-
-The documentation will be build at GitHub repository when it becomes available within a month or two.
+The documentation is hosted on GitHub pages [here](https://witm.github.io/BlazorArticle/).
