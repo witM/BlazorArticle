@@ -1,7 +1,7 @@
 {
   "mainAssemblyName": "BlazorArticleDocs",
   "resources": {
-    "hash": "sha256-YUfSNed28b9ZXSALrthlY4OqqTHEdg7b0tKM/LyKJWg=",
+    "hash": "sha256-JStGg+sIsjtaEprSLjJf7b0ynoHaoKOC3yntgK09GKM=",
     "fingerprinting": {
       "Microsoft.AspNetCore.Components.ecn0bmmua8.wasm": "Microsoft.AspNetCore.Components.wasm",
       "Microsoft.AspNetCore.Components.Web.dfporsox18.wasm": "Microsoft.AspNetCore.Components.Web.wasm",
@@ -48,9 +48,9 @@
       "System.Web.HttpUtility.3v5gnv41mf.wasm": "System.Web.HttpUtility.wasm",
       "System.icunsnzrqy.wasm": "System.wasm",
       "System.Private.CoreLib.4y9cgvz1no.wasm": "System.Private.CoreLib.wasm",
-      "BlazorArticle.Components.odqmooxjou.wasm": "BlazorArticle.Components.wasm",
-      "BlazorArticle.fwklybpwka.wasm": "BlazorArticle.wasm",
-      "BlazorArticleDocs.dh0t44r0tr.wasm": "BlazorArticleDocs.wasm",
+      "BlazorArticle.Components.bv24j4pmrk.wasm": "BlazorArticle.Components.wasm",
+      "BlazorArticle.lk53qwsfy2.wasm": "BlazorArticle.wasm",
+      "BlazorArticleDocs.s8ei6dxk2v.wasm": "BlazorArticleDocs.wasm",
       "dotnet.js": "dotnet.js",
       "dotnet.native.1p93gcv9fh.js": "dotnet.native.js",
       "dotnet.native.9msu8ucn2h.wasm": "dotnet.native.wasm",
@@ -121,9 +121,9 @@
       "System.Threading.u9nh6upk0z.wasm": "sha256-7uH4n8suBUC+Rg/WIY3k8mV7e4cs6q7bPsO1VRJqZrI=",
       "System.Web.HttpUtility.3v5gnv41mf.wasm": "sha256-r1Rvjzy1eOgrGTxrnCatjyOh+1PInPjVicvotDjF1Y4=",
       "System.icunsnzrqy.wasm": "sha256-YkFFFBkhWPJ9NX+mNSyGmlb6hmjtja4JNTnNi66JSGU=",
-      "BlazorArticle.Components.odqmooxjou.wasm": "sha256-9Ig5235Q+1GL2TmeBLKa3/FiLdrgP357R8Ekss2Zs2s=",
-      "BlazorArticle.fwklybpwka.wasm": "sha256-D1uo7svyKn0lMX04gdsiRsMTIXoKdXS715duonxKsac=",
-      "BlazorArticleDocs.dh0t44r0tr.wasm": "sha256-sWslTOItzY81M7p0KUwfXIy6jNDIAWZzfgpeaoM4Gfw="
+      "BlazorArticle.Components.bv24j4pmrk.wasm": "sha256-eYV+m6nr5XTghS/BwLlSYwwGo1jk7LpCRo5eeqCdAgM=",
+      "BlazorArticle.lk53qwsfy2.wasm": "sha256-9ZjmP+73UVl9HZcEzhebFz0Mx6i78KMPCAu7FybC1KM=",
+      "BlazorArticleDocs.s8ei6dxk2v.wasm": "sha256-nEL9rZf7O5lKMBryBgglQbdlwneVmHNxRNGJxDxgrXA="
     },
     "libraryInitializers": {
       "BlazorArticleDocs.556dvxi7uk.lib.module.js": "sha256-pxxcLT3W+lLFLAWUy1L6jd0FSqvucPnzZi0F+J5aYnc="
