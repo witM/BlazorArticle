@@ -4,7 +4,7 @@
 
 .page {
     overflow-x: auto; /*this makes the page items scrolling if needed (if item overflow-x:auto) */
-    max-width: 1080px; /*---->*/
+    max-width:1018px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #ffffff;
     color: #1b1b1b;

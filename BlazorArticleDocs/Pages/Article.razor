@@ -42,11 +42,31 @@ else
        1)there are some javascript DOM interlop (katex library) after article has been rendered at server side
        2)there are (maybe) rendering different types of render fragments in the loop by "ArticleRenderer" component
    *@
-    <div class="page" @key="_article.Id">
-        <article>
-            <ArticleRenderer  IContent="@_article" RemoveComments="false"  /> 
-        </article>
-    </div>
+    <div class="content-container"> 
+        <div class="page " @key="_article.Id">
+            <article>
+                <ArticleRenderer IContent="@_article" RemoveComments="false" />
+            </article>
+        </div>
+        @if(_isDocs)
+        {
+            @* <div class="page-side">
+                <div class="page-side-content">
+                    <div class="sticky-box">
+                        <div style="width:200px; height:50px; background-color:green;"></div>
+                    </div>
+
+                </div>
+            </div> *@
+
+            <div class="page-down">
+                <div class="page-down-content">
+                    <div style="width:200px; height:50px; background-color:green;"></div>
+                </div>
+            </div>
+        }
+    </div> 
+    
 
 }
 
@@ -84,8 +104,10 @@ else
     TableOfContent Ref_TOC{ get; set; }
 
     bool _isLoaded;
+    bool _isDocs;
     ModelArticle? _article;
     ModelArticleStyle? _articleStyle;
+
 
 
     protected override async Task OnInitializedAsync()
@@ -112,6 +134,7 @@ else
         }
         else if (relativePath.StartsWith("docs/", StringComparison.OrdinalIgnoreCase))
         {
+            _isDocs = true;
             await ParseDocs();
         }
     }
