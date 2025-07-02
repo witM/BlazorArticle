@@ -35,6 +35,11 @@ var configSection = builder.Configuration.GetSection("AppConfig");
 //builder.Services.AddSingleton(appConfig);
 builder.Services.Configure<AppConfig>(configSection);
 
+//set custom component marker
+builder.Services.Configure<ParserOptions>(options =>
+{
+    options.Markers.Add(new BlazorArticleWebClient.Shared.ArticleComponents.AlertYellowCounter_Parser());
+});
 
 
 

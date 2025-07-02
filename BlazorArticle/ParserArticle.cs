@@ -1,40 +1,56 @@
 ﻿
+using Microsoft.Extensions.Options;
 using System.Text.RegularExpressions;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace BlazorArticle
 {
+    public class ParserOptions
+    {
+        public List<IParserMarker> Markers = new List<IParserMarker>();
+    }
 
+    /// <summary>
+    /// Default parser service.
+    /// </summary>
     public class ParserArticle : IParserArticle
     {
 
-        List<IParserMarker> _markers = new List<IParserMarker>();
+        private readonly IOptions<ParserOptions> _options;
 
-        /*********************************************************************************
-        * ARTICLES
-        *********************************************************************************/
-
-
-        
-        List<ArticleFragment> IParserArticle.Parse(string rawContent, bool removeComments)
+        public ParserArticle(IOptions<ParserOptions> options)
         {
+            _options = options;
+            //_markers = (options.Value.Markers is null) ? new List<IParserMarker>() : options.Value.Markers;
+        }
+
+        /// <summary>
+        /// Parses the article content. For now only html content.
+        /// </summary>
+        /// <param name="content">Article content.</param>
+        /// <param name="removedComments">Determines whether to remove comments from the source of the rendered article.</param>
+        /// <returns>A list of render fragments to be rendered.</returns>
+        List<ArticleFragment> IParserArticle.Parse(string content, bool removeComments)
+        {
+
+            var markers = _options.Value.Markers;
+
             //remove html comments from article 
             if (removeComments)
-                rawContent = Regex.Replace(rawContent, @"<!--.*?-->", "", RegexOptions.Singleline);
+                content = Regex.Replace(content, @"<!--.*?-->", "", RegexOptions.Singleline);
 
-            //build patterns
-            //WARNING:changing in the pattersn ad parameteres requier set propper group matching --> [..] for getting parameter value
-            string[] patternsArray =
-            {
-                //[1]
-                @"(\[\[\[VideoItem(\s+Id=""(\d+)"")?(\s+Code=""([^""]+)"")?\]\]\])",             //Id->[3], Code->[5]
-                //[6]
-                @"(\[\[\[Link\s+Name=""([^""]+)""(\s+PartialName=""([^""]+)"")?\s+Title=""([^""]+)""\]\]\])" 
-                                                        //Name->[7], PartialName->[9], Title->[10]
-            };
+            ////build patterns
+            ////WARNING:changing in the pattersn ad parameteres requier set propper group matching --> [..] for getting parameter value
+            //string[] patternsArray =
+            //{
+            //    //[1]
+            //    @"(\[\[\[VideoItem(\s+Id=""(\d+)"")?(\s+Code=""([^""]+)"")?\]\]\])",             //Id->[3], Code->[5]
+            //    //[6]
+            //    @"(\[\[\[Link\s+Name=""([^""]+)""(\s+PartialName=""([^""]+)"")?\s+Title=""([^""]+)""\]\]\])" 
+            //                                            //Name->[7], PartialName->[9], Title->[10]
+            //};
 
 
-            string patternAll = string.Join("|", patternsArray);
+            //string patternAll = string.Join("|", patternsArray);
             var fragments = new List<ArticleFragment>();
             ///
             //pattern meaning:
@@ -50,7 +66,7 @@ namespace BlazorArticle
 
             int lastIndex = 0;
             // this match any pattern from given array above where "match.Index" is index of first letter from matched string in entire article
-            foreach (var marker in _markers)
+            foreach (var marker in markers)
             {
                 //for one markers: match.groups[1].Value, match.groups[2].Value ... match.groups[n].Value is equivalent to 1,2,..n parameters from marker () 
                 //match.Index   // index of first characther from pattern matching
@@ -59,7 +75,7 @@ namespace BlazorArticle
                 /////////////////////////////////////////////////////
 
                 var regex = new Regex(marker.StringPattern);
-                var matches = regex.Matches(rawContent);
+                var matches = regex.Matches(content);
                 //foreach match from the marker string pattern
                 foreach (Match match in matches)
                 {
@@ -68,7 +84,7 @@ namespace BlazorArticle
                     *********************************************************************************/
                     if (match.Index > lastIndex)
                     {
-                        string html = rawContent.Substring(lastIndex, match.Index - lastIndex);
+                        string html = content.Substring(lastIndex, match.Index - lastIndex);
                         fragments.Add(new HtmlFragment(html));
                     }
 
@@ -81,7 +97,7 @@ namespace BlazorArticle
                         fragments.Add(new ComponentFragment(type, parameters));
                     }
 
-                    //skip the marker content and get index of the first character of the article after the marker
+                    //skip the marker content text and get index of the first character of the article after the marker
                     lastIndex = match.Index + match.Length;
 
 
@@ -94,9 +110,9 @@ namespace BlazorArticle
             /*********************************************************************************
             * ADD RAW ARTICLE TEXT AFTER LAST MARKERS (COMPONENT)
             *********************************************************************************/
-            if (lastIndex < rawContent.Length)
+            if (lastIndex < content.Length)
             {
-                fragments.Add(new HtmlFragment(rawContent.Substring(lastIndex)));
+                fragments.Add(new HtmlFragment(content.Substring(lastIndex)));
             }
 
             return fragments;
@@ -104,12 +120,13 @@ namespace BlazorArticle
 
 
         /// <summary>
-        /// 
+        /// Registers a marker parser that will be used to render a text marker as a component render fragment.
         /// </summary>
-        /// <param name="marker"></param>
+        /// <param name="marker">Marker parser</param>
         public void RegisterComponentParser(IParserMarker marker)
         {
-            _markers.Add(marker);
+            var markers = _options.Value.Markers;
+            markers.Add(marker);
         }
 
     }

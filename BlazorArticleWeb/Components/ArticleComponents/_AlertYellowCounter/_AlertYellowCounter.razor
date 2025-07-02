@@ -1,0 +1,28 @@
+@namespace BlazorArticleWeb.Components.ArticleComponents
+
+<div class="alert alert-warning" role="alert">
+    <p>Welcome from the interactive article custom component. Click button to increment the counter value. </p>
+    <p class="mb-0">Counter value : @_counter <button @onclick="IncrementCounter">Click me</button></p>
+</div>
+
+
+
+@code {
+    [Parameter]
+    public int Counter { get; set; } = 0;
+
+    int _counter = 0;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _counter = Counter;
+    }
+
+    async Task IncrementCounter()
+    {
+
+        _counter++;
+    }
+
+
+}

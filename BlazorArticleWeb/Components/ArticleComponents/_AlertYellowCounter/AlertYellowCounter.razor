@@ -1,0 +1,21 @@
+﻿@namespace BlazorArticleWeb.Components.ArticleComponents
+@using System.Runtime.InteropServices
+@using static Microsoft.AspNetCore.Components.Web.RenderMode
+
+
+ @if (RuntimeInformation.IsOSPlatform(OSPlatform.Create("BROWSER")))
+    {
+        <_AlertYellowCounter Counter="Counter" />
+    }
+    else
+    {
+        <_AlertYellowCounter @rendermode="InteractiveServer" Counter="Counter" />
+    }
+
+
+@code {
+    [Parameter]
+    public int Counter { get; set; } = 0;
+
+  
+}

@@ -5,13 +5,15 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace BlazorArticle.Components.ArticleComponents
-{
-    public class AlertCounter_ParserMarker : IParserMarker
-    {
-        public string MarkerName { get; private set; } = "AlertCounter";
+using BlazorArticle;
 
-        public string StringPattern { get; private set; } = @"(\[\[\[AlertCounter(\s+Counter=""(\d+)"")?\]\]\])";
+namespace BlazorArticleWebClient.Shared.ArticleComponents
+{
+    internal class AlertYellowCounter_Parser : IParserMarker
+    {
+        public string MarkerName { get; private set; } = "AlertYellowCounter";
+
+        public string StringPattern { get; private set; } = @"(\[\[\[AlertYellowCounter(\s+Counter=""(\d+)"")?\]\]\])";
 
         public bool TryParse(Match match, out Type componentType, out Dictionary<string, object>? parameters)
         {
@@ -19,7 +21,7 @@ namespace BlazorArticle.Components.ArticleComponents
             //group[1] contains first match of () in the string pattern: (\[\[\[AlertCounter(\s+Counter=""(\d+)"")?\]\]\])
             ////////////////////////////////////////////////////
             
-            componentType = typeof(AlertCounter);
+            componentType = typeof(AlertYellowCounter);
             //parameters maybe set to null
             parameters = null;
             //if the "Counter" parameter is set

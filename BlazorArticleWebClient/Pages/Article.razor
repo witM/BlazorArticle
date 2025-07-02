@@ -3,8 +3,10 @@
 
 @page "/postview/{ArticleName}"
 
+@using BlazorArticle
 @using BlazorArticle.Components
 @using BlazorArticleWebClient.Services
+@using BlazorArticleWebClient.Shared.ArticleComponents
 @using Microsoft.AspNetCore.Components.Sections
 @using System.Runtime.InteropServices
 
@@ -13,7 +15,7 @@
 
 @inject NavigationManager Navigation
 @inject ArticleProviderSite ArticleProvider
-
+@inject IParserArticle Parser
 
 <PageTitle>
     @if(Layout.IsArticleLoaded)
@@ -83,6 +85,9 @@ else
 
     protected override async Task OnInitializedAsync()
     {
+        //Parser.RegisterComponentParser(new AlertYellowCounter_Parser());
+
+
         Layout.RefreshAllRequested += OnRefreshAll;
         Layout.RefreshStyle += OnRefreshStyle;
 

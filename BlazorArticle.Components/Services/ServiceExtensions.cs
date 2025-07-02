@@ -31,8 +31,7 @@ namespace BlazorArticle.Components.Services
             //add ArticleManager
             services.TryAddScoped<ArticleHeadManager>(provider => new ArticleHeadManager(Id));
             //
-            services.TryAddSingleton<RegistrationArticleMarker>();
-
+           
 
             //if (configureOptions is not null)
             //    services.Configure(configureOptions);
@@ -55,10 +54,11 @@ namespace BlazorArticle.Components.Services
         {
 
             //services.TryAddSingleton<RegistrationArticleMarker>(); //worning: have to be that same scoped as article parser
-            services.PostConfigure<IParserArticle>(parser =>
+
+            //set custom component marker
+            services.Configure<ParserOptions>(options =>
             {
-                parser.RegisterComponentParser(new AlertCounter_ParserMarker());
-                // możesz dodać więcej markerów
+                options.Markers.Add(new ArticleComponents.AlertCounter_ParserMarker());
             });
 
             return services;
