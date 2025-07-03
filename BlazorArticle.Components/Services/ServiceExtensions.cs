@@ -27,7 +27,7 @@ namespace BlazorArticle.Components.Services
                 Id = "article";
 
             //add default style parser
-            services.TryAddSingleton<IParserStyle, ParserStyle>();
+            services.TryAddSingleton<IParserStyle, ParserStyleDefault>();
             //add ArticleManager
             services.TryAddScoped<ArticleHeadManager>(provider => new ArticleHeadManager(Id));
             //

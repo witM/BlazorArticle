@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BlazorArticle
 {
-    public class ParserStyle : IParserStyle
+    public class ParserStyleDefault : IParserStyle
     {
 
         string IParserStyle.ParseStyle(string css, bool isCompressed = false)

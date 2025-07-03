@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BlazorArticle.Components.ArticleComponents
 {
-    public class AlertCounter_ParserMarker : IParserMarker
+    internal class AlertCounter_ParserMarker : IParserMarker
     {
         public string MarkerName { get; private set; } = "AlertCounter";
 

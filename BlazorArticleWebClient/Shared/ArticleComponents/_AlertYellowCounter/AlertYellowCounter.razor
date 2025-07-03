@@ -3,7 +3,7 @@
 @using static Microsoft.AspNetCore.Components.Web.RenderMode
 
 
- @if (RuntimeInformation.IsOSPlatform(OSPlatform.Create("BROWSER")))
+ @if (BlazorArticle.Runtime.IsWebAssembly)
     {
         <_AlertYellowCounter Counter="Counter" />
     }

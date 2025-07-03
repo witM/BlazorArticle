@@ -28,20 +28,13 @@ builder.Services.AddBlazorArticle();
 //manage the head tag depended from article style
 builder.Services.AddBlazorArticleStyle();
 //register default markers to be used in articles
-//builder.Services.AddBlazorArticleDefaultMarkers();
+builder.Services.AddBlazorArticleDefaultMarkers();
 /************************************************************/
 
 /*** SET CUSTOM MARKERS ***/
 builder.Services.Configure<ParserOptions>(options =>
 {
     options.Markers.Add(new BlazorArticleWeb.Components.ArticleComponents.AlertYellowCounter_Parser());
-});
-
-/*** SET CUSTOM MARKERS ***/
-builder.Services.Configure<ParserOptions>(options =>
-{
-    options.Markers.Add(new BlazorArticleWeb.Components.ArticleComponents.AlertYellowCounter_Parser());
-    options.Markers.Add(new BlazorArticle.Components.ArticleComponents.AlertCounter_ParserMarker());
 });
 
 string? connectionString = builder.Configuration.GetConnectionString("DefaultConnection");

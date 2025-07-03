@@ -4,20 +4,26 @@ using System.Text.RegularExpressions;
 
 namespace BlazorArticle
 {
+    /// <summary>
+    /// Set options for article parser
+    /// </summary>
     public class ParserOptions
     {
+        /// <summary>
+        /// List of markers to parsing within the article
+        /// </summary>
         public List<IParserMarker> Markers = new List<IParserMarker>();
     }
 
     /// <summary>
     /// Default parser service.
     /// </summary>
-    public class ParserArticle : IParserArticle
+    public class ParserArticleDefault : IParserArticle
     {
 
         private readonly IOptions<ParserOptions> _options;
 
-        public ParserArticle(IOptions<ParserOptions> options)
+        public ParserArticleDefault(IOptions<ParserOptions> options)
         {
             _options = options;
             //_markers = (options.Value.Markers is null) ? new List<IParserMarker>() : options.Value.Markers;
@@ -31,26 +37,32 @@ namespace BlazorArticle
         /// <returns>A list of render fragments to be rendered.</returns>
         List<ArticleFragment> IParserArticle.Parse(string content, bool removeComments)
         {
-
-            var markers = _options.Value.Markers;
-
+            content = PreParsing(content, removeComments);
+            //
+            return Parse(content, removeComments);
+        }
+        
+        string PreParsing(string content, bool removeComments)
+        {
             //remove html comments from article 
             if (removeComments)
                 content = Regex.Replace(content, @"<!--.*?-->", "", RegexOptions.Singleline);
+            //
+            return content;
+        }
 
-            ////build patterns
-            ////WARNING:changing in the pattersn ad parameteres requier set propper group matching --> [..] for getting parameter value
-           
+        List<ArticleFragment> Parse(string content, bool removeComments)
+        {
+            //var markers = _options.Value.Markers;
 
+            var matchesAll = GetAllMatchesSorted(content);
 
             //string patternAll = string.Join("|", patternsArray);
             var fragments = new List<ArticleFragment>();
-            ///
-           
 
             int lastIndex = 0;
             // this match any pattern from given array above where "match.Index" is index of first letter from matched string in entire article
-            foreach (var marker in markers)
+            foreach (var (marker, match) in matchesAll)
             {
                 //for one markers: match.groups[1].Value, match.groups[2].Value ... match.groups[n].Value is equivalent to 1,2,..n parameters from marker () 
                 //match.Index   // index of first characther from pattern matching
@@ -58,10 +70,10 @@ namespace BlazorArticle
                 //match.Value   // string of matched pattern
                 /////////////////////////////////////////////////////
 
-                var regex = new Regex(marker.StringPattern);
-                var matches = regex.Matches(content);
+                //var regex = new Regex(marker.StringPattern);
+                //var matches = regex.Matches(content);
                 //foreach match from the marker string pattern
-                foreach (Match match in matches)
+                //foreach (Match match in matches)
                 {
                     /*********************************************************************************
                     * ADD RAW ARTICLE TEXT BEFORE EACH OF THE MARKERS (COMPONENT)
@@ -101,6 +113,26 @@ namespace BlazorArticle
 
             return fragments;
         }
+
+        IOrderedEnumerable<(IParserMarker, Match)> GetAllMatchesSorted(string content)
+        {
+            
+            var allMatches = new List<(IParserMarker Marker, Match Match)>();
+
+            foreach (var marker in _options.Value.Markers)
+            {
+                var regex = new Regex(marker.StringPattern);
+                var matches = regex.Matches(content);
+
+                foreach (Match match in matches)
+                {
+                    allMatches.Add((marker, match));
+                }
+            }
+
+            return allMatches.OrderBy(m => m.Match.Index);
+        }
+
 
 
         /// <summary>

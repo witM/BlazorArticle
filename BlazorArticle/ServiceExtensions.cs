@@ -19,7 +19,7 @@ namespace BlazorArticle
         {
 
 
-            services.TryAddSingleton<IParserArticle, ParserArticle>();
+            services.TryAddSingleton<IParserArticle, ParserArticleDefault>();
             //services.TryAddSingleton<RegistrationArticleMarker>();
 
             //if (configureOptions is not null)
