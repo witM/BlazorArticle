@@ -40,29 +40,13 @@ namespace BlazorArticle
 
             ////build patterns
             ////WARNING:changing in the pattersn ad parameteres requier set propper group matching --> [..] for getting parameter value
-            //string[] patternsArray =
-            //{
-            //    //[1]
-            //    @"(\[\[\[VideoItem(\s+Id=""(\d+)"")?(\s+Code=""([^""]+)"")?\]\]\])",             //Id->[3], Code->[5]
-            //    //[6]
-            //    @"(\[\[\[Link\s+Name=""([^""]+)""(\s+PartialName=""([^""]+)"")?\s+Title=""([^""]+)""\]\]\])" 
-            //                                            //Name->[7], PartialName->[9], Title->[10]
-            //};
+           
 
 
             //string patternAll = string.Join("|", patternsArray);
             var fragments = new List<ArticleFragment>();
             ///
-            //pattern meaning:
-            /* \[\[  -> [[
-             * Video\s+  -> Video//and one ore more spaces
-             * ""a""  -> "a"
-             * ()  -> //some parameter
-             * ()?  -> // optional parameter -> have to be entire in ()? example: (Message=""([^""]+)"")?
-             * ([^"]+)  -> //any string
-             * (\d+)  -> //any digit pattern
-            */
-            //var regex = new Regex(patternAll);
+           
 
             int lastIndex = 0;
             // this match any pattern from given array above where "match.Index" is index of first letter from matched string in entire article

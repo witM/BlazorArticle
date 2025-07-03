@@ -1,0 +1,20 @@
+
+ //pattern meaning:
+            /* \[\[  -> [[
+             * Video\s+  -> Video//and one ore more spaces
+             * ""a""  -> "a"
+             * ()  -> //some parameter
+             * ()?  -> // optional parameter -> have to be entire in ()? example: (Message=""([^""]+)"")?
+             * ([^"]+)  -> //any string
+             * (\d+)  -> //any digit pattern
+            */
+            //var regex = new Regex(patternAll);
+
+ //string[] patternsArray =
+            //{
+            //    //[1]
+            //    @"(\[\[\[VideoItem(\s+Id=""(\d+)"")?(\s+Code=""([^""]+)"")?\]\]\])",             //Id->[3], Code->[5]
+            //    //[6]
+            //    @"(\[\[\[Link\s+Name=""([^""]+)""(\s+PartialName=""([^""]+)"")?\s+Title=""([^""]+)""\]\]\])" 
+            //                                            //Name->[7], PartialName->[9], Title->[10]
+            //};
