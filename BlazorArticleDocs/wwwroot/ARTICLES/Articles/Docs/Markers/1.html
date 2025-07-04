@@ -1,46 +1,201 @@
 ﻿
 
 
-<h2 id="1">Markers</h2>
+<h2 id="1">Marker parser registration</h2>
 
-
-<p>All documentations are written and work on the site using <b>BlazorArticle library.</b></p>
-
-<p>You can see example of the other article about solving logarithm <a href="Example/Logarithm?Style=math">here</a>. The article have custom style. You can change it to the dark theme by url parameter: <i>style=math_dark</i>.</p>
-
-<h2 id="2">Installation</h2>
+<div class="callout note">
+    <div class="callout-title">
+        <span class="callout-icon"></span>
+        <span class="callout-label"></span>
+    </div>
+    <p>
+        The article uses the application templates described in the installation guide.
+        The templates can be downloaded from the repository:
+        <a href="https://github.com/witM/BlazorArticleTemplates" target="_blank">BlazorArticleTemplates</a>.
+    </p>
+</div>
 
 <p>
-    The library is designed to work with .NET and Blazor applications. You can choose either a Blazor Web App or a Blazor WebAssembly Standalone application. For example, in a Blazor Web App, you might render articles from a database and build a custom article editing system. For simplicity, you can use a Blazor WebAssembly Standalone application for editing articles and then push them to the database to make them publicly visible. This is how the documentation is written.
+    In both template projects, you’ll find an ArticleComponents folder.
+    Inside it, there is a subfolder named after the component <b>AlertYellowCounter</b>, which will be rendered in place of the corresponding marker in the article content. You can treat such a subfolder as a package that provides the parsing and rendering logic for a specific component within an article.
 </p>
 
-<h3 id="1-1">Package installation</h3>
-
-<p>Install the following packages from nuget.</p>
-the packages are installed, add the following code to the <b>Program.cs</b> file to use the library's default services.</p>
-<pre class="console-block"><code>
-    dotnet add package BlazorArticle
-    dotnet add package BlazorArticle.Components
-</code></pre>
-
-<p>In the Visual Studio gui package manager look for "BlazorAricle" and "BlazorArticle.Components" packages.</p>
+<p>
+    To render a component, we need a parser that replaces the corresponding marker with the component, using the parameters passed through the marker. In this case, the parser class is named <span class="class">AlertYellowCounter_Parser</span></b>.
+    The parser class implements the <span class="class">IParserMarker</span> interface.
+    The details of how the parser works will be discussed later.
+</p>
 
 <p>
-    After
+    This folder also contains another component named <b>_AlertYellowCounter</b>. It includes the actual logic and behavior for the AlertYellowCounter component.
+</p>
+<!--#########################################-->
+<div class="code-block">
+    <div class="header">
+        <span class="filename">AlertYellowCounter.razor</span>
+        <button class="copy-button">Copy</button>
+    </div>
+<pre>
+<code class="language-csharp">
+@if (BlazorArticle.Runtime.IsWebAssembly)
+{
+    &lt;_AlertYellowCounter Counter="Counter" /&gt;
+}
+else
+{
+    &lt_AlertYellowCounter @rendermode="InteractiveServer" Counter="Counter" /&gt;
+}
 
-<pre class=""><code>
-    builder.Services.AddBlazorArticle();
-    builder.Services.AddBlazorArticleStyle();
-    //optional
-    builder.Services.AddBlazorArticleDefaultMarkers();
-</code></pre>
+@code {
+[Parameter]
+ public int Counter { get; set; } = 0;
+}
+</code>
+</pre>
+</div>
+<!--#########################################-->
 
 
-    <h2 id="3">Basic usage</h2>
+<p>
+    We can see that the AlertYellowCounter component accepts a single parameter and passes it to the _AlertYellowCounter component.
+    The instruction <code>BlazorArticle.Runtime.IsWebAssembly</code> returns true if the application is running as a Blazor WebAssembly Standalone app.
+    If you're using Blazor Web App and running on the server side, it returns false.
+    This allows the AlertYellowCounter component to be used in both application types.
+</p>
+
+<p>
+    This approach will also be discussed in more detail later.
+</p>
 
 
 
-<p>You can use the special Blazor Web App and Blazor WebAssembly Standalone templates to see how articles are rendered from a database or plain HTML files and to write your own article application.</p>
+<!--#########################################-->
+<div class="code-block">
+    <div class="header">
+        <span class="filename">_AlertYellowCounter.razor</span>
+        <button class="copy-button">Copy</button>
+    </div>
+<pre>
+<code class="language-csharp">
+&lt;div class="alert alert-warning" role="alert"&gt;
+    &lt;p&gt;Welcome from the interactive article custom component. Click button to increment the counter value. &lt;/p&gt;
+    &lt;p class="mb-0"&gt;Counter value : @_counter &lt;button @onclick="IncrementCounter"&gt;Click me&lt;/button&gt;&lt;/p&gt;
+&lt;/div&gt;
 
-<p>Here is a link to the template <a href="https://github.com/witM/BlazorArticleTemplates" target="_blank">repository</a>.</p>
+@code {
+[Parameter]
+public int Counter { get; set; } = 0;
 
+int _counter = 0;
+
+protected override async Task OnInitializedAsync()
+{
+    _counter = Counter;
+}
+
+async Task IncrementCounter()
+{
+    _counter++;
+}
+</code>
+</pre>
+</div>
+<!--#########################################-->
+
+<p>
+    The _AlertYellowCounter component simply displays an alert with a message and contains logic to increment the counter when a button is clicked.
+    The <b>AlertYellowCounter</b> component works similarly to the AlertCounter component from the BlazorArticle.Components library.
+</p>
+
+
+<h3 id="1-1">Registration of AlertYellowCounter marker parser</h3>
+
+<p>
+    To render the AlertYellowCounter component (or any other component) in an article, we first need to register its parser.
+    Add the following lines of code to the <span class="file">program.cs</span> file in both applications:
+</p>
+
+<!--#########################################-->
+<div class="code-block">
+    <div class="header">
+        <span class="filename">Program.cs</span>
+        <button class="copy-button">Copy</button>
+    </div>
+<pre>
+<code class="language-csharp">
+builder.Services.Configure&lt;ParserOptions&gt;(options =>
+{
+    options.Markers.Add(new AlertYellowCounter_Parser());
+});
+</code>
+</pre>
+</div>
+<!--#########################################-->
+
+<p>Don't forget to add the appropriate namespace in the program.cs file.</p>
+
+<p style="font-size:0.9em;">In <b>BlazorArticleWeb</b> project:</p>
+<p><code>using BlazorArticleWeb.Components.ArticleComponents;</code></p>
+
+<p style="font-size:0.9em;">In <b>BlazorArticleEditor</b> project:</p>
+<p><code>using BlazorArticleEditor.Shared.ArticleComponents;</code></p>
+
+<p>
+    <b>Note</b>: You can also use a service that implements <span class="class">IParserArticle</span> — for example, the default one provided by the BlazorArticle library.
+    After injecting it into a component, you can register the marker parser for example in Article page:
+</p>
+
+<!--#########################################-->
+<div class="code-block">
+    <div class="header">
+        <span class="filename">Article.razor</span>
+        <button class="copy-button">Copy</button>
+    </div>
+<pre>
+<code class="language-csharp">
+    ...
+
+@inject IParserArticle Parser
+
+@code{
+    protected override async Task OnInitializedAsync()
+    {
+        Parser.RegisterComponentParser(new AlertYellowCounter_Parser());
+    }    
+}
+</code>
+</pre>
+</div>
+<!--#########################################-->
+
+<h3 id="1-2">Rendering ArticleYellowCounter component</h3>
+
+<p>
+    Once the component’s marker parser is registered, you can render the component in an article.
+    In <b>BlazorArticleEditor</b> project go to any article for editing — for example:
+    <span class="file">wwwroot/ARTICLES/Articles/Logarithm.html</span> — and insert the following marker anywhere in an empty spot: <code>[[[AlertYellowCounter]]]</code>.
+</p>
+
+<p>
+    Now, when you render the article, you’ll see the <b>AlertYellowCounter</b> component rendered at the specified position.
+    Later in the article, the marker parser for this component is explained in detail.
+    In the marker, you can set the optional <code>Counter</code> parameter. Its value is passed directly to the AlertYellowCounter component’s parameter with the same name.
+    For example, to set the counter to 10, use: <code>[[[AlertYellowCounter Counter="10"]]]</code>.
+</p>
+
+<div class="callout">
+    <div class="callout-title">
+        <span class="callout-icon"></span>
+        <span class="callout-label"></span>
+    </div>
+    <p>
+        The article uses the application templates described in the installation guide.
+        The templates can be downloaded from the repository:
+        <a href="https://github.com/witM/BlazorArticleTemplates" target="_blank">BlazorArticleTemplates</a>.
+    </p>
+</div>
+
+
+<!-- ############################################################################################################################-->
+
+<h2 id="2">Details</h2>

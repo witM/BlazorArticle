@@ -64,6 +64,30 @@ function JS_RenderTOC(url, tocSelector, articleSelector) {
 }
 
 
+function CopyToClipboard(button) {
+    // Find <code> in neighber <pre>
+    const code = button.closest('.code-block')?.querySelector('pre > code');
+        if (!code) return;
+
+        // Copy content in the <code>
+        const text = code.innerText;
+
+    navigator.clipboard.writeText(text).then(() => {
+        // change button style temporary
+        const original = button.textContent;
+        button.textContent = 'Copied!';
+        setTimeout(() => {
+            button.textContent = original;
+        }, 2000);
+    }).catch(err => {
+            console.error('Copy failed', err);
+    });
+}
+
+
+
+
+
 //var g_isMobileTocActive = false;
 function ToggleArticleNavigation() {
 
