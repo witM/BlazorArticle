@@ -26,6 +26,7 @@ function RenderMath(element) {
 /*Called after blazor started and every time page has changed*/
 function JS_ParsePage() {
     RenderMath(document.body);
+    InitializeCopyButtonsForCode();
 }
 
 function JS_RenderMathInElement(element) {
@@ -72,4 +73,38 @@ function ParseLanguageCode() {
 function ToggleArticleNavigation() {
 
    
+}
+
+function InitializeCopyButtonsForCode() {
+    const buttons = document.querySelectorAll('.copy-button');
+    buttons.forEach(button => {
+        // in if condition: prevent double event listener registration
+        if (!button.dataset.copyBound) {
+            button.addEventListener('click', () => CopyToClipboardFromCode(button));
+            button.dataset.copyBound = 'true'; 
+        }
+    });
+}
+
+
+function CopyToClipboardFromCode(button) {
+    // Find <code> in neighber <pre>
+    const code = button.closest('.code-block')?.querySelector('pre > code');
+    if (!code) return;
+
+    // Copy content in the <code>
+    const text = code.innerText;
+
+    navigator.clipboard.writeText(text).then(() => {
+        // change button style temporary
+        const original = button.textContent;
+        button.textContent = 'Copied!';
+        button.classList.add('copied');   // class has to be defined in article style !!
+        setTimeout(() => {
+            button.textContent = original;
+            button.classList.remove('copied'); 
+        }, 1500);
+    }).catch(err => {
+        console.error('Copy failed', err);
+    });
 }

@@ -106,7 +106,66 @@ main[b-pb7kbadi08] {
     }
 }
 /* /Pages/Article.razor.rz.scp.css */
+
+.content-container[b-zulod1eygc]{
+    display:flex;
+    height:100%;
+    justify-content:space-between;
+}
+
+.content-container .page[b-zulod1eygc]{
+    flex: 3 1 0; 
+}
+
+.page-side[b-zulod1eygc] {
+    flex: 1 1 140px; 
+    min-width: 300px; 
+    padding:10px;
+    overflow-x:visible;
+    overflow:visible;
+}
+
+.page-side-content[b-zulod1eygc] {
+    overflow-x: visible;
+    overflow: visible;
+    position:relative;
+}
+
+.sticky-box[b-zulod1eygc] {
+    position: sticky;
+    top: 80px;
+    background: #e0e0e0;
+}
+
+/*max-width:1315px*/
+@media(min-width:0px){
+    .content-container[b-zulod1eygc]{
+        flex-direction:column;
+    }
+
+    .content-container .page[b-zulod1eygc]{
+        flex: none;
+    }
+
+    .page-side[b-zulod1eygc] {
+        flex: none;
+    }
+
+}
+
+
+
+.page-down[b-zulod1eygc]{
+    padding:20px;
+}
+.page-down-content[b-zulod1eygc]{
+    border-top:2px solid rgb(90, 90, 90);
+    padding:2em;
+}
 /* /Shared/TableOfContent.razor.rz.scp.css */
 
 
-
+h3[b-pprws97ai2] {
+    font-size: 1rem;
+    font-weight: 600;
+}
