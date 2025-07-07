@@ -9,7 +9,7 @@ using BlazorArticle;
 
 namespace BlazorArticleWebClient.Shared.ArticleComponents
 {
-    internal class AlertYellowCounter_Parser : IParserMarker
+    public class AlertYellowCounter_Parser : IParserMarker
     {
         public string MarkerName { get; private set; } = "AlertYellowCounter";
 
@@ -17,10 +17,10 @@ namespace BlazorArticleWebClient.Shared.ArticleComponents
 
         public bool TryParse(Match match, out Type componentType, out Dictionary<string, object>? parameters)
         {
-            //WARNING: The group[0] contains all match from string,
-            //group[1] contains first match of () in the string pattern: (\[\[\[AlertCounter(\s+Counter=""(\d+)"")?\]\]\])
+            //WARNING: The group[0] is entire matched string,
+            //group[1] contains first match of () in the string pattern
             ////////////////////////////////////////////////////
-            
+
             componentType = typeof(AlertYellowCounter);
             //parameters maybe set to null
             parameters = null;
