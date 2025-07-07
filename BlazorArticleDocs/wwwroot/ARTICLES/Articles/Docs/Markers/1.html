@@ -285,6 +285,12 @@ builder.Services.Configure&lt;ParserOptions&gt;(options =>
 </p>
 
 
+<ul>
+    <li>Extracting values from the matched groups (e.g. marker parameters),</li>
+    <li>Validating and converting them if needed,</li>
+    <li>Returning a fully configured Blazor component that should be rendered in place of the marker.</li>
+</ul>
+
 <p>
     Each subsequent match captured by parentheses () is stored in the <code>match.Groups</code> array.
     By accessing these groups, you can extract values from the marker and pass them as parameters to the corresponding Blazor component.
@@ -294,3 +300,5 @@ builder.Services.Configure&lt;ParserOptions&gt;(options =>
 <p>
     To summarize, <code>componentType</code> is the component that will be rendered in place of the marker, and <code>parameters</code> represents the parameters passed to this component, where string is the parameter name and object is its value.
 </p>
+
+<h3 id="2-2">Blazor Web App and Blazor WebAssembly compatibility</h3>
