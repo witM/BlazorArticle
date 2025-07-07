@@ -189,13 +189,108 @@ builder.Services.Configure&lt;ParserOptions&gt;(options =>
         <span class="callout-label"></span>
     </div>
     <p>
-        The article uses the application templates described in the installation guide.
-        The templates can be downloaded from the repository:
-        <a href="https://github.com/witM/BlazorArticleTemplates" target="_blank">BlazorArticleTemplates</a>.
+        You can also render the modified article with the AlertYellowCounter component from the database in the BlazorArticleWeb project.
+        Simply copy the entire article from the editor (using "Select All") and insert it into the database table — either by adding a new entry or updating an existing one.
     </p>
+    <p>Don't forget to register the marker parser for this component in the BlazorArticleWeb project.</p>
 </div>
 
 
 <!-- ############################################################################################################################-->
 
 <h2 id="2">Details</h2>
+
+<h3 id="2-1">Marker parser</h3>
+
+<p>Using the AlertYellowCounter marker parser as an example:</p>
+
+<div class="code-block">
+    <div class="header">
+        <span class="filename">AlertYellowCounter_Parser.cs</span>
+        <button class="copy-button">Copy</button>
+    </div>
+<pre>
+<code class="language-csharp">
+ public class AlertYellowCounter_Parser : IParserMarker
+ {
+     public string MarkerName { get; private set; } = "AlertYellowCounter";
+
+     public string StringPattern { get; private set; } = @"(\[\[\[AlertYellowCounter(\s+Counter=""(\d+)"")?\]\]\])";
+
+     public bool TryParse(Match match, out Type componentType, out Dictionary<string, object>? parameters)
+     {
+         //WARNING: The group[0] is entire matched string,
+         //group[1] contains first match of () in the string pattern
+         ////////////////////////////////////////////////////
+         
+         componentType = typeof(AlertYellowCounter);
+         //parameters maybe set to null
+         parameters = null;
+         //if the "Counter" parameter is set
+         if (match.Groups[2].Success)
+         {
+             parameters = new Dictionary<string, object>();
+             if(int.TryParse(match.Groups[3].Value, out var Counter))
+             {
+                 parameters.Add("Counter", Counter);
+             }
+             
+         }
+         return true;
+     }
+ }
+</code>
+</pre>
+</div>
+<!--#########################################-->
+
+<p>
+    <code>StringPattern</code> is used by the article parser to search for matching markers.
+    To create your own markers, you need to be familiar with regular expressions.
+    Make sure to review the .NET Regex class, which provides powerful tools for pattern matching and parsing within text.
+</p>
+
+<p>
+    Parentheses () in the <code>StringPattern</code> indicate a capturing group — a match that we want to extract.
+    For markers, the entire match is defined by the outermost parentheses in the StringPattern.
+
+    In our case, the match must start with [[[ and end with ]]].
+    We also have a starting text, which is the marker name, e.g., <code>\[\[\[AlertYellowCounter</code>.
+</p>
+
+
+<p>
+    Then we have the match:
+    <code>(\s+Counter=""(\d+)"")?</code>
+    The ? means that this part of the expression is optional, so the Counter parameter can be omitted from the marker.
+    \s+ matches any whitespace.
+    Inside this match, we have the last part: <code>(\d+)</code>, where \d+ means any sequence of digits.
+    This match represents the value of the Counter parameter.
+</p>
+
+<div class="callout note">
+    <div class="callout-title">
+        <span class="callout-icon"></span>
+        <span class="callout-label"></span>
+    </div>
+    <p>
+        A convention has been adopted where a marker starts with [[[ and ends with ]]], but this is entirely up to you — it’s customizable.
+    </p>
+    <p>In a future version, a method will likely be introduced that allows users to define their own StringPattern. This method would then be used instead of the fixed variable, giving you full control over the marker format.</p>
+</div>
+
+<p>
+    If the article parser finds a match for a marker, it calls the <code>TryParse</code> method, which contains the actual parsing logic.
+    This method is responsible for:
+</p>
+
+
+<p>
+    Each subsequent match captured by parentheses () is stored in the <code>match.Groups</code> array.
+    By accessing these groups, you can extract values from the marker and pass them as parameters to the corresponding Blazor component.
+    For example: the actual value for the Counter parameter of the AlertYellowCounter component is in <code>match.Groups[3].Value</code>.
+</p>
+
+<p>
+    To summarize, <code>componentType</code> is the component that will be rendered in place of the marker, and <code>parameters</code> represents the parameters passed to this component, where string is the parameter name and object is its value.
+</p>

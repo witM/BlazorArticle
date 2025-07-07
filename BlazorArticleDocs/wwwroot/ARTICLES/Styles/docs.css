@@ -54,6 +54,12 @@ a:hover {
     text-decoration: underline;
 }
 
+p span {
+    white-space: normal;
+    word-break: break-word;
+    overflow-wrap: break-word;
+}
+
 /*filename in text*/
 span.file {
     background-color: #f3f3f3;
@@ -64,6 +70,7 @@ span.file {
     /*color: #333;*/
     color: #0366d6;
     border: 1px solid #ddd;
+   
 }
 /*text marker (code or other element)*/
 span.mark {
@@ -77,6 +84,9 @@ code {
     font-size: 0.95em;
     border-radius: 2px;
     padding: 1px 2px;
+    white-space: normal;
+    word-break: break-word;
+    overflow-wrap: anywhere;
 }
 
 span.interface {
