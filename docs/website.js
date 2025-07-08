@@ -66,7 +66,11 @@ function JS_RenderTOC(url, tocSelector, articleSelector) {
 
 
 function ParseLanguageCode() {
-    Prism.highlightAll();
+    //Prism.highlightAll();
+    //hljs.highlightAll();
+    document.querySelectorAll('.code-block:not(.console) pre code').forEach((block) => {
+        hljs.highlightElement(block);
+    });
 }
 
 //var g_isMobileTocActive = false;

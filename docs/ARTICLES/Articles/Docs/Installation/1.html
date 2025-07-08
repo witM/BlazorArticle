@@ -18,22 +18,41 @@
 
 <p>Install the following packages from nuget.</p>
 
-<pre class="console-block"><code>
-    dotnet add package BlazorArticle
-    dotnet add package BlazorArticle.Components
-</code></pre>
+<!--#########################################-->
+<div class="code-block console">
+    <div class="header">
+        <span class="filename">Console</span>
+        <button class="copy-button">Copy</button>
+    </div>
+<pre>
+<code class="">
+dotnet add package BlazorArticle
+dotnet add package BlazorArticle.Components
+</code>
+</pre>
+</div>
+<!--#########################################-->
 
 <p>In the Visual Studio gui package manager look for "BlazorAricle" and "BlazorArticle.Components" packages.</p>
 
-<p>After the packages are installed, add the following code to the <b>Program.cs</b> file to use the library's default services.</p>
+<p>After the packages are installed, add the following code to the <span class="file">Program.cs</span> file to use the library's default services.</p>
 
-
-<pre class=""><code>
-    builder.Services.AddBlazorArticle();
-    builder.Services.AddBlazorArticleStyle();
-    //optional
-    builder.Services.AddBlazorArticleDefaultMarkers();
-</code></pre>
+<!--#########################################-->
+<div class="code-block">
+    <div class="header">
+        <span class="filename">Program.cs</span>
+        <button class="copy-button">Copy</button>
+    </div>
+<pre>
+<code class="language-csharp">
+builder.Services.AddBlazorArticle();
+builder.Services.AddBlazorArticleStyle();
+//optional
+builder.Services.AddBlazorArticleDefaultMarkers();
+</code>
+</pre>
+</div>
+<!--#########################################-->
 
 
 <h2 id="3">Basic usage</h2>
