@@ -113,6 +113,7 @@ span.class {
 
 .code-block .header {
     display: flex;
+    background-color: rgb(235, 235, 235);
     justify-content: space-between;
     align-items: center;
     /*    background-color: #f6f8fa;*/
@@ -149,6 +150,7 @@ span.class {
 .code-block .header .copy-button.copied {
   border:1px solid green;
 }
+
 /* code block */
 
 .code-block pre {
@@ -165,14 +167,23 @@ span.class {
     padding:0px;
     margin:0px;
     font-family: Consolas, Monaco, 'Courier New', monospace;
+    white-space: pre;
     /*    color: #c7254e;*/
     /*this is the background color where the text code is placed*/
-    /*background-color: #f9f2f4;*/
+    background-color:inherit;
 }
+/*reset some settings for the library*/
+.code-block pre code.hljs {
+    all:unset;
+  /*  overflow-x:initial;
+    background-color: #f5f5f5;*/
+}
+
 
 /* code block - console */
 
 .code-block.console{
+    padding:0px;
     background-color: #f9f9f9;
     color: #333;
     font-family: Consolas, Monaco, 'Courier New', monospace;

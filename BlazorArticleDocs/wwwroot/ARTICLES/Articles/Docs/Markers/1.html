@@ -36,7 +36,7 @@
         <button class="copy-button">Copy</button>
     </div>
 <pre>
-<code class="language-csharp">
+<code class="language-razor">
 @if (BlazorArticle.Runtime.IsWebAssembly)
 {
     &lt;_AlertYellowCounter Counter="Counter" /&gt;
@@ -76,26 +76,27 @@ else
         <button class="copy-button">Copy</button>
     </div>
 <pre>
-<code class="language-csharp">
+<code class="language-razor">
 &lt;div class="alert alert-warning" role="alert"&gt;
     &lt;p&gt;Welcome from the interactive article custom component. Click button to increment the counter value. &lt;/p&gt;
     &lt;p class="mb-0"&gt;Counter value : @_counter &lt;button @onclick="IncrementCounter"&gt;Click me&lt;/button&gt;&lt;/p&gt;
 &lt;/div&gt;
 
 @code {
-[Parameter]
-public int Counter { get; set; } = 0;
+    [Parameter]
+    public int Counter { get; set; } = 0;
 
-int _counter = 0;
+    int _counter = 0;
 
-protected override async Task OnInitializedAsync()
-{
-    _counter = Counter;
-}
+    protected override async Task OnInitializedAsync()
+    {
+        _counter = Counter;
+    }
 
-async Task IncrementCounter()
-{
-    _counter++;
+    async Task IncrementCounter()
+    {
+        _counter++;
+    }
 }
 </code>
 </pre>
@@ -152,9 +153,7 @@ builder.Services.Configure&lt;ParserOptions&gt;(options =>
         <button class="copy-button">Copy</button>
     </div>
 <pre>
-<code class="language-csharp">
-    ...
-
+<code class="language-razor">
 @inject IParserArticle Parser
 
 @code{
