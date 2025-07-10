@@ -216,7 +216,7 @@ builder.Services.Configure&lt;ParserOptions&gt;(options =>
 
      public string StringPattern { get; private set; } = @"(\[\[\[AlertYellowCounter(\s+Counter=""(\d+)"")?\]\]\])";
 
-     public bool TryParse(Match match, out Type componentType, out Dictionary<string, object>? parameters)
+     public bool TryParse(Match match, out Type componentType, out Dictionary&lt;string, object&gt;? parameters)
      {
          //WARNING: The group[0] is entire matched string,
          //group[1] contains first match of () in the string pattern
@@ -228,7 +228,7 @@ builder.Services.Configure&lt;ParserOptions&gt;(options =>
          //if the "Counter" parameter is set
          if (match.Groups[2].Success)
          {
-             parameters = new Dictionary<string, object>();
+             parameters = new Dictionary&lt;string, object&gt;();
              if(int.TryParse(match.Groups[3].Value, out var Counter))
              {
                  parameters.Add("Counter", Counter);
