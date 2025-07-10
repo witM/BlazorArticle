@@ -3,10 +3,7 @@
 
 @typeparam TId
 
-
-
 @inject IParserArticle Parser
-@* @inject BlazorArticle.Components.RegistrationArticleMarker MarkerRegister *@
 
 @* @((MarkupString)Content) *@ 
 
@@ -36,7 +33,7 @@
     [Parameter]
     public IArticle<TId> IContent { get; set; }
     /// <summary>
-    /// Specifies whether CSS comments and white spaces are removed from the final rendered result. (Default: false).
+    /// Specifies whether html comments are removed from the final rendered result. (Default: false).
     /// </summary>
     [Parameter]
     public bool RemoveComments { get; set; } = false;
