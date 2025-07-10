@@ -45,5 +45,19 @@ namespace BlazorArticle
         Task<TModel?> GetArticleByNameAsync(string name, TVersion version);
     }
 
+    /// <summary>
+    /// Base interface of the file article provider.
+    /// </summary>
+    /// <typeparam name="TModel">Inherits from IArticle</typeparam>
+    /// <typeparam name="Id"></typeparam>
+    public interface IFileArticleProvider<TModel, Id> where TModel: IArticle<Id>
+    {
+        /// <summary>
+        /// Get the article by given file path.
+        /// </summary>
+        /// <param name="path">Path to the article. Relative or absolute.</param>
+        /// <returns></returns>
+        Task<TModel> GetArticleByPathAsync(string path);
+    }
 
 }
