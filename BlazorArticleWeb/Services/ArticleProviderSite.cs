@@ -25,6 +25,12 @@ namespace BlazorArticleWeb.Services
 
         /*** ARTICLE INTERFACES ****/
 
+
+        public async Task<List<ModelArticle>> GetAll()
+        {
+            return await _context.Articles.ToListAsync();
+        }
+
         public async Task<ModelArticle> GetArticleAsync(int id)
         {
             return await _context.Articles.FindAsync(id);

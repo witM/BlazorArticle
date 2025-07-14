@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BlazorArticleWeb.Models
 {
-    public class ModelArticle : ModelArticleBase_<int>
+    public class ModelArticle : ModelArticleBase<int>
     {
         public int? _StyleId { get; set; }
         public ModelArticleStyle? _Style { get; set; }
