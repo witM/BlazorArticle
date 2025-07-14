@@ -21,6 +21,8 @@ namespace BlazorArticleWebClient.Services
 
         /*** ARTICLE INTERFACES ****/
 
+
+
         public Task<ModelArticle?> GetArticleAsync(string id)
         {
             throw new NotImplementedException();

@@ -1,0 +1,94 @@
+@typeparam TId
+@typeparam TArticle where TArticle : IArticle<TId>
+
+<div class="dropdown-content @_css_open">
+    <button class="dropdown-label" @onclick="() => Toggle(!_listVisible)">
+        <span id="selected-version">@(_selectedItem is null ? "" : ValueSelector(_selectedItem))</span>
+        <svg class="dropdown-arrow" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M5.25 7.25L10 12.25L14.75 7.25" stroke="currentColor" stroke-width="1.5" fill="none" />
+        </svg>
+    </button>
+    <ul class="dropdown-list">
+     @foreach(var item in Articles)
+     {
+            <li @key="item.Id" @onclick="@(() => OnSelectedArticle(item.Id))">@ValueSelector(item)</li>
+     }
+    </ul>
+</div>
+
+
+@code{
+
+    /// <summary>
+    /// List of the articles.
+    /// </summary>
+    [Parameter]
+    public IEnumerable<TArticle> Articles{ get; set; }
+
+    /// <summary>
+    /// Id of the article selected by default.
+    /// </summary>
+    [Parameter]
+    public TId Selected { get; set; }
+
+    /// <summary>
+    /// Action taken after the article is selected from dropdown list. (OPTIONAL).
+    /// </summary>
+    [Parameter]
+    //public EventCallback<TArticle> OnSelected { get; set; }
+    //public Action<TArticle>? OnSelected { get; set; }
+    //public Func<TArticle, Task>? OnSelected { get; set; }
+    public BlazorArticle.Utils.ActionAsync<TArticle> OnSelected { get; set; }
+    /// <summary>
+    /// Provides the value description for article items in dropdown list.
+    /// </summary>
+    [Parameter]
+    public Func<TArticle, string> ValueSelector{ get; set; }
+
+    // [Parameter]
+    // public RenderFragment<TArticle>? ChildContent{ get; set; }
+
+    bool _listVisible = false;
+    string? _css_open;
+    TId _selectedId;
+    TArticle? _selectedItem;
+
+    protected override async Task OnInitializedAsync()
+    {
+        //WARNING: _selectedId should be set once from Selected so the code is not in OnParameterSetAsync. User should prevent this in parent component. This component can be rerendered after OnSelected is fired.
+        _selectedId = Selected;
+        _selectedItem = Articles.FirstOrDefault(e => object.Equals(e.Id, _selectedId));
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+
+
+
+    }
+
+    void Toggle(bool toggler)
+    {
+        _listVisible = toggler;
+        _css_open = _listVisible ? "open" : null;
+    }
+
+
+    async Task OnSelectedArticle(TId id)
+    {
+        Toggle(false);
+        if(!object.Equals(id, _selectedId))
+        {
+            _selectedId = id;
+            _selectedItem = Articles.FirstOrDefault(e => object.Equals(e.Id, _selectedId));
+            //await OnSelected.InvokeAsync(_selectedItem);
+            //OnSelected?.Invoke(_selectedItem);
+            await (OnSelected?.Invoke(_selectedItem) ?? Task.CompletedTask);
+
+        }
+       
+        
+    }
+
+
+}

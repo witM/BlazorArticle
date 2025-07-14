@@ -1,6 +1,14 @@
-﻿@inject IJSRuntime JsRuntime
+﻿@using BlazorArticle
+@inject IJSRuntime JsRuntime
 @inject NavigationManager Navigation
 @* @inject AppStateService AppState *@
+
+@inject ArticleProviderSite ArticleProvider
+
+<p class="pt-1">counter:@_counter</p>
+<div class="p-3 pt-4">
+    <BlazorArticle.Components.DropdownArticleSelection Articles="_articles" Selected="ArticleId" ValueSelector="@(article => article.Title )" OnSelected="OnArticleSelected" />
+</div>
 
 <h3 class="text-center pt-5">Table of content</h3>
 
@@ -13,6 +21,14 @@
 
     ElementReference Ref_Toc{ get; set; }
 
+    List<ModelArticle>? _articles;
+
+    int _counter = 10;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _articles = await ArticleProvider.GetAll();
+    }
 
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -24,6 +40,16 @@
         //WARNING:For now we rendering only h2, h3, h4 headers in toc (h1 is used as article title - see tocbot documentation)
         await JsRuntime.InvokeVoidAsync("JS_RenderTOC", baseUri, "#toc-container", ".page");
         await JsRuntime.InvokeVoidAsync("JS_RenderMathInElement", Ref_Toc);
+    }
+
+
+    async Task OnArticleSelected(ModelArticle m)
+    {
+        var article = (ModelArticle)m;
+        _counter++;
+        StateHasChanged();
+
+        Navigation.NavigateTo($"/post/{m.Name}", true);
     }
 
 }

@@ -91,7 +91,8 @@ nav.m-navbar .m-navigation {
     /* border: 1px solid red;  */
 }
 
-nav.m-navbar .m-navigation a, button {
+nav.m-navbar .m-navigation a,
+nav.m-navbar .m-navigation button {
     padding: 5px;
     background-color: #fcfcfc;
     border-radius: 4px;

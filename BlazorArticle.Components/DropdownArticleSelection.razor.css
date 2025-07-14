@@ -1,0 +1,80 @@
+﻿
+
+
+
+.dropdown-content {
+    position: relative;
+    width: 100%;
+    max-width: 100%; /* wypełnia kontener */
+    font-family: system-ui, sans-serif;
+    font-size: 0.95rem;
+}
+
+/* Etykieta (przycisk) */
+button.dropdown-label {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 8px;
+    border: 1px solid #c8c8c8;
+    border-radius: 3px;
+    background-color: #ffffff;
+    cursor: pointer;
+    color: #1f1f1f;
+    font-weight: 600;
+    outline: none;
+    box-shadow: none;
+}
+
+button.dropdown-label:hover {
+    background-color: #f2f2f2;
+}
+
+/* Ikona strzałki */
+.dropdown-arrow {
+    width: 16px;
+    height: 16px;
+    color: #666666;
+    pointer-events: none;
+    flex-shrink: 0;
+}
+
+/* Rotacja gdy otwarty */
+.dropdown-content.open .dropdown-arrow {
+    transform: rotate(180deg);
+}
+
+
+/* Lista rozwijana */
+.dropdown-list {
+    list-style: none;
+    margin: 1px 0 0;
+    padding: 0;
+    position: absolute;
+    width: 100%;
+    background-color: #fff;
+    border: 1px solid #c8c8c8;
+    border-radius: 3px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    display: none;
+    z-index: 100;
+}
+
+.dropdown-list li {
+        padding: 4px 10px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: #1f1f1f;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+}
+
+.dropdown-list li:hover {
+        background-color: #f2f2f2;
+}
+
+/* Pokazanie listy */
+.dropdown-content.open .dropdown-list {
+    display: block;
+}

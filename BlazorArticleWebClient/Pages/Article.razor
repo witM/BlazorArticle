@@ -53,8 +53,7 @@ else
     @if(Layout.IsArticleLoaded)
     {
          <!-- sticky header is hardcoded as 50px height -->
-        <div class="sticky-top" style="top:50px;">
-         
+        <div class="sticky-top" style="top:50px;">  
             <TableOfContent @ref="Ref_TOC" />
         </div>
         
@@ -86,7 +85,6 @@ else
     protected override async Task OnInitializedAsync()
     {
         //Parser.RegisterComponentParser(new AlertYellowCounter_Parser());
-
 
         Layout.RefreshAllRequested += OnRefreshAll;
         Layout.RefreshStyle += OnRefreshStyle;
