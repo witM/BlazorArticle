@@ -12,7 +12,7 @@
 		<!-- generate package -->
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<PackageId>BlazorArticle.Components</PackageId>
-		<Version>1.0.13-preview</Version>
+		<Version>1.1.0</Version>
 		<Authors>Marian Witek (witM)</Authors>
 		<Description>.NET library with blazor components to parsing html article and rendering them with interactive dynamic components.</Description>
 		<!-- other metadata -->

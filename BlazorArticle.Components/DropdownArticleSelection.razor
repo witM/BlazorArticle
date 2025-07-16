@@ -3,7 +3,7 @@
 
 <div class="dropdown-content @_css_open">
     <button class="dropdown-label" @onclick="() => Toggle(!_listVisible)">
-        <span id="selected-version">@(_selectedItem is null ? "" : ValueSelector(_selectedItem))</span>
+        <span class="selected">@(_selectedItem is null ? "" : ValueSelector(_selectedItem))</span>
         <svg class="dropdown-arrow" viewBox="0 0 20 20" fill="currentColor">
             <path d="M5.25 7.25L10 12.25L14.75 7.25" stroke="currentColor" stroke-width="1.5" fill="none" />
         </svg>

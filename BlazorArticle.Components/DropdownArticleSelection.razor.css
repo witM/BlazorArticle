@@ -16,6 +16,7 @@ button.dropdown-label {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    text-align: left;
     padding: 4px 8px;
     border: 1px solid #c8c8c8;
     border-radius: 3px;
@@ -25,17 +26,27 @@ button.dropdown-label {
     font-weight: 600;
     outline: none;
     box-shadow: none;
+    /**/
+   
 }
+
+button.dropdown-label .selected {
+    white-space: nowrap;
+    overflow: hidden;
+    width:100%;
+    text-overflow: ellipsis;
+}
+
 
 button.dropdown-label:hover {
     background-color: #f2f2f2;
 }
 
-/* Ikona strzałki */
 .dropdown-arrow {
     width: 16px;
     height: 16px;
-    color: #666666;
+    color: #666666
+/* Ikona strzałki */;
     pointer-events: none;
     flex-shrink: 0;
 }
