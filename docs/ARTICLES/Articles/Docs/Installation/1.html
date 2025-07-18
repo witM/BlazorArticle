@@ -55,7 +55,41 @@ builder.Services.AddBlazorArticleDefaultMarkers();
 <!--#########################################-->
 
 
-<h2 id="3">Basic usage</h2>
+<h3 id="1-2">Assets</h3>
+
+<p>When using the BlazorArticle.Components library, you need to include the following assets according to the project type — either Blazor Web App or Blazor WebAssembly Standalone.</p>
+
+<!--#########################################-->
+<div class="code-block">
+    <div class="header">
+        <span class="filename">#</span>
+        <button class="copy-button">Copy</button>
+    </div>
+<pre>
+<code class="language-razor">
+&lt;link rel="stylesheet" href="_content/BlazorArticle.Components/css/blazorArticle.css" /&gt;
+</code>
+</pre>
+</div>
+<!--#########################################-->
+<!--#########################################-->
+<div class="code-block">
+    <div class="header">
+        <span class="filename">#</span>
+        <button class="copy-button">Copy</button>
+    </div>
+<pre>
+<code class="language-razor">
+&lt;script src="_content/BlazorArticle.Components/js/blazorArticle.js"&gt;&lt;/script&gt;
+</code>
+</pre>
+</div>
+<!--#########################################-->
+
+<p>The styles from the <span class="file">blazorArticle.css</span> file start with the prefix "m-".</p>
+
+
+<h2 id="4">Basic usage</h2>
 
 <p>You can use the special Blazor Web App and Blazor WebAssembly Standalone templates to see how articles are rendered from a database or plain HTML files and to write your own article application.</p>
 
