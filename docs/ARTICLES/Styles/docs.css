@@ -332,12 +332,28 @@ th {
     color: #6b4c9a;
 }
 
+/*warning*/
+
+.callout.warning {
+    background-color: #fff4e5;
+    color: #4b2e0d;
+    border: 1px solid #d97706;
+}
+
+.callout.warning .callout-icon::before {
+  content: "ℹ️";
+  color: #a972d4;  
+}
+
+.callout.warning .callout-label:before {
+    content: "Warning";
+    color: #b45309;
+}
+
+
 
 /***********************************/
-.callout.warning {
-    border-left-color: #d83b01;
-    background-color: #fff4ce;
-}
+
 
 .callout.important {
     border-left-color: #5c2d91;

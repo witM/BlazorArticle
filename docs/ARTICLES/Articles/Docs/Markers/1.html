@@ -1,7 +1,7 @@
 ﻿
 
 
-<h2 id="1">Marker parser registration</h2>
+<h2 id="1">Custom marker parser registration</h2>
 
 <div class="callout note">
     <div class="callout-title">
@@ -301,3 +301,71 @@ builder.Services.Configure&lt;ParserOptions&gt;(options =>
 </p>
 
 <h3 id="2-2">Blazor Web App and Blazor WebAssembly compatibility</h3>
+
+<p>
+    Let’s take another look at the AlertYellowCounter component.
+</p>
+<!--#########################################-->
+<div class="code-block">
+    <div class="header">
+        <span class="filename">AlertYellowCounter.razor</span>
+        <button class="copy-button">Copy</button>
+    </div>
+<pre>
+<code class="language-razor">
+@if (BlazorArticle.Runtime.IsWebAssembly)
+{
+    &lt;_AlertYellowCounter Counter="Counter" /&gt;
+}
+else
+{
+    &lt_AlertYellowCounter @rendermode="InteractiveServer" Counter="Counter" /&gt;
+}
+
+@code {
+[Parameter]
+ public int Counter { get; set; } = 0;
+}
+</code>
+</pre>
+</div>
+<!--#########################################-->
+
+<p>The statement <code>BlazorArticle.Runtime.IsWebAssembly</code> is responsible for detecting the application type.</p>
+
+<p>
+    The Blazor WebAssembly Standalone application is fully interactive on the client side.
+    A Blazor Web App rendered on the server becomes interactive on the client side for a given component and its children when this option is enabled, for example using the directive <code>@rendermode="InteractiveServer"</code> on the component.
+</p>
+
+<p>
+    By using the given statement, you can implement different logic depending on the type of application.
+    For example, a component may fetch data from different sources, or work fully in a Blazor Web App while in Blazor WebAssembly it may only display an appropriate message.
+</p>
+
+<div class="callout warning">
+    <div class="callout-title">
+        <span class="callout-icon"></span>
+        <span class="callout-label"></span>
+    </div>
+    <p>
+        The @rendermode directive which set interactive server side rendering is not supported in Blazor WebAssembly Standalone.
+    </p>
+   
+</div>
+
+
+<p>
+    Of course, if we know that the component will only be rendered in one type of application, we can implement the appropriate logic directly.
+    In the given example, the implementation of the _AlertYellowCounter component could be placed directly in AlertYellowCounter.
+</p>
+
+<div class="callout">
+    <div class="callout-title">
+        <span class="callout-icon"></span>
+        <span class="callout-label"></span>
+    </div>
+    <p>
+        Components that are to be parsed in both types of applications can be placed in a shared library along with the marker parser.
+    </p>
+</div>
